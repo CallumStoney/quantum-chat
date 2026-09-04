@@ -1,10 +1,10 @@
-# 🔐 Insightful Encryptions
+# Insightful Encryptions
 
 An interactive cryptographic learning platform that lets you explore, experiment with, and understand real cipher algorithms from first principles.
 
 ## Features
 
-### 🧪 The Lab
+### The Lab
 A standalone encryption sandbox where you can:
 - Type any message and encrypt it with 6 different cipher algorithms
 - Configure encryption keys (shift values, matrices, keywords)
@@ -12,7 +12,7 @@ A standalone encryption sandbox where you can:
 - Explore step-by-step character-by-character encryption breakdowns
 - Use decrypt tools: automated algorithm visualizations and manual walkthrough exercises
 
-### 💬 Online Room
+### Online Room
 Host or join a live encrypted chat room:
 - Real-time messaging via WebSockets
 - Each participant selects their own cipher and key
