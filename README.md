@@ -23,7 +23,7 @@ Host or join a live encrypted chat room:
 ### Cipher Algorithms
 | Cipher | Type | Key |
 |--------|------|-----|
-| Caesar Shift | Substitution | Integer shift (1–25) |
+| Caesar Shift | Substitution | Integer shift (1-25) |
 | Affine | Substitution | Multiplier A (coprime w/ 26) + Shift B |
 | Hill Matrix | Polygraphic | n×n invertible matrix |
 | Vigenère | Polyalphabetic | Keyword string |

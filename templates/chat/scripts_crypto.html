@@ -191,8 +191,8 @@
                 const cv = (pv + s) % 26;
                 rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${pv}</td><td class="op-cell">+ ${s}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
-            html = `<div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                <div class="sol-title" style="color:var(--purple-light);">Caesar Encryption, Shift ${s}</div>
+            html = `<div class="sol-box">
+                <div class="sol-title">Caesar Encryption (Shift ${s})</div>
                 <div class="sol-explain">Each character position value has ${s} added, then taken mod 26. ${m('C = (P + ' + s + ') mod 26')}</div>
                 <div class="tscroll">${buildTable(rows, ['Char', 'Position', '+ Shift', 'mod 26', 'Result'])}</div>
             </div>`;
@@ -203,12 +203,12 @@
             for (let i = 0; i < Math.min(pC.length, L); i++) {
                 const x = pC[i].charCodeAt(0) - 65;
                 const cv = (a * x + b) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${x}</td><td class="op-cell">${a}×${x}+${b} = ${a*x+b}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${x}</td><td class="op-cell">${a}*${x}+${b} = ${a*x+b}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
-            html = `<div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                <div class="sol-title" style="color:var(--purple-light);">Affine Encryption, A=${a}, B=${b}</div>
-                <div class="sol-explain">Each character: multiply by ${a}, add ${b}, take mod 26. ${m('E(x) = (' + a + '×x + ' + b + ') mod 26')}</div>
-                <div class="tscroll">${buildTable(rows, ['Char', 'x', 'A×x+B', 'mod 26', 'Result'])}</div>
+            html = `<div class="sol-box">
+                <div class="sol-title">Affine Encryption (A=${a}, B=${b})</div>
+                <div class="sol-explain">Each character: multiply by ${a}, add ${b}, take mod 26. ${m('E(x) = (' + a + ' * x + ' + b + ') mod 26')}</div>
+                <div class="tscroll">${buildTable(rows, ['Char', 'x', 'A*x+B', 'mod 26', 'Result'])}</div>
             </div>`;
         } else if (cipher === 'vigenere') {
             const k = String(activeCipherKey || '').toUpperCase().replace(/[^A-Z]/g, '') || 'KEY';
@@ -220,8 +220,8 @@
                 const cv = (pv + kv) % 26;
                 rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${kc} (${kv})</td><td class="op-cell">${pv}+${kv} = ${pv+kv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
-            html = `<div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                <div class="sol-title" style="color:var(--purple-light);">Vigenère Encryption, Key "${k}"</div>
+            html = `<div class="sol-box">
+                <div class="sol-title">Vigenère Encryption (Key "${k}")</div>
                 <div class="sol-explain">Each letter is shifted by its paired keyword letter. ${m('C[i] = (P[i] + K[i mod ' + k.length + ']) mod 26')}</div>
                 <div class="tscroll">${buildTable(rows, ['Char', 'Key Char', 'Shift', 'Result'])}</div>
             </div>`;
@@ -232,45 +232,45 @@
             for (let i = 0; i < pC.length; i += n) {
                 const block = pC.substring(i, i + n).padEnd(n, 'X');
                 const cBlock = cC.substring(i, i + n).padEnd(n, '?');
-                rows.push(`<tr><td style="color:#fff;">[${block.split('').join(', ')}]</td><td class="op-cell">× Key mod 26</td><td class="enc-cell">[${cBlock.split('').join(', ')}]</td></tr>`);
+                rows.push(`<tr><td style="color:#fff;">[${block.split('').join(', ')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cBlock.split('').join(', ')}]</td></tr>`);
             }
-            html = `<div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                <div class="sol-title" style="color:var(--purple-light);">Hill Cipher, ${n}×${n} Matrix Multiplication</div>
-                <div class="sol-explain">Plaintext is split into blocks of ${n} letters. Each block is multiplied by the key matrix mod 26. ${m('[C] = [P] × K (mod 26)')}</div>
+            html = `<div class="sol-box">
+                <div class="sol-title">Hill Cipher (${n}x${n} Matrix Multiplication)</div>
+                <div class="sol-explain">Plaintext is split into blocks of ${n} letters. Each block is multiplied by the key matrix mod 26. ${m('[C] = [P] * K (mod 26)')}</div>
                 ${mat ? '<div style="margin-bottom:8px;"><div class="mat-disp">' + printMat(mat).replace(/ /g, '&nbsp;') + '</div></div>' : ''}
-                <div class="tscroll">${buildTable(rows, [`Plain (×${n})`, 'Operation', `Cipher (×${n})`])}</div>
+                <div class="tscroll">${buildTable(rows, [`Plain (x${n})`, 'Operation', `Cipher (x${n})`])}</div>
             </div>`;
         } else if (cipher === 'aes') {
-            html = `<div class="sol-box" style="border-color:rgba(16,185,129,0.3);">
-                <div class="sol-title" style="color:var(--green-light);">AES-256 Block Cipher</div>
-                <div class="sol-explain">AES operates on 128-bit blocks through 14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey. Each round's state is a 4×4 byte matrix.</div>
+            html = `<div class="sol-box">
+                <div class="sol-title">AES-256 Block Cipher</div>
+                <div class="sol-explain">AES operates on 128-bit blocks through 14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey. Each round's state is a 4x4 byte matrix.</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:12px 0;">
-                    <div style="flex:1;min-width:120px;padding:10px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:6px;text-align:center;">
-                        <div style="font-size:0.5625rem;color:var(--muted);letter-spacing:1px;margin-bottom:4px;">ROUND 1</div>
-                        <div style="color:var(--blue-light);font-size:0.6875rem;font-family:var(--mono);">SubBytes</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 1</div>
+                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">SubBytes</div>
                     </div>
-                    <div style="flex:1;min-width:120px;padding:10px;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.3);border-radius:6px;text-align:center;">
-                        <div style="font-size:0.5625rem;color:var(--muted);letter-spacing:1px;margin-bottom:4px;">ROUND 2</div>
-                        <div style="color:var(--purple-light);font-size:0.6875rem;font-family:var(--mono);">ShiftRows</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 2</div>
+                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">ShiftRows</div>
                     </div>
-                    <div style="flex:1;min-width:120px;padding:10px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:6px;text-align:center;">
-                        <div style="font-size:0.5625rem;color:var(--muted);letter-spacing:1px;margin-bottom:4px;">ROUND 3</div>
-                        <div style="color:var(--green-light);font-size:0.6875rem;font-family:var(--mono);">MixColumns</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 3</div>
+                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">MixColumns</div>
                     </div>
-                    <div style="flex:1;min-width:120px;padding:10px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:6px;text-align:center;">
-                        <div style="font-size:0.5625rem;color:var(--muted);letter-spacing:1px;margin-bottom:4px;">ROUND 4</div>
-                        <div style="color:#f59e0b;font-size:0.6875rem;font-family:var(--mono);">AddRoundKey</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 4</div>
+                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">AddRoundKey</div>
                     </div>
                 </div>
-                <div style="color:var(--muted-2);font-size:0.6875rem;line-height:1.7;">
-                    This 4-step process repeats for all 14 rounds. The key schedule expands the 256-bit key into 15 round sub-keys. The final round omits MixColumns. Each round creates an avalanche effect where changing a single input bit diffuses to affect every output bit.
+                <div style="color:var(--text-dim);font-size:11px;line-height:1.6;">
+                    This 4-step process repeats for all 14 rounds. The key schedule expands the 256-bit key into 15 round sub-keys. The final round omits MixColumns.
                 </div>
             </div>`;
         } else if (cipher === 'quantum') {
-            html = `<div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                <div class="sol-title" style="color:var(--purple-light);">BB84 Quantum Key Distribution</div>
+            html = `<div class="sol-box">
+                <div class="sol-title">BB84 Quantum Key Distribution</div>
                 <div class="sol-explain">BB84 uses random photon polarizations sent across a quantum channel. Alice sends photons, Bob measures them with random bases, then they publicly compare basis choices (but not values).</div>
-                <div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:6px;margin:12px 0;color:var(--muted-2);font-size:0.6875rem;line-height:1.6;">
+                <div style="background:var(--bg-3);padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);margin:10px 0;color:var(--text-dim);font-size:11px;line-height:1.6;">
                     <strong>Sifting Process:</strong> Only bits where bases matched are kept (~50% survival rate). The remaining bits form the sifted key. This key is then used with a one-time pad for perfect secrecy.
                 </div>
             </div>`;
@@ -317,10 +317,10 @@
         const con = document.getElementById('hill-matrix-container');
         ind.className = 'matrix-valid ' + (valid ? 'valid' : 'invalid');
         if (valid) {
-            ind.innerHTML = `<div class="valid-dot"></div><span>Valid &mdash; det &equiv; <strong>${det}</strong> (mod 97) ✓</span>`;
+            ind.innerHTML = `<div class="valid-dot"></div><span>Valid - det = <strong>${det}</strong> (mod 97) ✓</span>`;
             con.style.borderColor = 'rgba(16,185,129,0.4)';
         } else {
-            ind.innerHTML = `<div class="valid-dot"></div><span>Singular &mdash; det &equiv; 0 &mdash; cannot encrypt</span>`;
+            ind.innerHTML = `<div class="valid-dot"></div><span>Singular - det = 0 - cannot encrypt</span>`;
             con.style.borderColor = 'rgba(239,68,68,0.4)';
         }
         return valid;
@@ -407,23 +407,23 @@
             modalBody.innerHTML = `<div style="text-align:center;color:var(--muted);font-style:italic;padding-top:16px;">This message was sent in plaintext. No encryption involved.</div>`;
         } else {
             modalBody.innerHTML = `
-                <div style="background:rgba(0,0,0,0.35);padding:10px 12px;border-radius:7px;border:1px solid var(--border);margin-bottom:16px;">
-                    <div style="color:var(--muted);font-size:9px;margin-bottom:5px;font-weight:800;letter-spacing:1px;">INTERCEPTED PAYLOAD</div>
-                    <div style="color:#fff;font-family:var(--mono);word-break:break-all;font-size:13px;">${cipherText}</div>
+                <div style="background:var(--bg-3);padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:14px;">
+                    <div style="color:var(--text-faint);font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">Intercepted Payload</div>
+                    <div style="color:var(--text-hi);font-family:var(--mono);word-break:break-all;font-size:13px;">${cipherText}</div>
                 </div>
-                <div class="sol-box" style="border-color:rgba(59,130,246,0.3);">
-                    <div class="sol-title" style="color:var(--blue-light);">1, Encryption Process</div>
+                <div class="sol-box">
+                    <div class="sol-title">Step 1: Encryption Process</div>
                     <div class="sol-explain">${getCipherExpl(cipher, key, false)}</div>
                     <div class="tscroll">${encTable(orig, cipherText, cipher, key)}</div>
                 </div>
-                <div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                    <div class="sol-title" style="color:var(--purple-light);">2, Decryption Process</div>
+                <div class="sol-box">
+                    <div class="sol-title">Step 2: Decryption Process</div>
                     <div class="sol-explain">${getCipherExpl(cipher, key, true)}</div>
                     <div class="tscroll">${decTable(orig, cipherText, cipher, key)}</div>
                 </div>
-                <div class="sol-box" style="border-color:rgba(16,185,129,0.3);">
-                    <div class="sol-title" style="color:var(--green-light);">4, Recovered Plaintext</div>
-                    <div style="color:#fff;font-size:15px;font-weight:bold;font-family:var(--mono);">${orig}</div>
+                <div class="sol-box">
+                    <div class="sol-title">Step 3: Recovered Plaintext</div>
+                    <div style="color:var(--text-hi);font-size:14px;font-weight:600;font-family:var(--mono);padding:4px 0;">${orig}</div>
                 </div>
             `;
         }
@@ -452,25 +452,25 @@
     }
 
     // -- Guide tab helpers ----------------------------------------
-    const m = s => `<code style="font-family:var(--mono);background:rgba(0,0,0,0.4);padding:2px 6px;border-radius:3px;font-size:10px;">${s}</code>`;
+    const m = s => `<code style="font-family:var(--mono);background:var(--bg-3);padding:2px 6px;border-radius:var(--radius-sm);font-size:11px;border:1px solid var(--border);">${s}</code>`;
     function getCipherExpl(type, key, dec) {
         if (type === 'caesar') {
             const s = parseInt(key) || 0;
-            return dec ? `Each ciphertext letter is shifted <strong>${s}</strong> positions backward. ${m('P=(C−' + s + '+26) mod 26')}` : `Each letter is shifted <strong>${s}</strong> positions forward. ${m('C=(P+' + s + ') mod 26')}`;
+            return dec ? `Each ciphertext letter is shifted <strong>${s}</strong> positions backward. ${m('P = (C - ' + s + ' + 26) mod 26')}` : `Each letter is shifted <strong>${s}</strong> positions forward. ${m('C = (P + ' + s + ') mod 26')}`;
         } else if (type === 'affine') {
             const a = key[0], b = key[1], invA = modInverse26(a);
             return dec ? `Multiply by modular inverse of ${a} (${invA}) and subtract ${b}. ${m('P = ' + invA + ' * (C - ' + b + ') mod 26')}` : `Multiply plaintext value by ${a} and add ${b}. ${m('C = (' + a + ' * P + ' + b + ') mod 26')}`;
         } else if (type === 'vigenere') {
             const k = String(key).toUpperCase();
-            return dec ? `Subtract each keyword letter of <strong>"${k}"</strong> from the ciphertext. ${m('P[i]=(C[i]−K[i mod ' + k.length + ']+26) mod 26')}` : `Pair each letter with keyword <strong>"${k}"</strong>. ${m('C[i]=(P[i]+K[i mod ' + k.length + ']) mod 26')}`;
+            return dec ? `Subtract each keyword letter of <strong>"${k}"</strong> from the ciphertext. ${m('P[i] = (C[i] - K[i mod ' + k.length + '] + 26) mod 26')}` : `Pair each letter with keyword <strong>"${k}"</strong>. ${m('C[i] = (P[i] + K[i mod ' + k.length + ']) mod 26')}`;
         } else if (type === 'hill') {
-            if (!key) return `Matrix is singular ,  cannot encrypt. Ensure the matrix determinant is non-zero (mod 97).`;
+            if (!key) return `Matrix is singular - cannot encrypt. Ensure the matrix determinant is non-zero (mod 97).`;
             const n = Array.isArray(key) ? key.length : 2;
-            return dec ? `Multiply ciphertext blocks by the <strong>inverse matrix K⁻¹</strong> mod 26. ${m('[P]=[C]×K⁻¹ (mod 26)')}` : `Multiply plaintext blocks of ${n} by the <strong>key matrix K</strong> mod 26. ${m('[C]=[P]×K (mod 26)')}`;
+            return dec ? `Multiply ciphertext blocks by the <strong>inverse matrix K⁻¹</strong> mod 26. ${m('[P] = [C] * K⁻¹ (mod 26)')}` : `Multiply plaintext blocks of ${n} by the <strong>key matrix K</strong> mod 26. ${m('[C] = [P] * K (mod 26)')}`;
         } else if (type === 'aes') {
-            return dec ? `AES applies 14 inverse rounds: <strong>InvShiftRows→InvSubBytes→AddRoundKey→InvMixColumns</strong>. Without the 256-bit key, recovery is infeasible.` : `AES-256 expands the key into 14 round sub-keys. Each round: <strong>SubBytes, ShiftRows, MixColumns, AddRoundKey</strong>.`;
+            return dec ? `AES applies 14 inverse rounds: <strong>InvShiftRows -> InvSubBytes -> AddRoundKey -> InvMixColumns</strong>. Without the 256-bit key, recovery is infeasible.` : `AES-256 expands the key into 14 round sub-keys. Each round: <strong>SubBytes, ShiftRows, MixColumns, AddRoundKey</strong>.`;
         } else if (type === 'quantum') {
-            return dec ? `Decryption uses the agreed-upon basis sift. Any eavesdropper introduces ~25% error, alerting the parties.` : `BB84 transmits each bit as a polarized photon in a randomly chosen basis (+/×). Matching bases form the shared key.`;
+            return dec ? `Decryption uses the agreed-upon basis sift. Any eavesdropper introduces ~25% error, alerting the parties.` : `BB84 transmits each bit as a polarized photon in a randomly chosen basis (+/x). Matching bases form the shared key.`;
         }
         return '';
     }
@@ -493,10 +493,10 @@
             for (let i = 0; i < Math.min(pC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, pv = pC[i].charCodeAt(0) - 65, cv = (pv + kv) % 26; rows.push(`<tr><td style="color:#fff;">${pC[i]}(${pv})</td><td class="op-cell">+${kc}(${kv})=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
             return buildTable(rows, ['PLAIN', 'KEY+SHIFT', 'CIPHER']);
         } else if (type === 'hill') {
-            if (!key || !Array.isArray(key)) return `<div style="color:var(--muted);padding:10px;font-size:11px;">Matrix is invalid ,  cannot display encryption process.</div>`;
+            if (!key || !Array.isArray(key)) return `<div style="color:var(--muted);padding:10px;font-size:11px;">Matrix is invalid - cannot display encryption process.</div>`;
             const n = key.length;
-            for (let i = 0; i < pC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${pC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">×Key mod 26</td><td class="enc-cell">[${cC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
-            return buildTable(rows, [`PLAIN(×${n})`, 'OP', `CIPHER(×${n})`]);
+            for (let i = 0; i < pC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${pC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
+            return buildTable(rows, [`PLAIN(x${n})`, 'OP', `CIPHER(x${n})`]);
         }
         return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">[Block-level cipher, character trace not applicable]</div>`;
     }
@@ -504,7 +504,7 @@
         let rows = [], pC = plain.replace(/[^a-zA-Z]/g, '').toUpperCase(), cC = cipher.replace(/[^a-zA-Z]/g, '').toUpperCase(), L = 18;
         if (type === 'caesar') {
             const s = parseInt(key) || 0;
-            for (let i = 0; i < Math.min(cC.length, L); i++) { const cv = cC[i].charCodeAt(0) - 65, pv = ((cv - s) % 26 + 26) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">(${cv}−${s}+26) mod 26=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
+            for (let i = 0; i < Math.min(cC.length, L); i++) { const cv = cC[i].charCodeAt(0) - 65, pv = ((cv - s) % 26 + 26) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">(${cv}-${s}+26) mod 26=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
             return buildTable(rows, ['CIPHER', 'REVERSE', 'PLAIN']);
         } else if (type === 'affine') {
             const a = key[0], b = key[1], invA = modInverse26(a);
@@ -512,13 +512,13 @@
             return buildTable(rows, ['CIPHER', 'REVERSE', 'PLAIN']);
         } else if (type === 'vigenere') {
             const k = String(key).toUpperCase();
-            for (let i = 0; i < Math.min(cC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, cv = cC[i].charCodeAt(0) - 65, pv = ((cv - kv) % 26 + 26) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">−${kc}(${kv})=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
-            return buildTable(rows, ['CIPHER', 'KEY−SHIFT', 'PLAIN']);
+            for (let i = 0; i < Math.min(cC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, cv = cC[i].charCodeAt(0) - 65, pv = ((cv - kv) % 26 + 26) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">-${kc}(${kv})=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
+            return buildTable(rows, ['CIPHER', 'KEY-SHIFT', 'PLAIN']);
         } else if (type === 'hill') {
-            if (!key || !Array.isArray(key)) return `<div style="color:var(--muted);padding:10px;font-size:11px;">Matrix is invalid ,  cannot display decryption process.</div>`;
+            if (!key || !Array.isArray(key)) return `<div style="color:var(--muted);padding:10px;font-size:11px;">Matrix is invalid - cannot display decryption process.</div>`;
             const n = key.length;
-            for (let i = 0; i < cC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${cC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">×K⁻¹ mod 26</td><td class="hi-cell">[${pC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
-            return buildTable(rows, [`CIPHER(×${n})`, 'INV MATRIX', `PLAIN(×${n})`]);
+            for (let i = 0; i < cC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${cC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* K⁻¹ mod 26</td><td class="hi-cell">[${pC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
+            return buildTable(rows, [`CIPHER(x${n})`, 'INV MATRIX', `PLAIN(x${n})`]);
         }
         return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">[Block-level, requires key for reversal]</div>`;
     }

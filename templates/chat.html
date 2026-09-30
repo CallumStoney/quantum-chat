@@ -4,14 +4,13 @@
 <div class="chat-page">
     <div class="chat-topbar-ext">
         <div class="room-badge">
-            <span style="color:var(--muted);font-size:13px;font-weight:600;">Room</span>
+            <span class="room-badge-live">Live</span>
             <div style="display:flex;align-items:center;gap:8px;">
                 <span class="room-code-display">{{ room_code }}</span>
                 <button class="btn-copy-room" onclick="copyRoomCode(this)" data-code="{{ room_code }}" title="Copy room code">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M8 17c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
-                        <path d="M16 4c1.657 0 3 1.343 3 3v5m0 7v1c0 1.657-1.343 3-3 3h-7c-1.657 0-3-1.343-3-3v-7m10-10h-7c-1.657 0-3 1.343-3 3v5"/>
-                        <rect x="9" y="9" width="7" height="7" rx="0"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                     </svg>
                 </button>
             </div>
@@ -20,22 +19,18 @@
     <div class="chat-body">
 
         <div class="chat-col" id="chat-col">
-            <div class="room-quick-guide" id="welcome-guide" style="position:relative;">
-                <button class="btn-close-guide" onclick="closeWelcomeGuide()" title="Close guide" style="position:absolute;top:8px;right:8px;background:none;border:none;color:var(--muted-2);cursor:pointer;font-size:18px;padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;">
-                    ✕
-                </button>
-                <strong>Welcome to the Secure Room!</strong><br>
-                <span style="color:var(--muted-2);">1. Select a cipher on the right and configure its key.<br>
-                    2. Type a message - it will be encrypted locally before sending.<br>
-                    3. Click the inspector icon next to any sent message to reveal its mathematical secrets.</span>
+            <div class="room-quick-guide" id="welcome-guide" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:8px 8px 0;padding:8px 12px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text-dim);line-height:1.4;">
+                <div>
+                    <span style="font-weight:600;color:var(--text-hi);">Session Connected:</span> Configure your cipher in the right inspector pane. Payloads are encrypted locally before transmission. Click the search icon on any message to inspect its character trace.
+                </div>
+                <button class="btn-close-guide" onclick="closeWelcomeGuide()" title="Dismiss" style="background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:12px;padding:0;line-height:1;flex-shrink:0;">✕</button>
             </div>
 
             {% include 'chat/host_panel.html' %}
 
             <div id="chat-box" class="chat-log"></div>
             <div class="chat-send-row">
-                <input type="text" id="msg-input" class="chat-input" placeholder="Type an encrypted message..."
-                    autofocus>
+                <input type="text" id="msg-input" class="chat-input" placeholder="Type a message to encrypt and send..." autofocus>
                 <button onclick="sendMessage()" class="btn-send">Send</button>
             </div>
         </div>
@@ -47,18 +42,14 @@
 
             <div class="enc-panel-bottom">
                 <div id="sel-details" class="tabs-wrap">
-                    <div
-                        style="background:rgba(0,0,0,0.35);padding:10px 12px;border-radius:7px;border:1px solid var(--border);margin-bottom:10px;flex-shrink:0;">
-                        <div
-                            style="color:var(--muted);font-size:9px;margin-bottom:5px;font-weight:800;letter-spacing:1px;">
-                            CIPHERTEXT PREVIEW</div>
-                        <div id="sel-payload"
-                            style="color:#fff;font-family:var(--mono);word-break:break-all;font-size:13px;">HELLO WORLD
-                        </div>
+                    <div style="background:var(--bg-3);padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:10px;flex-shrink:0;">
+                        <div style="color:var(--text-faint);font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">
+                            Ciphertext Preview</div>
+                        <div id="sel-payload" style="color:var(--blue-light);font-family:var(--mono);word-break:break-all;font-size:13px;">HELLO WORLD</div>
                     </div>
                     <div class="tabs-nav" style="flex-shrink:0;">
-                        <button class="tab-btn active" onclick="switchTab('guide',event)">Guide / Info</button>
-                        <button class="tab-btn" onclick="switchTab('steps',event)">Step by Step</button>
+                        <button class="tab-btn active" onclick="switchTab('guide',event)">Guide & Info</button>
+                        <button class="tab-btn" onclick="switchTab('steps',event)">Step-by-Step</button>
                         <button class="tab-btn" onclick="switchTab('decrypt',event)">Decrypt Tools</button>
                     </div>
 

@@ -10,33 +10,33 @@
                             <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">How the Shift Works</h4>
                             <p style="margin-top:0;">Imagine the alphabet written on a wheel. If your shift key is <strong>3</strong>, you spin the wheel forward by 3 spaces. 'A' becomes 'D', 'B' becomes 'E', and so on. When you reach the end of the alphabet, it simply wraps back around to the beginning, so 'X' becomes 'A', 'Y' becomes 'B', and 'Z' becomes 'C'.</p>
 
-                            <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">The Math</h4>
-                            <p style="margin-top:0;">Mathematically, this is expressed using modular arithmetic: <code style="font-family:var(--mono);background:rgba(0,0,0,0.4);padding:2px 6px;border-radius:3px;">C = (P + shift) mod 26</code>. The "mod 26" is the mathematical mechanism that handles the looping of the 26 letters. To decrypt, we simply reverse the process: <code style="font-family:var(--mono);background:rgba(0,0,0,0.4);padding:2px 6px;border-radius:3px;">P = (C − shift + 26) mod 26</code>.</p>
+                            <h4 style="color:var(--text-hi);font-size:11px;margin:12px 0 4px 0;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--mono);font-weight:600;">The Math</h4>
+                            <p style="margin-top:0;">Mathematically, this is expressed using modular arithmetic: <code style="font-family:var(--mono);background:var(--bg-3);padding:2px 6px;border-radius:var(--radius-sm);border:1px solid var(--border);">C = (P + shift) mod 26</code>. The "mod 26" is the mathematical mechanism that handles the looping of the 26 letters. To decrypt, we simply reverse the process: <code style="font-family:var(--mono);background:var(--bg-3);padding:2px 6px;border-radius:var(--radius-sm);border:1px solid var(--border);">P = (C - shift + 26) mod 26</code>.</p>
 
-                            <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">Weakness</h4>
+                            <h4 style="color:var(--text-hi);font-size:11px;margin:12px 0 4px 0;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--mono);font-weight:600;">Weakness</h4>
                             <p style="margin-top:0;">The Caesar cipher has only <strong>25 possible keys</strong>, making it extremely vulnerable to brute force attacks. An attacker can simply try all 25 shifts and find the correct one in seconds. It is also trivially broken by frequency analysis, since the letter distribution in English is well-known, the most common ciphertext letter likely maps to 'E'.</p>
                         </div>
 
                         <div id="hist-affine" class="history-block" style="display:none;">
-                            <h3 style="color:#fff;margin:0 0 8px 0;font-size:16px;font-weight:800;">The Affine Cipher</h3>
+                            <h3 style="color:#fff;margin:0 0 8px 0;font-size:15px;font-weight:700;">The Affine Cipher</h3>
                             <p style="margin-top:0;">The Affine cipher is a type of monoalphabetic substitution cipher, where each letter in an alphabet is mapped to its numeric equivalent, encrypted using a simple mathematical function, and converted back to a letter. It generalizes the Caesar cipher by adding a multiplication step before the shift.</p>
 
-                            <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">The Math</h4>
-                            <p style="margin-top:0;">The encryption function is <code style="font-family:var(--mono);background:rgba(0,0,0,0.4);padding:2px 6px;border-radius:3px;">E(x) = (A × x + B) mod 26</code>. The multiplier 'A' must be coprime with 26 for the cipher to be reversible. Valid values for A are: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.</p>
+                            <h4 style="color:var(--text-hi);font-size:11px;margin:12px 0 4px 0;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--mono);font-weight:600;">The Math</h4>
+                            <p style="margin-top:0;">The encryption function is <code style="font-family:var(--mono);background:var(--bg-3);padding:2px 6px;border-radius:var(--radius-sm);border:1px solid var(--border);">E(x) = (A * x + B) mod 26</code>. The multiplier 'A' must be coprime with 26 for the cipher to be reversible. Valid values for A are: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.</p>
 
-                            <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">Why Coprime?</h4>
+                            <h4 style="color:var(--text-hi);font-size:11px;margin:12px 0 4px 0;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--mono);font-weight:600;">Why Coprime?</h4>
                             <p style="margin-top:0;">If A shares a common factor with 26, multiple plaintext letters would map to the same ciphertext letter, making decryption impossible. The coprime requirement ensures a one-to-one mapping.</p>
 
-                            <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">Decryption</h4>
-                            <p style="margin-top:0;">The decryption formula is <code style="font-family:var(--mono);background:rgba(0,0,0,0.4);padding:2px 6px;border-radius:3px;">D(y) = A⁻¹ × (y − B) mod 26</code>, where A⁻¹ is the modular multiplicative inverse of A modulo 26. For example, if A = 5, then A⁻¹ = 21, because (5 × 21) mod 26 = 1.</p>
+                            <h4 style="color:var(--text-hi);font-size:11px;margin:12px 0 4px 0;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--mono);font-weight:600;">Decryption</h4>
+                            <p style="margin-top:0;">The decryption formula is <code style="font-family:var(--mono);background:var(--bg-3);padding:2px 6px;border-radius:var(--radius-sm);border:1px solid var(--border);">D(y) = A⁻¹ * (y - B) mod 26</code>, where A⁻¹ is the modular multiplicative inverse of A modulo 26. For example, if A = 5, then A⁻¹ = 21, because (5 * 21) mod 26 = 1.</p>
                         </div>
 
                         <div id="hist-hill" class="history-block" style="display:none;">
-                            <h3 style="color:#fff;margin:0 0 8px 0;font-size:16px;font-weight:800;">Lester S. Hill's Matrix Cipher</h3>
+                            <h3 style="color:#fff;margin:0 0 8px 0;font-size:15px;font-weight:700;">Lester S. Hill's Matrix Cipher</h3>
                             <p style="margin-top:0;">Invented in 1929, the Hill cipher was the first polygraphic substitution cipher based on linear algebra. Instead of encrypting one letter at a time, it encrypts groups of letters simultaneously using matrix multiplication, a revolutionary concept for its time.</p>
 
-                            <h4 style="color:var(--purple-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">How It Works</h4>
-                            <p style="margin-top:0;">Letters are converted to numbers (A=0, B=1, …, Z=25) and grouped into blocks matching the matrix size. Each block is multiplied by the <strong>Key Matrix</strong>, and the results are taken modulo 26 to produce ciphertext letters. A 2×2 matrix encrypts pairs, a 3×3 encrypts triplets, and so on.</p>
+                            <h4 style="color:var(--text-hi);font-size:11px;margin:12px 0 4px 0;letter-spacing:0.04em;text-transform:uppercase;font-family:var(--mono);font-weight:600;">How It Works</h4>
+                            <p style="margin-top:0;">Letters are converted to numbers (A=0, B=1, ..., Z=25) and grouped into blocks matching the matrix size. Each block is multiplied by the <strong>Key Matrix</strong>, and the results are taken modulo 26 to produce ciphertext letters. A 2x2 matrix encrypts pairs, a 3x3 encrypts triplets, and so on.</p>
 
                             <h4 style="color:var(--purple-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">What is a Determinant?</h4>
                             <p style="margin-top:0;">The <strong>determinant</strong> is a special number calculated directly from the Key Matrix. Think of the determinant as the matrix's gatekeeper, it tells us crucial information about whether the encryption can actually be reversed (decrypted).</p>
@@ -59,10 +59,10 @@
                             <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">The 14 Rounds</h4>
                             <p style="margin-top:0;">AES-256 processes data through <strong>14 rounds of transformation</strong>. Each round applies four operations to a 4×4 byte state matrix:</p>
                             <ol style="margin-top:0.5rem;padding-left:1rem;color:var(--muted-2);">
-                                <li style="margin-bottom:0.25rem;"><strong>SubBytes</strong>, Non-linear byte substitution using an S-Box lookup table</li>
-                                <li style="margin-bottom:0.25rem;"><strong>ShiftRows</strong>, Cyclic left-shift of each row by different offsets</li>
-                                <li style="margin-bottom:0.25rem;"><strong>MixColumns</strong>, Matrix multiplication in the Galois field GF(2⁸)</li>
-                                <li><strong>AddRoundKey</strong>, XOR the state with the round's sub-key</li>
+                                <li style="margin-bottom:0.25rem;"><strong>SubBytes</strong>: Non-linear byte substitution using an S-Box lookup table</li>
+                                <li style="margin-bottom:0.25rem;"><strong>ShiftRows</strong>: Cyclic left-shift of each row by different offsets</li>
+                                <li style="margin-bottom:0.25rem;"><strong>MixColumns</strong>: Matrix multiplication in the Galois field GF(2⁸)</li>
+                                <li><strong>AddRoundKey</strong>: XOR the state with the round's sub-key</li>
                             </ol>
                             <p style="margin-top:0.5rem;">The combination of these operations creates a powerful <strong>avalanche effect</strong>: changing a single input bit affects every bit of the output. AES is considered impenetrable by classical brute force.</p>
                         </div>
@@ -90,7 +90,7 @@
                             <p style="margin-top:0;">This is the core quantum principle that makes BB84 secure: <strong>measuring a quantum state alters it</strong>. If an eavesdropper (Eve) tries to intercept photons, she must measure them, but if she guesses the wrong basis, she irreversibly changes the photon's state. This introduces detectable errors.</p>
 
                             <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">The Sifting Process</h4>
-                            <p style="margin-top:0;">After transmission, Alice and Bob publicly compare which bases they used (but not the bit values). They keep only the bits where their bases matched, this is the <strong>sifted key</strong>. Roughly 50% of bits survive sifting.</p>
+                            <p style="margin-top:0;">After transmission, Alice and Bob publicly compare which bases they used (but not the bit values). They keep only the bits where their bases matched (the sifted key). Roughly 50% of bits survive sifting.</p>
 
                             <h4 style="color:var(--blue-light);font-size:12px;margin:12px 0 4px 0;letter-spacing:1px;text-transform:uppercase;">Eavesdrop Detection</h4>
                             <p style="margin-top:0;">Alice and Bob sacrifice a portion of their sifted key to check for errors. In a clean channel, error rate is ~0%. If Eve intercepted, the error rate spikes to ~25%. If errors exceed a threshold, they discard the key and start over.</p>
@@ -100,13 +100,13 @@
                         </div>
 
                         <div id="sol-dynamic" style="display:none;">
-                            <div class="sol-box" style="border-color:rgba(59,130,246,0.3);">
-                                <div class="sol-title" style="color:var(--blue-light);">1, Encryption Process</div>
+                            <div class="sol-box">
+                                <div class="sol-title" style="color:var(--blue-light);">1. Encryption Process</div>
                                 <div id="dyn-enc-explanation" class="sol-explain"></div>
                                 <div id="dyn-enc-steps" class="tscroll"></div>
                             </div>
-                            <div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                                <div class="sol-title" style="color:var(--purple-light);">2, Decryption Process</div>
+                            <div class="sol-box">
+                                <div class="sol-title" style="color:var(--purple-light);">2. Decryption Process</div>
                                 <div id="dyn-dec-explanation" class="sol-explain"></div>
                                 <div id="dyn-dec-steps" class="tscroll"></div>
                             </div>
