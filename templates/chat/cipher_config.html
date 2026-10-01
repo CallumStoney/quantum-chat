@@ -1,14 +1,14 @@
-        <div class="enc-panel">
+        <div class="enc-panel paper-card tape-top-right stamp-mark" data-stamp="Analysis">
             <div class="enc-panel-top" id="enc-top">
                 <div style="margin-bottom:14px;">
-                    <div style="font-size:12px;font-weight:600;color:var(--text-hi);margin-bottom:6px;font-family:var(--sans);">Active Cipher</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--ink);margin-bottom:6px;font-family:var(--font-stamp);letter-spacing:0.04em;text-transform:uppercase;">Active Cipher Specimen</div>
                     <select id="encryption-selector" style="width:100%;">
                         <option value="none">Plaintext (No Encryption)</option>
                         <optgroup label="Classical Primitives">
                             <option value="caesar">Caesar Shift</option>
-                            <option value="affine">Affine Transformation</option>
-                            <option value="hill">Hill Matrix Linear System</option>
-                            <option value="vigenere">Vigen&egrave;re Polyalphabetic</option>
+                            <option value="affine">Affine Cipher</option>
+                            <option value="hill">Hill Matrix Cipher</option>
+                            <option value="vigenere">Vigenère Cipher</option>
                         </optgroup>
                         <optgroup label="Modern & Quantum">
                             <option value="aes">AES-256 Block Cipher</option>
@@ -17,8 +17,8 @@
                     </select>
                 </div>
 
-                <div id="no-cipher-msg" style="color:var(--text-dim);font-style:italic;font-size:12px;margin-bottom:16px;">
-                    No encryption selected. Messages will be sent in plaintext.
+                <div id="no-cipher-msg" style="color:var(--ink-faint);font-style:italic;font-size:12px;margin-bottom:16px;font-family:var(--font-typewriter);">
+                    No encryption selected. Messages will be transmitted in plaintext.
                 </div>
 
                 <!-- Caesar Controls -->
@@ -33,12 +33,12 @@
                     <div class="alpha-strip">
                         <div>
                             <div class="alpha-label">Plaintext</div>
-                            <div class="alpha-letters" style="color:var(--text-hi);">A B C D E</div>
+                            <div class="alpha-letters" style="color:var(--ink);">A B C D E</div>
                         </div>
-                        <div style="color:var(--text-faint);font-size:14px;font-family:var(--font-mono);">:</div>
+                        <div style="color:var(--ink-faint);font-size:14px;font-family:var(--font-typewriter);">&rarr;</div>
                         <div>
                             <div class="alpha-label">Ciphertext</div>
-                            <div id="example-shift" class="alpha-letters" style="color:var(--blue-light);">B C D E F</div>
+                            <div id="example-shift" class="alpha-letters" style="color:var(--blue-ink);font-weight:700;">B C D E F</div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <div style="display:flex; gap:10px; margin-bottom:10px;">
                         <div style="flex:1;">
                             <div class="enc-label" style="margin-bottom:6px;">Multiplier a (Coprime to 26)</div>
-                            <select id="affine-a" style="width:100%; padding:6px 8px; background: var(--bg-inset); border: 1px solid var(--border-md); color: var(--text-hi); font-size: 12px; border-radius: var(--radius-sm); outline: none; cursor: pointer; font-family: inherit;">
+                            <select id="affine-a" style="width:100%; padding:6px 8px; background: rgba(255,255,255,0.85); border: 1.5px solid var(--ink-dim); color: var(--ink); font-size: 12px; border-radius: 1px; outline: none; cursor: pointer; font-family: var(--font-typewriter);">
                                 <option value="1">1</option>
                                 <option value="3">3</option>
                                 <option value="5" selected>5</option>
@@ -71,7 +71,7 @@
                     <div class="alpha-strip">
                         <div>
                             <div class="alpha-label">Formula</div>
-                            <div class="alpha-letters" style="color:var(--blue-light); font-size:12px;">E(x) = (a &middot; x + b) mod 26</div>
+                            <div class="alpha-letters" style="color:var(--blue-ink); font-size:12px; font-weight:700;">E(x) = (a &middot; x + b) mod 26</div>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                         </div>
                         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
                             <div id="hill-grid-picker"></div>
-                            <span style="color:var(--text-faint);font-size:10px;font-family:var(--sans);">select size</span>
+                            <span style="color:var(--ink-faint);font-size:10px;font-family:var(--font-typewriter);">select size</span>
                         </div>
                     </div>
                     <div id="hill-matrix-container"></div>
@@ -96,7 +96,7 @@
 
                 <!-- Text Key Controls (Vigenère / AES / Quantum) -->
                 <div id="text-key-controls" class="enc-param-wrapper" style="display:none;">
-                    <div class="enc-label">Key / Password</div>
+                    <div class="enc-label">Key / Secret Passphrase</div>
                     <div class="key-input-wrap">
                         <input type="text" id="text-key-input" class="chat-input key-inp" value="SECRET"
                             style="width:100%;" oninput="updateKeyMeta()">
@@ -107,9 +107,9 @@
                     </div>
                 </div>
 
-                <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:8px;">
-                    <div class="enc-label" style="margin-bottom:6px;">Live Test Message</div>
+                <div style="border-top:1.5px dashed var(--ink-faint); padding-top:14px; margin-top:8px;">
+                    <div class="enc-label" style="margin-bottom:6px;">Specimen Message (Live Test)</div>
                     <textarea id="example-msg-input" class="chat-input" style="width:100%; height:55px; resize:none;"
-                        placeholder="Type a sample message to preview encryption...">ORBITAL TELEMETRY LINK ESTABLISHED</textarea>
+                        placeholder="Type a sample message to preview encryption...">the quick brown fox jumps over the lazy dog</textarea>
                 </div>
             </div>

@@ -1,59 +1,56 @@
-            {% if is_host %}
-            <div class="host-panel"
-                style="margin: 8px 12px 0; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--border-md); border-radius: var(--radius-sm); flex-shrink: 0;">
-                
-                <!-- Top Row: Title and Collapse Toggle -->
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 10px; gap: 8px;">
-                    <div style="font-size: 12px; font-weight: 600; color: var(--blue-light); display: flex; align-items: center; gap: 6px;">
-                        Room Settings (Host Controls)
-                    </div>
-                    <button id="host-controls-toggle" onclick="toggleHostControls()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;" title="Toggle controls">
-                        &#9660;
-                    </button>
-                </div>
+{% if is_host %}
+<div class="host-panel">
+    
+    <!-- Top Row: Title and Collapse Toggle -->
+    <div class="host-panel-head">
+        <div class="host-panel-title">
+            Room Authority (Host Controls)
+        </div>
+        <button id="host-controls-toggle" onclick="toggleHostControls()" class="host-toggle-btn" title="Toggle controls">
+            &#9660;
+        </button>
+    </div>
 
-                <!-- Collapsible Content -->
-                <div id="host-controls-content" style="display:block;overflow:hidden;">
-                    <!-- Bold Message Toggle -->
-                    <label style="font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; margin-bottom: 10px; cursor: pointer; font-family: var(--sans);">
-                        <input type="checkbox" id="host-bold"> Make my messages bold
-                    </label>
+    <!-- Collapsible Content -->
+    <div id="host-controls-content" style="display:block;overflow:hidden;">
+        <!-- Bold Message Toggle -->
+        <label class="host-bold-label">
+            <input type="checkbox" id="host-bold"> Emphasize host transmissions (Bold)
+        </label>
 
-                    <!-- Middle Row: Global Settings -->
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px;">
-                        <select id="host-force-cipher"
-                            onchange="socket.emit('host_action', {room, action: 'force_cipher', cipher: this.value})">
-                            <option value="">Cipher Policy: Free Selection</option>
-                            <option value="none">Lock Room: Plaintext</option>
-                            <optgroup label="Classical Primitives">
-                                <option value="caesar">Lock Room: Caesar Shift</option>
-                                <option value="affine">Lock Room: Affine Cipher</option>
-                                <option value="hill">Lock Room: Hill Matrix</option>
-                                <option value="vigenere">Lock Room: Vigen&egrave;re</option>
-                            </optgroup>
-                            <optgroup label="Modern & Quantum">
-                                <option value="aes">Lock Room: AES-256</option>
-                                <option value="quantum">Lock Room: BB84 Quantum</option>
-                            </optgroup>
-                        </select>
+        <!-- Middle Row: Global Settings -->
+        <div class="host-controls-row">
+            <select id="host-force-cipher"
+                onchange="socket.emit('host_action', {room, action: 'force_cipher', cipher: this.value})">
+                <option value="">Cipher Policy: Free Selection</option>
+                <option value="none">Lock Room: Plaintext</option>
+                <optgroup label="Classical Primitives">
+                    <option value="caesar">Lock Room: Caesar Shift</option>
+                    <option value="affine">Lock Room: Affine Cipher</option>
+                    <option value="hill">Lock Room: Hill Matrix Cipher</option>
+                    <option value="vigenere">Lock Room: Vigenère Cipher</option>
+                </optgroup>
+                <optgroup label="Modern & Quantum">
+                    <option value="aes">Lock Room: AES-256</option>
+                    <option value="quantum">Lock Room: BB84 Quantum</option>
+                </optgroup>
+            </select>
 
-                        <button class="ctrl-btn" style="border-color: var(--border-md); color: var(--text); flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'toggle_global_mute'})">Mute All Participants</button>
-                    </div>
+            <button class="ctrl-btn"
+                onclick="socket.emit('host_action', {room, action: 'toggle_global_mute'})">Mute All Participants</button>
+        </div>
 
-                    <!-- Bottom Row: User Management -->
-                    <div style="display: flex; gap: 6px; align-items: center; background: var(--bg-inset); padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); flex-wrap: wrap;">
-                        <input type="text" id="host-target" class="chat-input" placeholder="Username"
-                            style="flex: 1; min-width: 100px; padding: 5px 8px; font-size: 12px; border-radius: var(--radius-xs);">
-                        <button class="ctrl-btn" style="flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'kick', target: document.getElementById('host-target').value})">Kick</button>
-                        <button class="ctrl-btn" style="flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'toggle_user_mute', target: document.getElementById('host-target').value})">Mute/Unmute</button>
-                        <input type="text" id="host-rename" class="chat-input" placeholder="New name"
-                            style="flex: 1; min-width: 80px; padding: 5px 8px; font-size: 12px; border-radius: var(--radius-xs);">
-                        <button class="ctrl-btn" style="flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'rename', target: document.getElementById('host-target').value, new_name: document.getElementById('host-rename').value})">Rename</button>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+        <!-- Bottom Row: User Management -->
+        <div class="host-user-row">
+            <input type="text" id="host-target" class="chat-input host-input" placeholder="Target user">
+            <button class="ctrl-btn"
+                onclick="socket.emit('host_action', {room, action: 'kick', target: document.getElementById('host-target').value})">Kick</button>
+            <button class="ctrl-btn"
+                onclick="socket.emit('host_action', {room, action: 'toggle_user_mute', target: document.getElementById('host-target').value})">Mute/Unmute</button>
+            <input type="text" id="host-rename" class="chat-input host-input" placeholder="New name">
+            <button class="ctrl-btn"
+                onclick="socket.emit('host_action', {room, action: 'rename', target: document.getElementById('host-target').value, new_name: document.getElementById('host-rename').value})">Rename</button>
+        </div>
+    </div>
+</div>
+{% endif %}

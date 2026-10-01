@@ -3,8 +3,8 @@
 {% block content %}
 <style>
     .lobby-wrapper {
-        min-height: calc(100vh - 52px);
-        padding: 48px 24px 72px;
+        min-height: calc(100vh - 48px);
+        padding: 68px 24px 72px;
         background: transparent;
         position: relative;
     }
@@ -35,37 +35,37 @@
 
     /* Left: Session Gateway Terminal */
     .lobby-card {
-        background: linear-gradient(180deg, rgba(20, 26, 38, 0.9) 0%, rgba(13, 17, 25, 0.96) 100%);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--border);
-        border-top: 1px solid rgba(255, 255, 255, 0.09);
-        border-radius: var(--radius-sm);
+        background: var(--paper);
+        border: none;
+        border-radius: 0;
         padding: 28px;
-        box-shadow: 0 10px 32px -4px rgba(0, 0, 0, 0.55);
+        box-shadow: 2px 3px 8px rgba(0,0,0,0.15), inset 0 0 40px rgba(0,0,0,0.03);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        color: var(--ink);
+        position: relative;
+        transform: rotate(-0.7deg);
     }
 
     .lobby-header {
         margin-bottom: 22px;
         padding-bottom: 16px;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1.5px dashed var(--ink-faint);
     }
 
     .lobby-title {
-        font-family: var(--font-display);
+        font-family: var(--font-stamp);
         font-size: 22px;
         font-weight: 700;
         letter-spacing: -0.02em;
-        color: var(--text-hi);
+        color: var(--ink);
         margin: 0 0 6px 0;
     }
 
     .lobby-desc {
         font-size: 13px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
         margin: 0;
         line-height: 1.55;
     }
@@ -73,9 +73,10 @@
     /* Mode Segmented Controls */
     .session-mode-switch {
         display: flex;
-        background: var(--bg-inset);
-        border: 1px solid var(--border-md);
-        border-radius: var(--radius-xs);
+        background: rgba(255,255,255,0.3);
+        border: none;
+        border-bottom: 1.5px solid var(--ink-faint);
+        border-radius: 0;
         padding: 3px;
         margin-bottom: 20px;
         gap: 3px;
@@ -84,10 +85,10 @@
     .mode-tab-btn {
         flex: 1;
         padding: 7px 12px;
-        font-family: var(--font-display);
+        font-family: var(--font-typewriter);
         font-size: 12px;
         font-weight: 600;
-        color: var(--text-dim);
+        color: var(--ink-dim);
         background: transparent;
         border: none;
         border-radius: var(--radius-xs);
@@ -96,12 +97,12 @@
         text-align: center;
     }
     .mode-tab-btn:hover {
-        color: var(--text-hi);
+        color: var(--ink);
     }
     .mode-tab-btn.active {
-        background: var(--bg-3);
-        color: var(--text-hi);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 3px rgba(0, 0, 0, 0.3);
+        background: rgba(255,255,255,0.5);
+        color: var(--ink);
+        border-bottom: 2px solid var(--stamp-red);
     }
 
     .field-group {
@@ -112,38 +113,39 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-family: var(--font-display);
+        font-family: var(--font-typewriter);
         font-size: 12px;
         font-weight: 600;
-        color: var(--text-hi);
+        color: var(--ink);
         margin-bottom: 6px;
     }
 
     .field-sublabel {
         font-family: var(--font-mono);
         font-size: 10px;
-        color: var(--text-faint);
+        color: var(--ink-faint);
         font-weight: 400;
     }
 
     .text-input {
         width: 100%;
         padding: 9px 12px;
-        background: var(--bg-inset);
-        border: 1px solid var(--border-md);
-        color: var(--text-hi);
-        font-family: var(--sans);
+        background: rgba(255,255,255,0.5);
+        border: none;
+        border-bottom: 1.5px solid var(--ink-dim);
+        color: var(--ink);
+        font-family: var(--font-typewriter);
         font-size: 13px;
-        border-radius: var(--radius-xs);
+        border-radius: 0;
         outline: none;
-        transition: border-color 0.15s, box-shadow 0.15s;
+        transition: border-color 0.15s;
     }
     .text-input:focus {
-        border-color: var(--blue-light);
-        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+        border-bottom-color: var(--blue-ink);
     }
     .text-input::placeholder {
-        color: var(--text-faint);
+        color: var(--ink-faint);
+        font-style: italic;
     }
 
     .code-input-field {
@@ -181,23 +183,23 @@
     .lobby-foot {
         margin-top: 24px;
         padding-top: 16px;
-        border-top: 1px solid var(--border);
+        border-top: 1px dashed var(--ink-faint);
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 11.5px;
-        color: var(--text-faint);
-        font-family: var(--sans);
+        color: var(--ink-faint);
+        font-family: var(--font-typewriter);
     }
 
     .lobby-foot a {
-        color: var(--text-dim);
+        color: var(--blue-ink);
         text-decoration: none;
-        font-family: var(--font-display);
+        font-family: var(--font-typewriter);
         font-weight: 500;
     }
     .lobby-foot a:hover {
-        color: var(--text-hi);
+        color: var(--ink);
     }
 
     /* Right: Telemetry & Network Monitor Column */
@@ -208,12 +210,13 @@
     }
 
     .monitor-card {
-        background: linear-gradient(180deg, rgba(17, 23, 34, 0.8) 0%, rgba(10, 14, 21, 0.9) 100%);
-        border: 1px solid var(--border);
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: var(--radius-sm);
+        background: var(--paper-aged);
+        border: none;
+        border-radius: 0;
         padding: 20px;
-        backdrop-filter: blur(12px);
+        box-shadow: 1px 2px 5px rgba(0,0,0,0.1);
+        color: var(--ink);
+        position: relative;
     }
 
     .monitor-head {
@@ -222,14 +225,14 @@
         align-items: center;
         margin-bottom: 14px;
         padding-bottom: 10px;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px dashed var(--ink-faint);
     }
 
     .monitor-title {
-        font-family: var(--font-display);
+        font-family: var(--font-stamp);
         font-size: 13.5px;
         font-weight: 600;
-        color: var(--text-hi);
+        color: var(--ink);
         margin: 0;
         display: flex;
         align-items: center;
@@ -239,21 +242,23 @@
     .monitor-badge {
         font-family: var(--font-mono);
         font-size: 10px;
-        color: var(--blue-light);
-        background: rgba(2, 132, 199, 0.1);
+        color: var(--blue-ink);
+        background: transparent;
+        border: 1px solid var(--ink-faint);
         padding: 2px 6px;
         border-radius: 2px;
     }
 
     /* Live Stream Log */
     .stream-feed {
-        background: var(--bg-inset);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xs);
+        background: rgba(255,255,255,0.2);
+        border: none;
+        border-left: 2px solid var(--ink-faint);
+        border-radius: 0;
         padding: 12px;
-        font-family: var(--font-mono);
+        font-family: var(--font-typewriter);
         font-size: 11px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
         line-height: 1.6;
         display: flex;
         flex-direction: column;
@@ -266,17 +271,18 @@
     }
 
     .feed-tag {
-        color: var(--blue-light);
+        color: var(--stamp-red);
+        font-weight: 700;
         flex-shrink: 0;
     }
 
     .feed-text {
-        color: var(--text);
+        color: var(--ink-dim);
         word-break: break-all;
     }
 
     .feed-accent {
-        color: var(--green-light);
+        color: var(--blue-ink);
     }
 
     /* Diagram Card */
@@ -285,9 +291,9 @@
         align-items: center;
         justify-content: space-between;
         padding: 14px 10px;
-        background: var(--bg-inset);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xs);
+        background: rgba(255,255,255,0.2);
+        border: none;
+        border-radius: 0;
         margin-bottom: 14px;
     }
 
@@ -297,29 +303,29 @@
     }
 
     .node-box {
-        background: var(--bg-2);
-        border: 1px solid var(--border-md);
-        border-radius: var(--radius-xs);
+        background: var(--paper);
+        border: 1.5px solid var(--ink-dim);
+        border-radius: 0;
         padding: 6px 8px;
-        font-family: var(--font-mono);
+        font-family: var(--font-typewriter);
         font-size: 11px;
         font-weight: 600;
-        color: var(--text-hi);
+        color: var(--ink);
         display: inline-block;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     }
 
     .node-sub {
         font-size: 10px;
-        color: var(--text-faint);
+        color: var(--ink-faint);
         margin-top: 4px;
-        font-family: var(--sans);
+        font-family: var(--font-typewriter);
     }
 
     .topo-link {
         font-family: var(--font-mono);
         font-size: 10px;
-        color: var(--blue-light);
+        color: var(--ink-dim);
         text-align: center;
         padding: 0 6px;
         flex-shrink: 0;
@@ -332,7 +338,7 @@
     .link-line {
         width: 36px;
         height: 1px;
-        background: var(--border-hi);
+        background: var(--ink-faint);
         position: relative;
     }
     .link-line::after {
@@ -342,8 +348,8 @@
         top: -2px;
         width: 5px;
         height: 5px;
-        border-top: 1px solid var(--border-hi);
-        border-right: 1px solid var(--border-hi);
+        border-top: 1px solid var(--ink-faint);
+        border-right: 1px solid var(--ink-faint);
         transform: rotate(45deg);
     }
 
@@ -352,8 +358,9 @@
         flex-direction: column;
         gap: 8px;
         font-size: 12px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
         line-height: 1.5;
+        font-family: var(--font-typewriter);
     }
 
     .guarantee-item {
@@ -361,9 +368,12 @@
         gap: 8px;
         align-items: flex-start;
     }
+    .guarantee-item strong {
+        color: var(--ink);
+    }
 
     .guarantee-bullet {
-        color: var(--blue-light);
+        color: var(--stamp-red);
         font-family: var(--font-mono);
         flex-shrink: 0;
     }
@@ -376,18 +386,14 @@
 </style>
 
 <div class="lobby-wrapper">
-    <div class="lobby-watermark">
-        0x43 0x48 0x41 0x54 0x5F 0x52 0x4F 0x4F 0x4D 0x53 &bull; SHA-256 // EPHEMERAL
-    </div>
-
     <div class="lobby-container">
         <!-- Left: Gateway Terminal -->
-        <div class="lobby-card">
+        <div class="lobby-card paper-card tape-top stamp-mark anim-paper" data-stamp="Session">
             <div>
                 <div class="lobby-header">
                     <h2 class="lobby-title">Chat Rooms</h2>
                     <p class="lobby-desc">
-                        Initialize a new room session or join an active room with an access code. Cryptographic transformations occur locally in your browser sandbox prior to relay transit.
+                        Create a room or join one with a 4-letter code. Encryption happens in your browser.
                     </p>
                 </div>
 
@@ -413,7 +419,7 @@
                             id="username_input"
                             name="username"
                             class="text-input"
-                            placeholder="e.g. cipher_node"
+                            placeholder="e.g. alice"
                             maxlength="24"
                             required
                             autocomplete="off"
@@ -423,7 +429,7 @@
                     </div>
 
                     <button type="submit" id="btn-host" class="btn-primary btn-submit-action">
-                        Initialize Room Session
+                        Create Room
                     </button>
                 </form>
 
@@ -439,7 +445,7 @@
                             id="join_username_input"
                             name="username"
                             class="text-input"
-                            placeholder="e.g. vector_peer"
+                            placeholder="e.g. bob"
                             maxlength="24"
                             required
                             autocomplete="off"
@@ -465,38 +471,38 @@
                     </div>
 
                     <button type="submit" id="btn-join" class="btn-secondary btn-submit-action">
-                        Connect to Room
+                        Join
                     </button>
                 </form>
             </div>
 
             <div class="lobby-foot">
-                <span>In-memory session state &bull; Discarded on disconnect</span>
+                <span>Messages vanish when you close the tab</span>
                 <a href="/lab">Open Workbench</a>
             </div>
         </div>
 
         <!-- Right: Telemetry & Network Monitor -->
-        <div class="telemetry-column">
+        <div class="telemetry-column" style="margin-top: 12px;">
             <!-- Topology Architecture Card -->
-            <div class="monitor-card">
+            <div class="monitor-card paper-card paper-tilt-r pushpin anim-paper" style="animation-delay: 0.15s; transform: rotate(0.8deg);">
                 <div class="monitor-head">
-                    <h3 class="monitor-title">Relay Topology & Trust Model</h3>
-                    <span class="monitor-badge">In-memory relay</span>
+                    <h3 class="monitor-title">How Messages Travel</h3>
+                    <span class="monitor-badge">How it works</span>
                 </div>
 
                 <div class="topology-diagram">
                     <div class="topo-node">
                         <div class="node-box">Browser A</div>
-                        <div class="node-sub">WebCrypto Engine</div>
+                        <div class="node-sub">Encrypts here</div>
                     </div>
                     <div class="topo-link">
                         <span style="font-size:9px;">CIPHERTEXT</span>
                         <div class="link-line"></div>
                     </div>
                     <div class="topo-node">
-                        <div class="node-box" style="border-color:var(--blue-light);">Relay Node</div>
-                        <div class="node-sub">RAM Buffer Only</div>
+                        <div class="node-box" style="border-color:var(--ink-dim);">Server</div>
+                        <div class="node-sub">Just passes through</div>
                     </div>
                     <div class="topo-link">
                         <span style="font-size:9px;">CIPHERTEXT</span>
@@ -504,49 +510,49 @@
                     </div>
                     <div class="topo-node">
                         <div class="node-box">Browser B</div>
-                        <div class="node-sub">Local Decrypt</div>
+                        <div class="node-sub">Decrypts here</div>
                     </div>
                 </div>
 
                 <div class="guarantee-list">
                     <div class="guarantee-item">
                         <span class="guarantee-bullet">&bull;</span>
-                        <span><strong>Client Sandbox:</strong> Transformations occur in JavaScript memory. Decryption keys never travel across the socket connection.</span>
+                        <span><strong>Your Browser:</strong> Encryption and decryption happen right here. Keys never leave your machine.</span>
                     </div>
                     <div class="guarantee-item">
                         <span class="guarantee-bullet">&bull;</span>
-                        <span><strong>Blind Transport:</strong> The server forwards opaque ciphertext payloads. It possesses no keys or mathematical shortcuts to read messages.</span>
+                        <span><strong>The Server:</strong> It just passes encrypted data between browsers. It can't read any of it.</span>
                     </div>
                     <div class="guarantee-item">
                         <span class="guarantee-bullet">&bull;</span>
-                        <span><strong>Session Ephemerality:</strong> Leaving or closing the tab immediately triggers memory garbage collection with zero persistent logs.</span>
+                        <span><strong>No Logs:</strong> Close the tab and everything vanishes. Nothing is saved anywhere.</span>
                     </div>
                 </div>
             </div>
 
             <!-- Connection & Execution Model -->
-            <div class="monitor-card">
+            <div class="monitor-card paper-card paper-tilt-l anim-paper" style="animation-delay: 0.25s; transform: rotate(-1.2deg); margin-top: -8px;">
                 <div class="monitor-head">
-                    <h3 class="monitor-title">Connection & Execution Model</h3>
-                    <span class="monitor-badge">Client sandbox</span>
+                    <h3 class="monitor-title">Under the Hood</h3>
+                    <span class="monitor-badge">Details</span>
                 </div>
 
                 <div class="stream-feed">
                     <div class="feed-line">
-                        <span class="feed-tag">SANDBOX</span>
-                        <span class="feed-text">WebCrypto API and client-side cipher evaluation in browser thread</span>
+                        <span class="feed-tag">ENCRYPT</span>
+                        <span class="feed-text">Ciphers run in your browser using JavaScript</span>
                     </div>
                     <div class="feed-line">
-                        <span class="feed-tag">TRANSPORT</span>
-                        <span class="feed-text">WebSocket relay transports opaque ciphertext payloads only</span>
+                        <span class="feed-tag">RELAY</span>
+                        <span class="feed-text">Server only sees encrypted data, never plaintext</span>
                     </div>
                     <div class="feed-line">
-                        <span class="feed-tag">STORAGE</span>
-                        <span class="feed-text">Volatile memory state discarded immediately on session disconnect</span>
+                        <span class="feed-tag">MEMORY</span>
+                        <span class="feed-text">Everything disappears when you leave</span>
                     </div>
                     <div class="feed-line">
-                        <span class="feed-tag">ROUTING</span>
-                        <span class="feed-text">Peer broadcast isolated strictly by room session code</span>
+                        <span class="feed-tag">ROOMS</span>
+                        <span class="feed-text">Messages only go to people in your room</span>
                     </div>
                 </div>
             </div>

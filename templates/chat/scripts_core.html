@@ -70,7 +70,7 @@
 
     // State for the Live Example Preview
     let activePayload = '';
-    let activeOriginal = 'ORBITAL TELEMETRY LINK ESTABLISHED';
+    let activeOriginal = 'the quick brown fox jumps over the lazy dog';
     let activeCipherKey = null;
     let activeCipherType = 'none';
     let currentDecryptMode = 'computer';
@@ -82,6 +82,7 @@
         const wrap = document.createElement('div');
         wrap.className = 'msg-wrap ' + (data.type || 'msg-user-wrap');
         if (data.id) wrap.id = 'msg-content-' + data.id;
+        if (data.username === myUsername) wrap.classList.add('msg-self');
         const txt = document.createElement('div'); txt.className = 'msg-text';
         if (data.type === 'msg-system') {
             txt.textContent = data.msg; wrap.classList.add('msg-system'); wrap.appendChild(txt);

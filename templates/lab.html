@@ -5,41 +5,65 @@
     html, body { overflow: hidden !important; }
 
     .lab-page {
-        height: 100vh;
+        margin-top: 48px;
+        height: calc(100vh - 48px);
         display: flex;
-        padding-top: 50px;
-        background: var(--bg);
+        padding: 14px 18px 18px;
+        background: transparent;
         overflow: hidden;
+        gap: 16px;
+        box-sizing: border-box;
     }
 
-    /* === LEFT PANEL === */
+    /* === LEFT PANEL: SPECIMEN DOSSIER === */
     .lab-config {
-        width: 42%;
+        width: 41%;
         min-width: 320px;
         max-width: 75%;
         display: flex;
         flex-direction: column;
-        border-right: 1px solid var(--border);
         overflow: hidden;
         flex-shrink: 0;
-        background: var(--bg-2);
+        background: var(--paper);
+        color: var(--ink);
+        border: none;
+        border-radius: 0;
+        box-shadow: 2px 3px 8px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.04), inset 0 0 40px rgba(0,0,0,0.03);
+        position: relative;
+        transform: rotate(-0.5deg);
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+    .lab-config:hover {
+        transform: rotate(0deg) translateY(-1px);
+        box-shadow: 3px 5px 14px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
     }
     .lab-config-inner {
         flex: 1;
         overflow-y: auto;
-        padding: 18px 20px;
+        padding: 20px 22px;
         display: flex;
         flex-direction: column;
         gap: 0;
     }
 
-    /* === RIGHT PANEL === */
+    /* === RIGHT PANEL: ANALYSIS DOSSIER === */
     .lab-edu {
         flex: 1;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        background: var(--bg);
+        background: var(--paper-aged);
+        color: var(--ink);
+        border: none;
+        border-radius: 0;
+        box-shadow: 2px 3px 8px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.04), inset 0 0 40px rgba(0,0,0,0.03);
+        position: relative;
+        transform: rotate(0.4deg);
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+    .lab-edu:hover {
+        transform: rotate(0deg) translateY(-1px);
+        box-shadow: 3px 5px 14px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
     }
     .lab-edu-inner {
         flex: 1;
@@ -49,174 +73,267 @@
         padding: 0;
     }
 
-    /* === SECTION HEADERS === */
+    /* === RESIZER DIVIDER === */
+    .resizer-x {
+        width: 6px;
+        background: rgba(0,0,0,0.14);
+        border-left: 1px solid rgba(255,255,255,0.06);
+        border-right: 1px solid rgba(0,0,0,0.25);
+        cursor: col-resize;
+        flex-shrink: 0;
+        transition: background 0.15s;
+        z-index: 10;
+        border-radius: 2px;
+    }
+    .resizer-x:hover, .resizer-x.dragging {
+        background: var(--stamp-red);
+    }
+
+    /* === PANEL NESTING & VARIABLE DEPTH === */
+    .lab-block-nest {
+        background: rgba(255,255,255,0.45);
+        border: 1.5px solid var(--ink-faint);
+        border-radius: 1px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .lab-block-algo {
+        background: rgba(255,255,255,0.35);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-left: 3px solid var(--stamp-red);
+        border-radius: 1px;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+    }
+    .lab-block-params {
+        background: rgba(255,255,255,0.4);
+        border: 1.5px dashed var(--ink-faint);
+        border-radius: 1px;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+    }
+    .lab-block-output {
+        background: rgba(45,74,122,0.05);
+        border: 1.5px dashed var(--blue-ink);
+        border-radius: 1px;
+        padding: 12px 14px;
+        margin-top: 6px;
+    }
+
+    /* Collapsible section header */
+    .lab-section-collapsible {
+        cursor: pointer;
+        user-select: none;
+    }
+    .lab-section-collapsible:hover {
+        color: var(--stamp-red);
+    }
+    .collapse-toggle-btn {
+        font-family: var(--font-typewriter);
+        font-size: 11px;
+        color: var(--blue-ink);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    /* Section headers */
     .lab-section-hdr {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 12px;
-        font-weight: 600;
-        margin-bottom: 6px;
-        color: var(--text-hi);
+        font-size: 11.5px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--ink);
+        font-family: var(--font-stamp);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
     }
 
     /* === TEXTAREA / OUTPUT === */
     .lab-textarea {
         width: 100%;
-        height: 110px;
+        height: 95px;
         resize: vertical;
-        font-family: var(--mono);
+        font-family: var(--font-typewriter);
         font-size: 13px;
         line-height: 1.5;
-        padding: 8px 12px;
-        background: var(--bg-3);
-        border: 1px solid var(--border-md);
-        border-radius: var(--radius-sm);
-        color: var(--text-hi);
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.7);
+        border: none;
+        border-bottom: 1.5px solid var(--ink-dim);
+        border-radius: 0;
+        color: var(--ink);
         outline: none;
         transition: border-color 0.15s;
     }
     .lab-textarea:focus {
-        border-color: var(--border-hi);
+        border-bottom-color: var(--blue-ink);
     }
     .lab-output {
         width: 100%;
-        min-height: 75px;
-        max-height: 150px;
+        min-height: 70px;
+        max-height: 140px;
         overflow-y: auto;
-        font-family: var(--mono);
+        font-family: var(--font-typewriter);
         font-size: 13px;
         line-height: 1.5;
-        padding: 8px 12px;
-        background: var(--bg-3);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        color: var(--text-hi);
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.7);
+        border: none;
+        border-bottom: 1.5px solid var(--blue-ink);
+        border-radius: 0;
+        color: var(--blue-ink);
         word-break: break-all;
         white-space: pre-wrap;
+        font-weight: 600;
     }
 
     /* === CIPHER SELECT === */
     .lab-select {
         width: 100%;
-        padding: 8px 12px;
-        background: var(--bg-3);
-        border: 1px solid var(--border-md);
-        color: var(--text-hi);
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.85);
+        border: 1.5px solid var(--ink-dim);
+        color: var(--ink);
         font-size: 13px;
-        border-radius: var(--radius-sm);
+        border-radius: 0;
         outline: none;
         cursor: pointer;
-        font-family: var(--sans);
+        font-family: var(--font-typewriter);
         transition: border-color 0.15s;
     }
-    .lab-select:focus { border-color: var(--border-hi); }
-    .lab-select option { background: var(--bg-2); }
+    .lab-select:focus { border-color: var(--blue-ink); }
+    .lab-select option { background: var(--paper); color: var(--ink); }
 
     /* === ACTION BUTTONS === */
     .lab-actions {
         display: flex;
-        gap: 8px;
-        margin: 14px 0;
+        gap: 10px;
+        margin: 12px 0;
     }
     .lab-btn-encrypt {
         flex: 1;
-        padding: 8px 16px;
-        background: var(--primary-gradient);
+        padding: 9px 16px;
+        background: var(--stamp-red);
         color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-bottom-color: rgba(0, 0, 0, 0.35);
-        border-radius: var(--radius-sm);
+        border: none;
+        border-radius: 2px;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         transition: all 0.15s ease;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
-        font-family: var(--font-display);
-        letter-spacing: 0.01em;
+        font-family: var(--font-stamp);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
     .lab-btn-encrypt:hover {
-        background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
-        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        background: #9e2a28;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
         color: #ffffff;
     }
     .lab-btn-encrypt:active {
         transform: translateY(1px);
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
     }
     .lab-btn-swap {
-        padding: 8px 16px;
-        background: var(--bg-3);
-        border: 1px solid var(--border-md);
-        border-top-color: rgba(255, 255, 255, 0.08);
-        color: var(--text-hi);
+        padding: 9px 16px;
+        background: var(--paper-aged);
+        border: 1.5px solid var(--ink-dim);
+        color: var(--ink);
         font-size: 12px;
-        font-weight: 500;
-        border-radius: var(--radius-sm);
+        font-weight: 600;
+        border-radius: 2px;
         cursor: pointer;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         transition: all 0.15s;
-        font-family: var(--font-display);
-        letter-spacing: 0.01em;
+        font-family: var(--font-typewriter);
+        letter-spacing: 0.02em;
     }
     .lab-btn-swap:hover {
-        border-color: var(--border-hi);
-        color: #ffffff;
-        background: var(--bg-hover);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        background: var(--paper-dark);
+        border-color: var(--ink);
+        color: var(--ink);
     }
     .btn-copy {
         display: inline-flex;
         align-items: center;
         gap: 4px;
         font-size: 11px;
-        font-weight: 500;
-        padding: 4px 10px;
-        background: var(--bg-3);
-        border: 1px solid var(--border-md);
-        border-radius: var(--radius-sm);
-        color: var(--text-dim);
+        font-weight: 600;
+        padding: 3px 8px;
+        background: transparent;
+        border: 1px solid var(--blue-ink);
+        border-radius: 2px;
+        color: var(--blue-ink);
         cursor: pointer;
         transition: all 0.15s;
-        font-family: var(--font-display);
+        font-family: var(--font-typewriter);
     }
     .btn-copy:hover {
-        color: var(--text-hi);
-        border-color: var(--border-hi);
-        background: var(--bg-hover);
+        background: rgba(45, 74, 122, 0.1);
+        color: var(--ink);
     }
 
-    /* === LIVE PREVIEW BOX === */
+    /* === LIVE PREVIEW: YELLOW STICKY NOTE === */
     .lab-preview-box {
-        background: var(--bg-2);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 10px 14px;
-        margin: 12px 14px 0 14px;
+        background: #fef08a;
+        color: #713f12;
+        border: 1px solid rgba(202, 138, 4, 0.35);
+        border-radius: 1px;
+        padding: 11px 16px;
+        margin: 12px 18px 12px 18px;
         flex-shrink: 0;
+        box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+        position: relative;
+        transform: rotate(-0.9deg);
+        transition: transform 0.2s ease;
+    }
+    .lab-preview-box:hover {
+        transform: rotate(0deg);
+    }
+    .lab-preview-box::after {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #e74c3c 0%, #a93226 60%, #7b241c 100%);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        z-index: 4;
     }
     .lab-preview-label {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--text-dim);
-        font-family: var(--sans);
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #854d0e;
+        font-family: var(--font-stamp);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         margin-bottom: 4px;
     }
     .lab-preview-text {
-        font-family: var(--mono);
+        font-family: var(--font-typewriter);
         font-size: 13px;
-        color: var(--text-hi);
+        color: #1c1917;
         word-break: break-all;
         max-height: 2.5rem;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-weight: 700;
     }
 
-    /* === TABS === */
+    /* === TABS IN LAB === */
     .lab-tabs-wrap {
         display: flex;
         flex-direction: column;
@@ -227,63 +344,85 @@
     .lab-tabs-nav {
         display: flex;
         background: transparent;
-        padding: 0 14px;
-        border-bottom: 1px solid var(--border);
-        margin: 10px 0 0;
+        padding: 0 18px;
+        border-bottom: 2px solid var(--ink-faint);
+        margin: 6px 0 0;
         flex-shrink: 0;
-        gap: 2px;
+        gap: 4px;
     }
     .lab-tab-btn {
-        background: transparent;
+        background: rgba(0,0,0,0.03);
         border: none;
-        border-bottom: 2px solid transparent;
-        color: var(--text-dim);
-        padding: 8px 14px;
+        border-bottom: 3px solid transparent;
+        color: var(--ink-dim);
+        padding: 8px 16px;
         cursor: pointer;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 12px;
-        border-radius: 0;
-        font-family: var(--sans);
-        transition: color 0.12s ease, border-color 0.12s ease;
+        border-radius: 3px 3px 0 0;
+        font-family: var(--font-typewriter);
+        transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
         text-align: center;
     }
-    .lab-tab-btn:hover { color: var(--text-hi); }
+    .lab-tab-btn:hover {
+        color: var(--ink);
+        background: rgba(255,255,255,0.3);
+    }
     .lab-tab-btn.active {
-        background: transparent;
-        color: var(--text-hi);
-        border-bottom-color: var(--primary);
-        font-weight: 600;
-        box-shadow: none;
+        background: var(--paper);
+        color: var(--ink);
+        border-bottom-color: var(--stamp-red);
+        font-weight: 700;
+        box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+    }
+
+    /* Tab Pane Transitions */
+    @keyframes tab-unfold {
+        from {
+            opacity: 0;
+            transform: translateY(8px) scale(0.995);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
     }
     .lab-tab-pane {
         display: none;
         flex: 1;
         overflow-y: auto;
         min-height: 0;
-        padding: 14px;
+        padding: 16px 18px;
         font-size: 13px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
         line-height: 1.6;
+        font-family: var(--font-typewriter);
+        background: rgba(255,255,255,0.4);
+        margin: 0 18px 18px;
+        border: 1px solid rgba(0,0,0,0.04);
+        border-top: none;
     }
     .lab-tab-pane.active {
         display: flex;
         flex-direction: column;
+        animation: tab-unfold 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
 
-    /* === GUIDE CONTENT === */
+    /* === GUIDE CONTENT OVERRIDES === */
     .lab-guide-section {
         display: none;
     }
     .lab-guide-section.active { display: block; }
     .lab-guide-section h3 {
-        color: var(--text-hi);
+        color: var(--ink);
         margin: 0 0 8px 0;
         font-size: 15px;
         font-weight: 700;
+        font-family: var(--font-stamp);
     }
     .lab-guide-section h4 {
-        color: var(--blue-light);
-        font-family: var(--font-display);
+        color: var(--blue-ink);
+        font-family: var(--font-stamp);
         font-size: 13px;
         font-weight: 600;
         margin: 14px 0 6px 0;
@@ -293,19 +432,21 @@
         margin-top: 0;
         margin-bottom: 8px;
         line-height: 1.6;
+        color: var(--ink-dim);
     }
     .lab-guide-section code {
-        font-family: var(--mono);
-        background: var(--bg-3);
+        font-family: var(--font-typewriter);
+        background: rgba(255,255,255,0.6);
         padding: 2px 6px;
-        border-radius: var(--radius-sm);
+        border-radius: 1px;
         font-size: 12px;
-        border: 1px solid var(--border);
+        border: 1px solid var(--ink-faint);
+        color: var(--ink);
     }
     .lab-guide-section ol {
         margin-top: 6px;
         padding-left: 18px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
     }
     .lab-guide-section ol li {
         margin-bottom: 4px;
@@ -316,30 +457,30 @@
         display: none;
     }
     #tab-guide .history-block h3 {
-        color: var(--text-hi);
+        color: var(--ink);
         margin: 0 0 8px 0;
         font-size: 15px;
         font-weight: 700;
+        font-family: var(--font-stamp);
     }
     #tab-guide .history-block h4 {
-        color: var(--blue-light);
-        font-family: var(--font-display);
+        color: var(--blue-ink);
+        font-family: var(--font-stamp);
         font-size: 13px;
         font-weight: 600;
         margin: 14px 0 6px 0;
-        letter-spacing: -0.01em;
     }
     #tab-guide .history-block p {
         margin-top: 0;
         margin-bottom: 8px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
         font-size: 13px;
         line-height: 1.6;
     }
     #tab-guide .history-block ol {
         margin-top: 6px;
         padding-left: 18px;
-        color: var(--text-dim);
+        color: var(--ink-dim);
     }
     #tab-guide .history-block ol li {
         margin-bottom: 4px;
@@ -348,17 +489,219 @@
     #tab-guide #sol-none {
         display: block;
         text-align: center;
-        color: var(--text-faint);
+        color: var(--ink-faint);
         font-style: italic;
         padding-top: 14px;
     }
     #tab-guide #sol-dynamic { display: none; }
 
-    /* === DECRYPT MODE BAR === */
+    /* === STEP-BY-STEP SOLUTION CARDS === */
+    .sol-box {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-left: 3px solid var(--blue-ink);
+        border-radius: 1px;
+        padding: 14px;
+        margin-bottom: 14px;
+        box-shadow: 1px 2px 4px rgba(0,0,0,0.06);
+        color: var(--ink);
+    }
+    .sol-title {
+        font-family: var(--font-stamp);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 8px;
+        border-bottom: 1px dashed var(--ink-faint);
+        padding-bottom: 6px;
+    }
+    .sol-explain {
+        font-size: 12px;
+        color: var(--ink-dim);
+        line-height: 1.6;
+        padding: 8px 12px;
+        background: rgba(0,0,0,0.03);
+        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 1px;
+        margin-bottom: 10px;
+        font-family: var(--font-typewriter);
+    }
+    .sol-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: var(--font-typewriter);
+        font-size: 12px;
+    }
+    .sol-table th {
+        text-align: left;
+        padding: 7px 10px;
+        border-bottom: 1.5px solid var(--ink-dim);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 700;
+        background: rgba(0,0,0,0.03);
+    }
+    .sol-table td {
+        padding: 6px 10px;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        color: var(--ink);
+    }
+    .sol-table tr:last-child td { border-bottom: none; }
+    .tscroll {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid var(--ink-faint);
+        background: rgba(255,255,255,0.6);
+        border-radius: 1px;
+    }
+    .hi-cell { color: var(--stamp-red); font-weight: 700; }
+    .enc-cell { color: var(--blue-ink); font-weight: 700; }
+    .op-cell { color: var(--ink-dim); font-size: 11px; }
+
+    /* === DECRYPT MODE BAR & TERMINALS === */
     .lab-decrypt-container {
         flex: 1;
         overflow-y: auto;
         min-height: 0;
+    }
+    .decrypt-mode-bar {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+        margin-bottom: 12px;
+        background: rgba(0,0,0,0.03);
+        padding: 3px;
+        border-bottom: 1.5px solid var(--ink-faint);
+    }
+    .mode-btn {
+        flex: 1;
+        padding: 7px 12px;
+        background: transparent;
+        border: none;
+        color: var(--ink-dim);
+        font-family: var(--font-typewriter);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    .mode-btn:hover { color: var(--ink); }
+    .mode-btn.active {
+        background: var(--paper);
+        color: var(--ink);
+        font-weight: 700;
+        border-bottom: 2px solid var(--stamp-red);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .algo-terminal, .manual-terminal {
+        background: rgba(255,255,255,0.7);
+        border: 1.5px solid var(--ink-dim);
+        border-radius: 1px;
+        font-size: 12px;
+        overflow: hidden;
+        color: var(--ink);
+        box-shadow: 1px 2px 5px rgba(0,0,0,0.08);
+    }
+    .algo-header, .manual-header {
+        background: var(--paper);
+        padding: 9px 14px;
+        border-bottom: 1.5px solid var(--ink-dim);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .algo-title, .manual-title {
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 700;
+        flex: 1;
+        font-family: var(--font-stamp);
+        letter-spacing: 0.04em;
+    }
+    .algo-body, .manual-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        color: var(--ink);
+        font-family: var(--font-typewriter);
+    }
+    .algo-pseudocode {
+        background: rgba(0,0,0,0.04);
+        border: 1px solid var(--ink-faint);
+        border-radius: 1px;
+        padding: 10px 14px;
+        font-family: var(--font-typewriter);
+    }
+    .algo-line { color: var(--ink-dim); line-height: 1.8; font-size: 11px; }
+    .algo-line .kw { color: var(--stamp-red); font-weight: 700; }
+    .algo-line .fn { color: var(--blue-ink); font-weight: 600; }
+    .algo-line .val { color: var(--ink); font-weight: 600; }
+    .algo-line .cm { color: var(--ink-faint); font-style: italic; }
+
+    .ctrl-btn {
+        background: var(--paper);
+        border: 1px solid var(--ink-dim);
+        color: var(--ink);
+        font-family: var(--font-typewriter);
+        padding: 6px 12px;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 11.5px;
+    }
+    .ctrl-btn:hover {
+        background: var(--paper-dark);
+        border-color: var(--ink);
+    }
+
+    /* Parameter Controls */
+    .shift-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+    .shift-badge {
+        width: 32px;
+        height: 32px;
+        background: var(--stamp-red);
+        color: #fff;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-stamp);
+        font-size: 16px;
+        font-weight: 700;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .enc-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--ink);
+        font-family: var(--font-typewriter);
+    }
+    .alpha-strip {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 10px;
+        background: rgba(255,255,255,0.6);
+        border: 1px solid var(--ink-faint);
+        border-radius: 1px;
+    }
+    .alpha-label {
+        font-size: 10px;
+        color: var(--ink-faint);
+        font-family: var(--font-typewriter);
+        text-transform: uppercase;
+    }
+    .alpha-letters {
+        font-family: var(--font-typewriter);
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.1em;
     }
 
     /* === PHOTON STYLES === */
@@ -373,75 +716,84 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: var(--radius-sm);
+        border-radius: 2px;
         font-size: 13px;
-        font-family: var(--mono);
-        border: 1px solid var(--border-md);
-        background: var(--bg-3);
+        font-family: var(--font-typewriter);
+        border: 1px solid var(--ink-dim);
+        background: rgba(255,255,255,0.7);
+        color: var(--ink);
     }
-    .photon-0 { color: var(--blue-light); }
-    .photon-1 { color: var(--purple-light); }
-    .photon-match { border-color: var(--green) !important; background: rgba(16,185,129,0.1) !important; }
-    .photon-mismatch { border-color: var(--border) !important; opacity: 0.4; }
+    .photon-0 { color: var(--blue-ink); }
+    .photon-1 { color: var(--stamp-red); }
+    .photon-match { border-color: var(--blue-ink) !important; background: rgba(45,74,122,0.12) !important; font-weight: 700; }
+    .photon-mismatch { border-color: var(--ink-faint) !important; opacity: 0.45; }
 
     /* === KEY CONFIG SEPARATOR === */
     .lab-separator {
         border: none;
-        border-top: 1px solid var(--border);
-        margin: 14px 0;
+        border-top: 1px dashed var(--ink-faint);
+        margin: 12px 0;
     }
 
     /* === RESPONSIVE === */
     @media (max-width: 900px) {
         .lab-page {
             flex-direction: column;
+            height: auto;
+            overflow-y: auto;
         }
         .lab-config {
             width: 100% !important;
             max-width: 100%;
             min-width: 0;
-            border-right: none;
-            border-bottom: 1px solid var(--border);
-            max-height: 50vh;
+            border-bottom: 1.5px dashed var(--ink-faint);
+            max-height: none;
+            transform: none !important;
         }
         .lab-edu {
-            min-height: 50vh;
+            min-height: 500px;
+            transform: none !important;
         }
         .resizer-x { display: none; }
     }
 </style>
 
 <div class="lab-page">
-    <!-- ========== LEFT PANEL ========== -->
-    <div class="lab-config" id="lab-config">
+    <!-- ========== LEFT PANEL: SPECIMEN DOSSIER ========== -->
+    <div class="lab-config paper-card tape-top stamp-mark anim-paper" id="lab-config" data-stamp="Specimen">
         <div class="lab-config-inner">
-            <!-- PLAINTEXT INPUT -->
-            <div class="lab-section-hdr"><span>Plaintext Input</span></div>
-            <textarea class="lab-textarea" id="lab-plaintext" spellcheck="false" placeholder="Enter text to encrypt...">ORBITAL TELEMETRY LINK ESTABLISHED</textarea>
+            <!-- PLAINTEXT INPUT BLOCK -->
+            <div class="lab-block-nest">
+                <div class="lab-section-hdr"><span>Plaintext Input</span></div>
+                <textarea class="lab-textarea" id="lab-plaintext" spellcheck="false" placeholder="Enter text to encrypt...">the quick brown fox jumps over the lazy dog</textarea>
+            </div>
 
-            <hr class="lab-separator">
+            <!-- CIPHER ALGORITHM BLOCK -->
+            <div class="lab-block-algo">
+                <div class="lab-section-hdr"><span>Cipher Algorithm</span></div>
+                <select id="lab-cipher" class="lab-select">
+                    <option value="none">Plaintext (No Encryption)</option>
+                    <optgroup label="Classical Primitives">
+                        <option value="caesar" selected>Caesar Shift</option>
+                        <option value="affine">Affine Cipher</option>
+                        <option value="hill">Hill Matrix Cipher</option>
+                        <option value="vigenere">Vigenère Cipher</option>
+                    </optgroup>
+                    <optgroup label="Modern & Quantum">
+                        <option value="aes">AES-256 Block Cipher</option>
+                        <option value="quantum">BB84 QKD Protocol</option>
+                    </optgroup>
+                </select>
+            </div>
 
-            <!-- CIPHER ALGORITHM -->
-            <div class="lab-section-hdr"><span>Cipher Algorithm</span></div>
-            <select id="lab-cipher" class="lab-select">
-                <option value="none">Plaintext (No Encryption)</option>
-                <optgroup label="Classical Primitives">
-                    <option value="caesar" selected>Caesar Shift</option>
-                    <option value="affine">Affine Transformation</option>
-                    <option value="hill">Hill Matrix Linear System</option>
-                    <option value="vigenere">Vigen&egrave;re Polyalphabetic</option>
-                </optgroup>
-                <optgroup label="Modern & Quantum">
-                    <option value="aes">AES-256 Block Cipher</option>
-                    <option value="quantum">BB84 QKD Protocol</option>
-                </optgroup>
-            </select>
-
-            <hr class="lab-separator">
-
-            <!-- KEY CONFIGURATION (DYNAMIC) -->
-            <div class="lab-section-hdr"><span>Cipher Parameters</span></div>
-            <div id="lab-key-config"></div>
+            <!-- KEY CONFIGURATION (DYNAMIC & COLLAPSIBLE) -->
+            <div class="lab-block-params">
+                <div class="lab-section-hdr lab-section-collapsible" onclick="toggleLabParams()" title="Click to collapse/expand">
+                    <span>Cipher Parameters</span>
+                    <button type="button" class="collapse-toggle-btn" id="lab-param-toggle-btn">[ &minus; Collapse ]</button>
+                </div>
+                <div id="lab-key-config"></div>
+            </div>
 
             <!-- ACTION BUTTONS -->
             <div class="lab-actions">
@@ -449,23 +801,25 @@
                 <button class="lab-btn-swap" id="lab-swap-btn">Invert to Input</button>
             </div>
 
-            <!-- CIPHERTEXT OUTPUT -->
-            <div class="lab-section-hdr">
-                <span>Encrypted Output</span>
-                <button class="btn-copy" id="lab-copy-btn" onclick="labCopyOutput()" title="Copy output">
-                    <span id="lab-copy-label">Copy Output</span>
-                </button>
+            <!-- CIPHERTEXT OUTPUT BLOCK -->
+            <div class="lab-block-output">
+                <div class="lab-section-hdr">
+                    <span style="color:var(--blue-ink);">Encrypted Output</span>
+                    <button class="btn-copy" id="lab-copy-btn" onclick="labCopyOutput()" title="Copy output">
+                        <span id="lab-copy-label">Copy Output</span>
+                    </button>
+                </div>
+                <div class="lab-output" id="lab-ciphertext">-</div>
             </div>
-            <div class="lab-output" id="lab-ciphertext">-</div>
         </div>
     </div>
 
     <!-- ========== RESIZER ========== -->
     <div class="resizer-x" id="lab-resizer"></div>
 
-    <!-- ========== RIGHT PANEL ========== -->
-    <div class="lab-edu" id="lab-edu">
-        <!-- LIVE PREVIEW -->
+    <!-- ========== RIGHT PANEL: ANALYSIS DOSSIER ========== -->
+    <div class="lab-edu paper-card tape-top-right stamp-mark anim-paper" id="lab-edu" data-stamp="Analysis" style="animation-delay: 0.15s;">
+        <!-- LIVE PREVIEW STICKY NOTE -->
         <div class="lab-preview-box">
             <div class="lab-preview-label">Live Output Preview</div>
             <div class="lab-preview-text" id="lab-preview-text">-</div>
@@ -487,7 +841,7 @@
             <!-- ===== STEP-BY-STEP TAB ===== -->
             <div id="lab-tab-steps" class="lab-tab-pane">
                 <div id="lab-steps-content">
-                    <div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:11px;">
+                    <div style="text-align:center;color:var(--ink-faint);font-style:italic;padding:2rem 0;font-size:11px;">
                         Enter text and click Encrypt to view the step-by-step mathematical transformation.
                     </div>
                 </div>
@@ -648,7 +1002,7 @@
     //  STATE
     // ===========================================================
     let labCipher = 'caesar';
-    let labPlaintext = 'ORBITAL TELEMETRY LINK ESTABLISHED';
+    let labPlaintext = 'the quick brown fox jumps over the lazy dog';
     let labCiphertext = '';
     let labKey = 3;
     let labHillSize = 2;
@@ -1028,6 +1382,23 @@
         document.getElementById('lab-decrypt-manual').style.display = mode === 'manual' ? 'block' : 'none';
     }
     window.labSetDecryptMode = labSetDecryptMode;
+
+    // ===========================================================
+    //  PARAMETER COLLAPSE TOGGLE
+    // ===========================================================
+    function toggleLabParams() {
+        const kc = document.getElementById('lab-key-config');
+        const btn = document.getElementById('lab-param-toggle-btn');
+        if (!kc) return;
+        if (kc.style.display === 'none') {
+            kc.style.display = 'block';
+            if (btn) btn.textContent = '[ \u2212 Collapse ]';
+        } else {
+            kc.style.display = 'none';
+            if (btn) btn.textContent = '[ + Expand ]';
+        }
+    }
+    window.toggleLabParams = toggleLabParams;
 
     // ===========================================================
     //  GUIDE RENDERING (now uses shared include file)

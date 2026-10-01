@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
     <style>
@@ -82,18 +82,38 @@
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
             --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
             --shadow-lg: 0 12px 28px -4px rgba(0, 0, 0, 0.6);
+
+            /* Dossier / classified-desk palette */
+            --cork:         #1a1612;
+            --cork-light:   #2a2218;
+            --paper:        #f5f0e1;
+            --paper-aged:   #e8dcc8;
+            --paper-dark:   #d6c9ad;
+            --paper-shadow: rgba(0,0,0,0.18);
+            --ink:          #2c2416;
+            --ink-dim:      #6b5d4d;
+            --ink-faint:    #9e8e78;
+            --stamp-red:    #b8312f;
+            --stamp-red-dim:rgba(184,49,47,0.30);
+            --blue-ink:     #2d4a7a;
+            --blue-ink-dim: rgba(45,74,122,0.55);
+            --tape:         rgba(210, 190, 130, 0.45);
+            --tape-edge:    rgba(180, 160, 100, 0.25);
+            --pin-red:      #c0392b;
+            --pin-yellow:   #d4a017;
+
+            --font-typewriter: 'Courier Prime', 'Courier New', Courier, monospace;
+            --font-stamp:      'Special Elite', 'Courier New', monospace;
         }
 
         html, body {
             margin: 0; padding: 0; height: 100%;
-            background-color: var(--bg);
+            background-color: var(--cork);
             background-image: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(2, 132, 199, 0.08), transparent 70%),
-                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 100% 100%, 36px 36px, 36px 36px;
+                radial-gradient(ellipse 60% 40% at 65% 15%, rgba(184,49,47,0.04), transparent 60%),
+                radial-gradient(ellipse 40% 30% at 20% 80%, rgba(45,74,122,0.03), transparent 50%);
             color: var(--text);
-            font-family: var(--sans);
+            font-family: var(--font-typewriter);
             font-size: 13px;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
@@ -104,90 +124,88 @@
         ::-webkit-scrollbar-thumb { background: #1e2638; border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: #2a364e; }
 
-        /* Topbar */
+        /* Topbar — folder tab at top of desk */
         .topbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-            height: 52px;
+            height: 48px;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 24px;
-            background: rgba(14, 18, 27, 0.88);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+            background: var(--paper-aged);
+            border-bottom: 2px solid var(--ink-faint);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
         }
 
         .topbar-logo {
             display: flex; align-items: center; gap: 10px;
             text-decoration: none;
-            color: var(--text-hi);
+            color: var(--ink);
         }
 
         .logo-mark {
-            width: 28px; height: 28px;
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.25) 0%, rgba(18, 24, 36, 0.8) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            border-radius: var(--radius-sm);
+            width: 26px; height: 26px;
+            background: var(--paper);
+            border: 1.5px solid var(--ink-dim);
+            border-radius: 2px;
             display: flex; align-items: center; justify-content: center;
-            color: var(--blue-light);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+            color: var(--stamp-red);
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
         }
 
         .logo-text {
             font-size: 15px; font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text-hi);
-            font-family: var(--font-display);
+            letter-spacing: 0.02em;
+            color: var(--ink);
+            font-family: var(--font-stamp);
         }
 
         .logo-version {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-faint);
+            font-family: var(--font-typewriter);
+            font-size: 10px;
+            color: var(--ink-faint);
             margin-left: 2px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .topbar-nav { display: flex; align-items: center; gap: 6px; }
 
         .topbar-link {
-            padding: 6px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 13px; font-weight: 500;
-            color: var(--text-dim);
+            padding: 6px 12px;
+            border-radius: 0;
+            font-size: 12px; font-weight: 400;
+            color: var(--ink-dim);
             text-decoration: none;
-            border: 1px solid transparent;
-            font-family: var(--font-display);
-            transition: color 0.15s, background 0.15s, border-color 0.15s;
+            border: none;
+            border-bottom: 1.5px solid transparent;
+            font-family: var(--font-typewriter);
+            transition: color 0.15s, border-color 0.15s;
         }
         .topbar-link:hover {
-            color: var(--text-hi);
-            background: var(--bg-3);
-            border-color: rgba(255, 255, 255, 0.05);
+            color: var(--ink);
+            border-bottom-color: var(--ink-dim);
         }
         .topbar-link.active {
-            color: var(--text-hi);
-            background: var(--bg-3);
-            border-color: var(--border-md);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            color: var(--ink);
+            border-bottom-color: var(--stamp-red);
+            font-weight: 700;
         }
 
         .btn-disconnect {
-            padding: 6px 14px;
-            background: rgba(248, 81, 73, 0.1);
-            border: 1px solid rgba(248, 81, 73, 0.35);
-            color: #ff7b72;
-            font-size: 12px; font-weight: 600;
-            border-radius: var(--radius-sm);
+            padding: 5px 12px;
+            background: transparent;
+            border: 1.5px solid var(--stamp-red-dim);
+            color: var(--stamp-red);
+            font-size: 11px; font-weight: 700;
+            border-radius: 2px;
             text-decoration: none;
             transition: all 0.15s;
-            font-family: var(--sans);
+            font-family: var(--font-stamp);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
             display: inline-flex; align-items: center; gap: 6px;
         }
         .btn-disconnect:hover {
-            background: rgba(248, 81, 73, 0.2);
-            border-color: #f85149;
-            color: #ffffff;
+            background: rgba(184, 49, 47, 0.1);
+            border-color: var(--stamp-red);
         }
 
         /* Buttons - tactile engineering controls */
@@ -339,7 +357,7 @@
         .chat-page {
             height: 100vh;
             display: flex; flex-direction: column;
-            overflow: hidden; padding-top: 52px;
+            overflow: hidden; padding-top: 48px;
         }
 
         .chat-topbar-ext {
@@ -1015,6 +1033,231 @@
             line-height: 1; padding: 0;
         }
         .close-btn:hover { color: var(--text-hi); }
+
+        /* ========================================
+           DOSSIER UTILITY CLASSES
+           ======================================== */
+
+        /* Paper card — the base building block */
+        .paper-card {
+            background: var(--paper);
+            border: none;
+            border-radius: 0;
+            box-shadow:
+                2px 3px 8px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(0,0,0,0.04),
+                inset 0 0 40px rgba(0,0,0,0.03);
+            color: var(--ink);
+            position: relative;
+            padding: 24px;
+        }
+        .paper-card .panel-title,
+        .paper-card .panel-subtitle,
+        .paper-card h2, .paper-card h3 {
+            color: var(--ink);
+        }
+        .paper-card .panel-subtitle,
+        .paper-card p,
+        .paper-card .block-tag,
+        .paper-card .panel-foot-note,
+        .paper-card label {
+            color: var(--ink-dim);
+        }
+        .paper-card .field-hint {
+            color: var(--stamp-red);
+        }
+
+        /* Rotation variants — break the grid */
+        .paper-tilt-l  { transform: rotate(-1.2deg); }
+        .paper-tilt-r  { transform: rotate(0.8deg); }
+        .paper-tilt-l2 { transform: rotate(-2.1deg); }
+        .paper-tilt-r2 { transform: rotate(1.5deg); }
+        .paper-card:hover {
+            transform: rotate(0deg) translateY(-2px);
+            box-shadow: 4px 6px 16px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Tape strip — sticks a card to the cork */
+        .tape-top::before {
+            content: '';
+            position: absolute;
+            top: -9px;
+            left: 28%;
+            width: 64px;
+            height: 20px;
+            background: var(--tape);
+            border-bottom: 1px solid var(--tape-edge);
+            transform: rotate(1.5deg);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .tape-top-right::before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            right: 15%;
+            width: 58px;
+            height: 18px;
+            background: var(--tape);
+            border-bottom: 1px solid var(--tape-edge);
+            transform: rotate(-2deg);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .tape-corner::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -8px;
+            width: 52px;
+            height: 16px;
+            background: var(--tape);
+            border-bottom: 1px solid var(--tape-edge);
+            transform: rotate(38deg);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Rubber stamp overlay */
+        .stamp-mark::after {
+            content: attr(data-stamp);
+            position: absolute;
+            font-family: var(--font-stamp);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--stamp-red-dim);
+            border: 2.5px solid var(--stamp-red-dim);
+            border-radius: 3px;
+            padding: 3px 14px;
+            transform: rotate(-14deg);
+            pointer-events: none;
+            z-index: 3;
+            top: 18px;
+            right: 20px;
+            animation: stamp-appear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        /* Pushpin */
+        .pushpin::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #e74c3c 0%, #a93226 60%, #7b241c 100%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(0,0,0,0.2);
+            z-index: 4;
+        }
+        .pushpin-yellow::after {
+            background: radial-gradient(circle at 40% 35%, #f1c40f 0%, #d4a017 60%, #b7950b 100%);
+        }
+
+        /* Coffee ring stain — decorative background */
+        .coffee-stain {
+            position: relative;
+        }
+        .coffee-stain::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid rgba(139, 109, 63, 0.06);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Paper-card input fields override */
+        .paper-card .text-input,
+        .paper-card input[type="text"] {
+            background: rgba(255,255,255,0.5);
+            border: none;
+            border-bottom: 1.5px solid var(--ink-dim);
+            border-radius: 0;
+            color: var(--ink);
+            font-family: var(--font-typewriter);
+            padding: 8px 4px;
+        }
+        .paper-card .text-input:focus,
+        .paper-card input[type="text"]:focus {
+            border-bottom-color: var(--blue-ink);
+            box-shadow: none;
+            outline: none;
+        }
+        .paper-card .text-input::placeholder,
+        .paper-card input[type="text"]::placeholder {
+            color: var(--ink-faint);
+            font-style: italic;
+        }
+        .paper-card .btn-primary {
+            background: var(--stamp-red);
+            border: none;
+            border-radius: 2px;
+            color: #fff;
+            font-family: var(--font-stamp);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .paper-card .btn-primary:hover {
+            background: #9e2a28;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+        }
+        .paper-card .btn-secondary {
+            background: var(--paper-aged);
+            border: 1.5px solid var(--ink-dim);
+            border-radius: 2px;
+            color: var(--ink);
+            font-family: var(--font-typewriter);
+        }
+        .paper-card .btn-secondary:hover {
+            background: var(--paper-dark);
+            border-color: var(--ink);
+        }
+
+        /* Keyframes */
+        @keyframes paper-unfold {
+            from {
+                transform: scaleY(0.4) rotate(-1.5deg);
+                opacity: 0;
+                transform-origin: top center;
+            }
+            to {
+                transform: scaleY(1) rotate(var(--card-rotate, 0deg));
+                opacity: 1;
+            }
+        }
+
+        @keyframes stamp-appear {
+            from {
+                transform: rotate(-14deg) scale(1.8);
+                opacity: 0;
+            }
+            to {
+                transform: rotate(-14deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-up-in {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .anim-paper { animation: paper-unfold 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        .anim-slide { animation: slide-up-in 0.35s ease both; }
 
         .anim-in { }
     </style>
