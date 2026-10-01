@@ -13,25 +13,25 @@
 
     .lobby-card {
         width: 100%;
-        max-width: 480px;
+        max-width: 440px;
         background: var(--bg-2);
         border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 28px 24px;
+        border-radius: var(--radius-md);
+        padding: 24px;
     }
 
     .lobby-header {
-        margin-bottom: 24px;
-        padding-bottom: 16px;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
         border-bottom: 1px solid var(--border);
     }
 
     .lobby-title {
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 700;
         letter-spacing: -0.01em;
         color: var(--text-hi);
-        margin: 0 0 4px 0;
+        margin: 0 0 6px 0;
     }
 
     .lobby-desc {
@@ -42,16 +42,14 @@
     }
 
     .field-group {
-        margin-bottom: 18px;
+        margin-bottom: 16px;
     }
 
     .field-label {
         display: block;
         font-size: 11px;
         font-weight: 600;
-        color: var(--text-dim);
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
+        color: var(--text-hi);
         margin-bottom: 6px;
     }
 
@@ -76,9 +74,9 @@
 
     .code-input-field {
         font-family: var(--mono);
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: 0.2em;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
         text-align: center;
         text-transform: uppercase;
     }
@@ -89,23 +87,24 @@
         margin-top: 4px;
         min-height: 16px;
         display: block;
+        font-weight: 500;
     }
 
     .action-section {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 12px;
     }
 
     .btn-action-host {
         width: 100%;
         padding: 9px 16px;
         background: var(--primary);
-        color: #fff;
+        color: #ffffff;
         font-family: var(--sans);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
-        border: none;
+        border: 1px solid rgba(255,255,255,0.1);
         border-radius: var(--radius-sm);
         cursor: pointer;
         display: flex;
@@ -118,7 +117,7 @@
         background: var(--primary-hover);
     }
     .btn-action-host:disabled {
-        opacity: 0.4;
+        opacity: 0.45;
         cursor: not-allowed;
     }
 
@@ -126,12 +125,10 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 4px 0;
+        margin: 2px 0;
         color: var(--text-faint);
-        font-size: 10px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
+        font-size: 11px;
+        font-weight: 500;
     }
     .divider-text::before,
     .divider-text::after {
@@ -156,25 +153,25 @@
         border: 1px solid var(--border-md);
         color: var(--text-hi);
         font-family: var(--sans);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         border-radius: var(--radius-sm);
         cursor: pointer;
         white-space: nowrap;
-        transition: border-color 0.15s, background 0.15s;
+        transition: border-color 0.15s, color 0.15s;
     }
     .btn-action-join:hover {
         border-color: var(--border-hi);
-        background: var(--bg);
+        color: #ffffff;
     }
     .btn-action-join:disabled {
-        opacity: 0.4;
+        opacity: 0.45;
         cursor: not-allowed;
     }
 
     .lobby-foot {
-        margin-top: 20px;
-        padding-top: 16px;
+        margin-top: 18px;
+        padding-top: 14px;
         border-top: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
@@ -184,27 +181,27 @@
     }
 
     .lobby-foot a {
-        color: var(--text-dim);
+        color: var(--blue-light);
         text-decoration: none;
     }
     .lobby-foot a:hover {
-        color: var(--text-hi);
+        text-decoration: underline;
     }
 </style>
 
 <div class="lobby-wrapper">
     <div class="lobby-card">
         <div class="lobby-header">
-            <h2 class="lobby-title">Encrypted Room Lobby</h2>
+            <h2 class="lobby-title">Encrypted Chat Rooms</h2>
             <p class="lobby-desc">
-                Establish an isolated session or join an existing room with a 4-character code.
-                All messages are encrypted client-side in browser memory.
+                Pick a nickname to start a new chat room, or enter a 4-letter code from a friend to join theirs.
+                Messages are encrypted right in your browser before they touch the network.
             </p>
         </div>
 
         <form method="post" id="local-form">
             <div class="field-group">
-                <label class="field-label" for="username_input">Display Alias</label>
+                <label class="field-label" for="username_input">Your Nickname</label>
                 <input
                     type="text"
                     id="username_input"
@@ -214,6 +211,7 @@
                     maxlength="24"
                     required
                     autocomplete="off"
+                    autofocus
                 >
                 <span id="username_warning" class="field-error"></span>
             </div>
@@ -221,17 +219,17 @@
             <div class="action-section">
                 <div>
                     <button type="submit" formaction="/host" id="btn-host" class="btn-action-host">
-                        <svg viewBox="0 0 20 20" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
-                            <rect x="2" y="2" width="16" height="7" rx="1"/>
-                            <rect x="2" y="11" width="16" height="7" rx="1"/>
+                        <svg viewBox="0 0 20 20" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+                            <rect x="2" y="2" width="16" height="7" rx="1.5"/>
+                            <rect x="2" y="11" width="16" height="7" rx="1.5"/>
                             <circle cx="5.5" cy="5.5" r="1" fill="currentColor"/>
                             <circle cx="5.5" cy="14.5" r="1" fill="currentColor"/>
                         </svg>
-                        Host New Session
+                        Host a New Room
                     </button>
                 </div>
 
-                <div class="divider-text">or join with code</div>
+                <div class="divider-text">or join with a code</div>
 
                 <div class="field-group" style="margin-bottom:0">
                     <div class="join-group">
@@ -244,7 +242,7 @@
                             maxlength="4"
                         >
                         <button type="submit" formaction="/join" id="btn-join" class="btn-action-join">
-                            Join Session →
+                            Join Room →
                         </button>
                     </div>
                 </div>
@@ -252,8 +250,8 @@
         </form>
 
         <div class="lobby-foot">
-            <span>RAM ephemeral session</span>
-            <a href="/">← Return to Hub</a>
+            <span>In-memory sessions · Zero database logs</span>
+            <a href="/">← Back to Home</a>
         </div>
     </div>
 </div>
@@ -276,7 +274,7 @@ usernameInput.addEventListener('input', function () {
         .then(r => r.json())
         .then(taken => {
             if (taken.includes(val)) {
-                warningDiv.textContent = 'This alias is currently in use on the network.';
+                warningDiv.textContent = 'That nickname is currently in use in an active room.';
                 hostBtn.disabled = joinBtn.disabled = true;
                 usernameInput.style.borderColor = 'var(--rose)';
             } else {

@@ -3,71 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insightful Encryptions</title>
+    <title>QuantumChat - Encrypted Chat & Cipher Lab</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; }
 
         :root {
-            /* Engineered utilitarian developer palette */
-            --bg:          #0d1117;
-            --bg-2:        #161b22;
-            --bg-3:        #21262d;
-            --bg-panel:    #161b22;
+            /* Hand-crafted graphite & steel developer palette */
+            --bg:          #14161a;
+            --bg-2:        #1c1f26;
+            --bg-3:        #242933;
+            --bg-panel:    #1c1f26;
 
-            --text:        #e6edf3;
+            --text:        #e1e4ea;
             --text-hi:     #ffffff;
-            --text-dim:    #8b949e;
-            --text-md:     #8b949e;
-            --text-faint:  #6e7681;
-            --text-lo:     #484f58;
+            --text-dim:    #8d97a5;
+            --text-md:     #8d97a5;
+            --text-faint:  #5d6778;
+            --text-lo:     #485262;
 
-            --primary:     #1f6feb;
-            --primary-hover:#388bfd;
-            --blue:        #1f6feb;
-            --blue-light:  #58a6ff;
+            --primary:      #3777d1;
+            --primary-hover:#2966be;
+            --blue:         #3777d1;
+            --blue-light:   #5997ef;
 
-            --cyan:        #58a6ff;
-            --cyan-dim:    #1f6feb;
+            --cyan:        #3fa5d8;
+            --cyan-dim:    #257ea8;
             --cyan-glow:   transparent;
 
-            --amber:       #d29922;
-            --amber-dim:   rgba(210,153,34,0.12);
+            --amber:       #d48828;
+            --amber-dim:   rgba(212,136,40,0.12);
 
-            --rose:        #f85149;
-            --rose-dim:    rgba(248,81,73,0.12);
-            --red:         #f85149;
+            --rose:        #d64444;
+            --rose-dim:    rgba(214,68,68,0.12);
+            --red:         #d64444;
 
-            --green:       #2ea043;
-            --green-light: #3fb950;
-            --jade:        #2ea043;
-            --jade-dim:    #238636;
+            --green:       #2da154;
+            --green-light: #48bb78;
+            --jade:        #2da154;
+            --jade-dim:    #217d40;
 
-            --purple:      #8957e5;
-            --purple-light:#a371f7;
-            --violet:      #8957e5;
-            --violet-dim:  rgba(137,87,229,0.12);
+            --purple:      #805cd4;
+            --purple-light:#9e7ce6;
+            --violet:      #805cd4;
+            --violet-dim:  rgba(128,92,212,0.12);
 
-            --muted:       #6e7681;
-            --muted-2:     #8b949e;
+            --muted:       #5d6778;
+            --muted-2:     #8d97a5;
 
-            --border:      #30363d;
-            --border-md:   #484f58;
-            --border-hi:   #58a6ff;
+            --border:      #2e3543;
+            --border-md:   #3b4456;
+            --border-hi:   #4d82d6;
 
-            --mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
-            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            --mono: "SF Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-            /* Crisp, utilitarian corners - no bubbly soft radii */
+            /* Crisp engineering radii (no pillowy cards) */
             --radius-sm: 2px;
             --radius-md: 3px;
             --radius-lg: 4px;
-            --radius-xl: 4px;
+            --radius-xl: 6px;
             --rad-sm: 2px;
             --rad-md: 3px;
             --rad-lg: 4px;
@@ -84,17 +81,17 @@
         }
 
         /* Clean unobtrusive scrollbar */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 1px; }
-        ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+        ::-webkit-scrollbar-thumb { background: #2e3543; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b4456; }
 
         /* Topbar */
         .topbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 200;
             height: 48px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 18px;
             background: var(--bg-2);
             border-bottom: 1px solid var(--border);
         }
@@ -105,19 +102,8 @@
             color: var(--text-hi);
         }
 
-        .logo-mark {
-            width: 22px; height: 22px;
-            border-radius: var(--radius-sm);
-            background: var(--bg-3);
-            border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            color: var(--text-dim);
-        }
-        .logo-mark svg { display: block; }
-
         .logo-text {
-            font-size: 13px; font-weight: 600;
+            font-size: 15px; font-weight: 700;
             letter-spacing: -0.01em;
             color: var(--text-hi);
             font-family: var(--sans);
@@ -126,9 +112,9 @@
         .topbar-nav { display: flex; align-items: center; gap: 4px; }
 
         .topbar-link {
-            padding: 4px 10px;
+            padding: 5px 11px;
             border-radius: var(--radius-sm);
-            font-size: 12px; font-weight: 500;
+            font-size: 12px; font-weight: 600;
             color: var(--text-dim);
             text-decoration: none;
             transition: color 0.15s, background 0.15s;
@@ -137,13 +123,13 @@
         .topbar-link.active {
             color: var(--text-hi);
             background: var(--bg-3);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-md);
         }
 
         .btn-disconnect {
             padding: 5px 12px;
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.3);
+            background: rgba(214,68,68,0.12);
+            border: 1px solid rgba(214,68,68,0.35);
             color: #f87171;
             font-size: 12px; font-weight: 600;
             border-radius: var(--radius-sm);
@@ -152,14 +138,14 @@
             font-family: var(--sans);
         }
         .btn-disconnect:hover {
-            background: rgba(239,68,68,0.2);
+            background: rgba(214,68,68,0.22);
         }
 
         /* Chat Layout */
         .chat-page {
             height: 100vh;
             display: flex; flex-direction: column;
-            overflow: hidden; padding-top: 50px;
+            overflow: hidden; padding-top: 48px;
         }
 
         .chat-topbar-ext {
@@ -172,19 +158,6 @@
 
         .room-badge {
             display: flex; align-items: center; gap: 8px;
-        }
-
-        .room-badge-live {
-            display: inline-flex; align-items: center;
-            font-family: var(--mono);
-            font-size: 10px; font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--green-light);
-            background: rgba(46,160,67,0.12);
-            border: 1px solid rgba(46,160,67,0.3);
-            border-radius: var(--radius-sm);
-            padding: 2px 6px;
-            text-transform: uppercase;
         }
 
         .room-code-display {
@@ -362,11 +335,10 @@
 
         .panel-hdr {
             display: flex; align-items: center; justify-content: space-between;
-            font-family: var(--mono);
-            font-size: 11px; font-weight: 600;
-            letter-spacing: 0.05em; text-transform: uppercase;
-            margin-bottom: 12px;
-            color: var(--text-dim);
+            font-family: var(--sans);
+            font-size: 12px; font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-hi);
         }
         .panel-hdr::after {
             content: '';
@@ -602,8 +574,8 @@
         }
         .sol-title {
             font-family: var(--sans);
-            font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
-            text-transform: uppercase; color: var(--text-dim);
+            font-size: 12px; font-weight: 700;
+            color: var(--text-hi);
             margin-bottom: 6px; border-bottom: 1px solid var(--border);
             padding-bottom: 5px;
         }
@@ -830,23 +802,16 @@
 
     <nav class="topbar">
         <a href="/" class="topbar-logo">
-            <span class="logo-mark">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <rect x="3" y="7" width="10" height="7" rx="1"/>
-                    <path d="M5 7V5a3 3 0 016 0v2"/>
-                    <circle cx="8" cy="10.5" r="1" fill="currentColor"/>
-                </svg>
-            </span>
-            <span class="logo-text">Insightful Encryptions</span>
+            <span class="logo-text">QuantumChat</span>
         </a>
 
         <div class="topbar-nav">
             {% if page == 'chat' %}
-                <a href="/leave" class="btn-disconnect">Disconnect</a>
+                <a href="/leave" class="btn-disconnect">Leave Room</a>
             {% else %}
                 <a href="/"      class="topbar-link {{ 'active' if page == 'home' else '' }}">Home</a>
-                <a href="/lab"   class="topbar-link {{ 'active' if page == 'lab' else '' }}">Lab</a>
-                <a href="/local" class="topbar-link {{ 'active' if page == 'local' else '' }}">Online Room</a>
+                <a href="/lab"   class="topbar-link {{ 'active' if page == 'lab' else '' }}">Cipher Lab</a>
+                <a href="/local" class="topbar-link {{ 'active' if page == 'local' else '' }}">Chat Rooms</a>
             {% endif %}
         </div>
     </nav>

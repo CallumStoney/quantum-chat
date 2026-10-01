@@ -1,47 +1,50 @@
         <div class="enc-panel">
             <div class="enc-panel-top" id="enc-top">
-                <div style="margin-bottom:12px;">
-                    <div style="font-size:12px;font-weight:600;margin-bottom:10px;">Cipher Configuration</div>
-                    <select id="encryption-selector">
-                        <option value="none">Plaintext (None)</option>
-                        <option value="caesar">Caesar Cipher</option>
+                <div style="margin-bottom:14px;">
+                    <div style="font-size:12px;font-weight:700;color:var(--text-hi);margin-bottom:8px;">Outgoing Cipher</div>
+                    <select id="encryption-selector" style="width:100%;">
+                        <option value="none">Plaintext (No Encryption)</option>
+                        <option value="caesar">Caesar Shift</option>
                         <option value="affine">Affine Cipher</option>
-                        <option value="hill">Hill Cipher</option>
+                        <option value="hill">Hill Matrix Cipher</option>
                         <option value="vigenere">Vigenère Cipher</option>
-                        <option value="aes">AES-256</option>
-                        <option value="quantum">BB84 Quantum</option>
+                        <option value="aes">AES-256 Block Cipher</option>
+                        <option value="quantum">BB84 Quantum Key</option>
                     </select>
                 </div>
 
-                <div id="no-cipher-msg" style="color:var(--muted);font-style:italic;font-size:12px;margin-bottom:16px;">
-                    Select a cipher above to configure its key.</div>
+                <div id="no-cipher-msg" style="color:var(--text-dim);font-style:italic;font-size:12px;margin-bottom:16px;">
+                    No encryption selected. Messages will send in plain readable text.
+                </div>
 
+                <!-- Caesar Controls -->
                 <div id="caesar-controls" class="enc-param-wrapper" style="display:none;">
                     <div class="shift-row">
                         <div class="shift-badge" id="shift-badge">1</div>
                         <div style="flex:1;">
-                            <div class="enc-label" style="margin-bottom:6px;">Shift Amount (1-25)</div>
+                            <div class="enc-label" style="margin-bottom:6px;">Shift Amount (1 to 25)</div>
                             <input type="range" id="caesar-slider" min="1" max="25" value="1">
                         </div>
                     </div>
                     <div class="alpha-strip">
                         <div>
-                            <div class="alpha-label">Plain</div>
+                            <div class="alpha-label">Plaintext</div>
                             <div class="alpha-letters" style="color:#fff;">A B C D E</div>
                         </div>
-                        <div style="color:rgba(255,255,255,0.3);font-size:16px;">→</div>
+                        <div style="color:var(--text-faint);font-size:14px;">→</div>
                         <div>
-                            <div class="alpha-label">Cipher</div>
-                            <div id="example-shift" class="alpha-letters" style="color:var(--green-light);">B C D E F
-                            </div>
+                            <div class="alpha-label">Ciphertext</div>
+                            <div id="example-shift" class="alpha-letters" style="color:var(--green-light);">B C D E F</div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Affine Controls -->
                 <div id="affine-controls" class="enc-param-wrapper" style="display:none;">
                     <div style="display:flex; gap:10px; margin-bottom:10px;">
                         <div style="flex:1;">
-                            <div class="enc-label" style="margin-bottom:6px;">Multiplier (A)</div>
-                            <select id="affine-a" style="width:100%; padding:4px; background: var(--bg-3); border: 1px solid var(--border-md); color: var(--text); font-size: 12px; border-radius: var(--radius-sm); outline: none; cursor: pointer; font-family: inherit;">
+                            <div class="enc-label" style="margin-bottom:6px;">Multiplier (A) - must be coprime with 26</div>
+                            <select id="affine-a" style="width:100%; padding:6px 8px; background: var(--bg-3); border: 1px solid var(--border-md); color: var(--text-hi); font-size: 12px; border-radius: var(--radius-sm); outline: none; cursor: pointer; font-family: inherit;">
                                 <option value="1">1</option>
                                 <option value="3">3</option>
                                 <option value="5" selected>5</option>
@@ -58,25 +61,27 @@
                         </div>
                         <div style="flex:1;">
                             <div class="enc-label" style="margin-bottom:6px;">Shift (B)</div>
-                            <input type="number" id="affine-b" class="chat-input" value="8" min="0" max="25" style="width:100%; padding:4px;">
+                            <input type="number" id="affine-b" class="chat-input" value="8" min="0" max="25" style="width:100%; padding:6px 8px;">
                         </div>
                     </div>
                     <div class="alpha-strip">
                         <div>
-                            <div class="alpha-label">Math</div>
-                            <div class="alpha-letters" style="color:var(--purple-light); font-size:12px;">E(x) = (A * x + B) mod 26</div>
+                            <div class="alpha-label">Transformation Formula</div>
+                            <div class="alpha-letters" style="color:var(--blue-light); font-size:12px;">E(x) = (A * x + B) mod 26</div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Hill Controls -->
                 <div id="hill-controls" class="enc-param-wrapper" style="display:none;">
                     <div class="hill-header">
                         <div>
-                            <div class="enc-label" style="margin-bottom:5px;">Matrix Size</div>
+                            <div class="enc-label" style="margin-bottom:5px;">Matrix Dimensions</div>
                             <div id="hill-size-pill" class="hill-size-pill">2 × 2</div>
                         </div>
                         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
                             <div id="hill-grid-picker"></div>
-                            <span style="color:var(--muted);font-size:9px;">drag to resize</span>
+                            <span style="color:var(--text-faint);font-size:10px;">drag to resize</span>
                         </div>
                     </div>
                     <div id="hill-matrix-container"></div>
@@ -84,10 +89,12 @@
                         <div class="valid-dot"></div><span>Enter matrix values to validate...</span>
                     </div>
                 </div>
+
+                <!-- Text Key Controls (Vigenère / AES / Quantum) -->
                 <div id="text-key-controls" class="enc-param-wrapper" style="display:none;">
-                    <div class="enc-label">Keyword / Seed</div>
+                    <div class="enc-label">Secret Keyword or Key</div>
                     <div class="key-input-wrap">
-                        <svg class="key-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor"
+                        <svg class="key-icon" viewBox="0 0 24 24" width="15" height="15" stroke="currentColor"
                             stroke-width="2" fill="none">
                             <path
                                 d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
@@ -96,15 +103,14 @@
                             style="width:100%;" oninput="updateKeyMeta()">
                     </div>
                     <div class="key-meta">
-                        <span class="key-len" id="key-length-label">6 CHARS</span>
+                        <span class="key-len" id="key-length-label">6 chars</span>
                         <div class="key-bars" id="key-strength-bars"></div>
                     </div>
                 </div>
 
-                <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:8px;">
-                    <div class="enc-label" style="margin-bottom:8px;">Example Message (Live Preview)</div>
-                    <textarea id="example-msg-input" class="chat-input" style="width:100%; height:60px; resize:none;"
-                        placeholder="Type a message to preview...">HELLO WORLD</textarea>
+                <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:8px;">
+                    <div class="enc-label" style="margin-bottom:6px;">Live Cipher Preview</div>
+                    <textarea id="example-msg-input" class="chat-input" style="width:100%; height:55px; resize:none;"
+                        placeholder="Type a sample message to preview encryption...">HELLO WORLD</textarea>
                 </div>
             </div>
-

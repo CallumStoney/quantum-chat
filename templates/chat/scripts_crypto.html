@@ -329,7 +329,7 @@
     // -- Key meta ------------------------------------------------
     function updateKeyMeta() {
         const len = textKeyInp.value.length;
-        document.getElementById('key-length-label').textContent = len + ' CHAR' + (len !== 1 ? 'S' : '');
+        document.getElementById('key-length-label').textContent = len + ' char' + (len !== 1 ? 's' : '');
         const el = document.getElementById('key-strength-bars'); el.innerHTML = '';
         for (let i = 0; i < 10; i++) {
             const b = document.createElement('div');

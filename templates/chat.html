@@ -4,24 +4,28 @@
 <div class="chat-page">
     <div class="chat-topbar-ext">
         <div class="room-badge">
-            <span class="room-badge-live">Live</span>
-            <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size: 11px; font-weight: 600; color: var(--text-dim);">Room:</span>
+            <div style="display:flex;align-items:center;gap:6px;">
                 <span class="room-code-display">{{ room_code }}</span>
                 <button class="btn-copy-room" onclick="copyRoomCode(this)" data-code="{{ room_code }}" title="Copy room code">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                     </svg>
                 </button>
             </div>
         </div>
+        <div style="font-size: 11px; color: var(--text-dim);">
+            User: <strong style="color: var(--text-hi);">{{ current_user }}</strong>
+            {% if is_host %}<span style="color: var(--amber); font-weight: 600; margin-left: 4px;">[Host]</span>{% endif %}
+        </div>
     </div>
     <div class="chat-body">
 
         <div class="chat-col" id="chat-col">
-            <div class="room-quick-guide" id="welcome-guide" style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:8px 8px 0;padding:8px 12px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text-dim);line-height:1.4;">
+            <div class="room-quick-guide" id="welcome-guide" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 8px 0;padding:6px 10px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text-dim);">
                 <div>
-                    <span style="font-weight:600;color:var(--text-hi);">Session Connected:</span> Configure your cipher in the right inspector pane. Payloads are encrypted locally before transmission. Click the search icon on any message to inspect its character trace.
+                    Configure cipher & key on the right. Outgoing messages encrypt locally before transmission.
                 </div>
                 <button class="btn-close-guide" onclick="closeWelcomeGuide()" title="Dismiss" style="background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:12px;padding:0;line-height:1;flex-shrink:0;">✕</button>
             </div>
@@ -42,10 +46,9 @@
 
             <div class="enc-panel-bottom">
                 <div id="sel-details" class="tabs-wrap">
-                    <div style="background:var(--bg-3);padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:10px;flex-shrink:0;">
-                        <div style="color:var(--text-faint);font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">
-                            Ciphertext Preview</div>
-                        <div id="sel-payload" style="color:var(--blue-light);font-family:var(--mono);word-break:break-all;font-size:13px;">HELLO WORLD</div>
+                    <div style="background:var(--bg-3);padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:8px;flex-shrink:0;">
+                        <div style="color:var(--text-faint);font-size:10px;margin-bottom:3px;font-weight:600;">Ciphertext Preview</div>
+                        <div id="sel-payload" style="color:var(--blue-light);font-family:var(--mono);word-break:break-all;font-size:12px;">HELLO WORLD</div>
                     </div>
                     <div class="tabs-nav" style="flex-shrink:0;">
                         <button class="tab-btn active" onclick="switchTab('guide',event)">Guide & Info</button>

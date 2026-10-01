@@ -54,12 +54,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        color: var(--text-dim);
+        margin-bottom: 6px;
+        color: var(--text-hi);
     }
 
     /* === TEXTAREA / OUTPUT === */
@@ -168,11 +166,9 @@
         flex-shrink: 0;
     }
     .lab-preview-label {
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: var(--text-faint);
+        color: var(--text-dim);
         margin-bottom: 4px;
     }
     .lab-preview-text {
@@ -208,8 +204,6 @@
         cursor: pointer;
         font-weight: 600;
         font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
         border-bottom: 2px solid transparent;
         font-family: var(--sans);
         transition: color 0.15s, border-color 0.15s;
@@ -378,7 +372,7 @@
     <div class="lab-config" id="lab-config">
         <div class="lab-config-inner">
             <!-- PLAINTEXT INPUT -->
-            <div class="lab-section-hdr"><span>Plaintext Input</span></div>
+            <div class="lab-section-hdr"><span>Message Input</span></div>
             <textarea class="lab-textarea" id="lab-plaintext" spellcheck="false" placeholder="Enter text to encrypt...">HELLO WORLD</textarea>
 
             <hr class="lab-separator">
@@ -398,7 +392,7 @@
             <hr class="lab-separator">
 
             <!-- KEY CONFIGURATION (DYNAMIC) -->
-            <div class="lab-section-hdr"><span>Key Configuration</span></div>
+            <div class="lab-section-hdr"><span>Key Settings</span></div>
             <div id="lab-key-config"></div>
 
             <!-- ACTION BUTTONS -->
@@ -411,7 +405,7 @@
             </div>
 
             <!-- CIPHERTEXT OUTPUT -->
-            <div class="lab-section-hdr"><span>Ciphertext Output</span></div>
+            <div class="lab-section-hdr"><span>Encrypted Output</span></div>
             <div class="lab-output" id="lab-ciphertext">-</div>
         </div>
     </div>
@@ -423,16 +417,16 @@
     <div class="lab-edu" id="lab-edu">
         <!-- LIVE PREVIEW -->
         <div class="lab-preview-box">
-            <div class="lab-preview-label">Live Cipher Preview</div>
+            <div class="lab-preview-label">Live Output Preview</div>
             <div class="lab-preview-text" id="lab-preview-text">-</div>
         </div>
 
         <!-- TAB NAVIGATION -->
         <div class="lab-tabs-wrap">
             <div class="lab-tabs-nav">
-                <button class="lab-tab-btn active" onclick="labSwitchTab('guide', event)">Guide / Info</button>
-                <button class="lab-tab-btn" onclick="labSwitchTab('steps', event)">Step-by-Step</button>
-                <button class="lab-tab-btn" onclick="labSwitchTab('decrypt', event)">Decrypt Tools</button>
+                <button class="lab-tab-btn active" onclick="labSwitchTab('guide', event)">Overview & History</button>
+                <button class="lab-tab-btn" onclick="labSwitchTab('steps', event)">Step-by-Step Breakdown</button>
+                <button class="lab-tab-btn" onclick="labSwitchTab('decrypt', event)">Cracking & Decrypt</button>
             </div>
 
             <!-- ===== GUIDE TAB ===== -->
@@ -1543,7 +1537,7 @@
             <div class="algo-terminal anim-in">
                 ${algoHeader('BB84 QUANTUM CHANNEL SIMULATION','var(--purple-light)')}
                 <div class="algo-body">
-                    <div id="lab-q-stage-label" style="color:var(--muted);font-size:10px;letter-spacing:1.5px;margin-bottom:6px;">WAITING TO START...</div>
+                    <div id="lab-q-stage-label" style="color:var(--text-dim);font-size:11px;font-weight:600;margin-bottom:6px;">Ready to simulate transmission</div>
                     <div id="lab-q-photon-display" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:8px;">
                         <button class="ctrl-btn" id="lab-q-step-btn">▶ Next Stage</button>
@@ -1792,7 +1786,7 @@
                 </div>
                 <div class="manual-body">
                     <div class="step-box">
-                        <div class="step-title">Step 1: Kasiski examination - find key length</div>
+                        <div class="step-title">Step 1: Kasiski key length analysis</div>
                         ${reps.length ? `<div style="color:var(--muted-2);font-size:11px;">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> repeats at [${reps[0][1].join(', ')}]<br>Gap = ${reps[0][1][1]-reps[0][1][0]} → factors include key length</div>` : `<div style="color:var(--muted-2);font-size:11px;">Text too short for Kasiski. Estimate key length by other means.</div>`}
                         <div class="prompt-line" style="margin-top:8px;">
                             <span class="prompt-sym">$</span><span style="color:var(--muted-2);font-size:11px;">key_length =</span>

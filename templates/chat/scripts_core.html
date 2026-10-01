@@ -86,7 +86,7 @@
         if (data.type === 'msg-system') {
             txt.textContent = data.msg; wrap.classList.add('msg-system'); wrap.appendChild(txt);
         } else {
-            txt.innerHTML = `<span style="color:var(--blue-light);font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;">${data.username}</span><br><span style="font-size:14px;margin-top:2px;display:inline-block;${data.is_bold ? 'font-weight:900;color:var(--red);' : ''}">${data.msg}</span>`;
+            txt.innerHTML = `<span style="color:var(--blue-light);font-weight:600;font-size:12px;">${data.username}</span><br><span style="font-size:13px;margin-top:2px;display:inline-block;${data.is_bold ? 'font-weight:700;color:var(--text-hi);' : ''}">${data.msg}</span>`;
             wrap.classList.add('msg-user-wrap');
 
             const acts = document.createElement('div'); acts.className = 'msg-actions';
