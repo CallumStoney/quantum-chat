@@ -121,16 +121,16 @@
     }
     .lab-btn-encrypt {
         flex: 1;
-        padding: 9px 14px;
-        background: linear-gradient(180deg, #d48b38 0%, #ba7526 100%);
-        color: #121418;
-        border: 1px solid #e29845;
+        padding: 8px 14px;
+        background: var(--primary);
+        color: #ffffff;
+        border: 1px solid rgba(240, 246, 252, 0.1);
         border-radius: var(--radius-sm);
         font-size: 12px;
-        font-weight: 700;
+        font-weight: 600;
         cursor: pointer;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 1px 3px rgba(0,0,0,0.4);
-        transition: all 0.15s;
+        box-shadow: var(--shadow-sm);
+        transition: background 0.15s ease, border-color 0.15s ease;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -138,30 +138,49 @@
         font-family: var(--sans);
     }
     .lab-btn-encrypt:hover {
-        background: linear-gradient(180deg, #e09845 0%, #c98230 100%);
-        border-color: #f0a855;
+        background: var(--primary-hover);
     }
     .lab-btn-swap {
-        padding: 9px 14px;
-        background: linear-gradient(180deg, #2b313d 0%, #1f232b 100%);
-        border: 1px solid #3c4556;
-        color: var(--text-dim);
+        padding: 8px 14px;
+        background: var(--bg-3);
+        border: 1px solid var(--border-md);
+        color: var(--text);
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 500;
         border-radius: var(--radius-sm);
         cursor: pointer;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.35);
         transition: all 0.15s;
         font-family: var(--sans);
     }
     .lab-btn-swap:hover {
         border-color: var(--border-hi);
         color: var(--text-hi);
+        background: var(--bg-hover);
+    }
+    .btn-copy {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 3px 8px;
+        background: var(--bg-3);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-dim);
+        cursor: pointer;
+        transition: all 0.15s;
+        font-family: var(--sans);
+    }
+    .btn-copy:hover {
+        color: var(--text-hi);
+        border-color: var(--border-md);
+        background: var(--bg-hover);
     }
 
     /* === LIVE PREVIEW BOX === */
     .lab-preview-box {
-        background: var(--bg-inset);
+        background: var(--bg-2);
         border: 1px solid var(--border);
         border-radius: var(--radius-sm);
         padding: 10px 14px;
@@ -169,25 +188,23 @@
         flex-shrink: 0;
     }
     .lab-preview-label {
-        font-size: 10px;
-        font-weight: 700;
-        color: var(--text-faint);
-        font-family: var(--mono);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-dim);
+        font-family: var(--sans);
         margin-bottom: 4px;
     }
     .lab-preview-text {
         font-family: var(--mono);
         font-size: 13px;
-        color: var(--amber);
+        color: var(--text-hi);
         word-break: break-all;
         max-height: 2.5rem;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    /* === TABS (Segmented hardware switcher) === */
+    /* === TABS === */
     .lab-tabs-wrap {
         display: flex;
         flex-direction: column;
@@ -197,34 +214,34 @@
     }
     .lab-tabs-nav {
         display: flex;
-        background: var(--bg-inset);
-        padding: 3px;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border);
-        margin: 10px 14px 6px;
+        background: transparent;
+        padding: 0 14px;
+        border-bottom: 1px solid var(--border);
+        margin: 10px 0 0;
         flex-shrink: 0;
         gap: 2px;
     }
     .lab-tab-btn {
-        flex: 1;
         background: transparent;
-        border: 1px solid transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
         color: var(--text-dim);
-        padding: 7px 10px;
+        padding: 8px 14px;
         cursor: pointer;
-        font-weight: 600;
-        font-size: 11px;
-        border-radius: 2px;
+        font-weight: 500;
+        font-size: 12px;
+        border-radius: 0;
         font-family: var(--sans);
-        transition: all 0.12s ease;
+        transition: color 0.12s ease, border-color 0.12s ease;
         text-align: center;
     }
     .lab-tab-btn:hover { color: var(--text-hi); }
     .lab-tab-btn.active {
-        background: var(--bg-2);
+        background: transparent;
         color: var(--text-hi);
-        border-color: var(--border-md);
-        box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        border-bottom-color: var(--primary);
+        font-weight: 600;
+        box-shadow: none;
     }
     .lab-tab-pane {
         display: none;
@@ -385,13 +402,13 @@
     <div class="lab-config" id="lab-config">
         <div class="lab-config-inner">
             <!-- PLAINTEXT INPUT -->
-            <div class="lab-section-hdr"><span>Test Vector Input</span></div>
+            <div class="lab-section-hdr"><span>Plaintext Input</span></div>
             <textarea class="lab-textarea" id="lab-plaintext" spellcheck="false" placeholder="Enter text to encrypt...">HELLO WORLD</textarea>
 
             <hr class="lab-separator">
 
             <!-- CIPHER ALGORITHM -->
-            <div class="lab-section-hdr"><span>Algorithm Selection</span></div>
+            <div class="lab-section-hdr"><span>Cipher Algorithm</span></div>
             <select id="lab-cipher" class="lab-select">
                 <option value="none">Plaintext (None)</option>
                 <option value="caesar" selected>Caesar Shift</option>
@@ -405,20 +422,26 @@
             <hr class="lab-separator">
 
             <!-- KEY CONFIGURATION (DYNAMIC) -->
-            <div class="lab-section-hdr"><span>Parameter Configuration</span></div>
+            <div class="lab-section-hdr"><span>Cipher Parameters</span></div>
             <div id="lab-key-config"></div>
 
             <!-- ACTION BUTTONS -->
             <div class="lab-actions">
                 <button class="lab-btn-encrypt" id="lab-encrypt-btn">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    Encrypt Test Vector
+                    Encrypt
                 </button>
-                <button class="lab-btn-swap" id="lab-swap-btn">&varr; Swap</button>
+                <button class="lab-btn-swap" id="lab-swap-btn">&varr; Swap to Input</button>
             </div>
 
             <!-- CIPHERTEXT OUTPUT -->
-            <div class="lab-section-hdr"><span>Encrypted Payload Stream</span></div>
+            <div class="lab-section-hdr">
+                <span>Encrypted Output</span>
+                <button class="btn-copy" id="lab-copy-btn" onclick="labCopyOutput()" title="Copy output">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span id="lab-copy-label">Copy</span>
+                </button>
+            </div>
             <div class="lab-output" id="lab-ciphertext">-</div>
         </div>
     </div>
@@ -430,16 +453,16 @@
     <div class="lab-edu" id="lab-edu">
         <!-- LIVE PREVIEW -->
         <div class="lab-preview-box">
-            <div class="lab-preview-label">Live Output Stream Preview</div>
+            <div class="lab-preview-label">Live Output Preview</div>
             <div class="lab-preview-text" id="lab-preview-text">-</div>
         </div>
 
         <!-- TAB NAVIGATION -->
         <div class="lab-tabs-wrap">
             <div class="lab-tabs-nav">
-                <button class="lab-tab-btn active" onclick="labSwitchTab('guide', event)">Specification & Cryptanalysis</button>
-                <button class="lab-tab-btn" onclick="labSwitchTab('steps', event)">Character Trace Matrix</button>
-                <button class="lab-tab-btn" onclick="labSwitchTab('decrypt', event)">Cracking Workbench</button>
+                <button class="lab-tab-btn active" onclick="labSwitchTab('guide', event)">Guide & Details</button>
+                <button class="lab-tab-btn" onclick="labSwitchTab('steps', event)">Step-by-Step Breakdown</button>
+                <button class="lab-tab-btn" onclick="labSwitchTab('decrypt', event)">Decrypt & Crack</button>
             </div>
 
             <!-- ===== GUIDE TAB ===== -->
@@ -451,7 +474,7 @@
             <div id="lab-tab-steps" class="lab-tab-pane">
                 <div id="lab-steps-content">
                     <div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:11px;">
-                        Awaiting input vector. Execute encryption to populate the character-by-character transformation matrix.
+                        Enter text and click Encrypt to view the step-by-step mathematical transformation.
                     </div>
                 </div>
             </div>
@@ -605,7 +628,7 @@
             if (data.error) throw new Error(data.error);
             return data.ciphertext;
         } catch (e) {
-            return '[' + algorithm.toUpperCase() + ', Server encryption: ' + e.message + ']';
+            return '[' + algorithm.toUpperCase() + ' error: ' + e.message + ']';
         }
     }
 
@@ -635,7 +658,7 @@
     // ===========================================================
     function labRenderKeyConfig(cipher) {
         if (cipher === 'none') {
-            elKeyConfig.innerHTML = '<div style="color:var(--text-faint);font-style:italic;font-size:11px;">Identity mapping active. Parameter vector not required.</div>';
+            elKeyConfig.innerHTML = '<div style="color:var(--text-faint);font-style:italic;font-size:11px;">No parameters needed for plaintext.</div>';
             return;
         }
         if (cipher === 'caesar') {
@@ -717,7 +740,7 @@
                     </div>
                     <div id="lab-hill-matrix-container" style="display:grid;gap:6px;background:rgba(0,0,0,0.3);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);transition:border-color 0.3s,box-shadow 0.3s;"></div>
                     <div id="lab-hill-validation" class="matrix-valid pending">
-                        <div class="valid-dot"></div><span>Enter matrix values to validate...</span>
+                        <div class="valid-dot"></div><span>Enter matrix values to check invertibility...</span>
                     </div>
                 </div>`;
             labInitHillPicker();
@@ -733,7 +756,7 @@
                         <input type="text" id="lab-vig-key" class="chat-input key-inp" value="SECRET" style="width:100%;">
                     </div>
                     <div class="key-meta">
-                        <span class="key-len" id="lab-vig-len">6 CHARS</span>
+                        <span class="key-len" id="lab-vig-len">6 chars</span>
                         <div class="key-bars" id="lab-vig-bars"></div>
                     </div>
                 </div>`;
@@ -757,7 +780,7 @@
                         <input type="text" id="lab-aes-key" class="chat-input key-inp" value="MySecretKey256!" style="width:100%;">
                     </div>
                     <div class="key-meta">
-                        <span class="key-len" id="lab-aes-len">15 CHARS</span>
+                        <span class="key-len" id="lab-aes-len">15 chars</span>
                         <div class="key-bars" id="lab-aes-bars"></div>
                     </div>
                 </div>`;
@@ -780,7 +803,7 @@
                         <input type="text" id="lab-q-seed" class="chat-input key-inp" value="42" style="width:100%;">
                     </div>
                     <div class="key-meta">
-                        <span class="key-len" style="color:var(--purple-light);">BB84 PROTOCOL</span>
+                        <span class="key-len" style="color:var(--purple-light);">BB84 Simulation</span>
                     </div>
                 </div>`;
             labKey = '42';
@@ -795,7 +818,7 @@
         const len = (document.getElementById('lab-vig-key')?.value || '').length;
         const lbl = document.getElementById('lab-vig-len');
         const bars = document.getElementById('lab-vig-bars');
-        if (lbl) lbl.textContent = len + ' CHAR' + (len !== 1 ? 'S' : '');
+        if (lbl) lbl.textContent = len + ' char' + (len !== 1 ? 's' : '');
         if (bars) {
             bars.innerHTML = '';
             for (let i = 0; i < 10; i++) {
@@ -810,7 +833,7 @@
         const len = (document.getElementById('lab-aes-key')?.value || '').length;
         const lbl = document.getElementById('lab-aes-len');
         const bars = document.getElementById('lab-aes-bars');
-        if (lbl) lbl.textContent = len + ' CHAR' + (len !== 1 ? 'S' : '');
+        if (lbl) lbl.textContent = len + ' char' + (len !== 1 ? 's' : '');
         if (bars) {
             bars.innerHTML = '';
             for (let i = 0; i < 10; i++) {
@@ -832,8 +855,8 @@
         function hl(sz, commit) {
             [...picker.children].forEach(el => {
                 const lit = parseInt(el.dataset.r) <= sz && parseInt(el.dataset.c) <= sz;
-                el.style.background = lit ? (commit ? 'rgba(212,139,56,0.45)' : 'rgba(212,139,56,0.2)') : 'transparent';
-                el.style.borderColor = lit ? 'var(--amber)' : 'var(--border)';
+                el.style.background = lit ? (commit ? 'rgba(31,111,235,0.45)' : 'rgba(31,111,235,0.2)') : 'transparent';
+                el.style.borderColor = lit ? 'var(--blue-light)' : 'var(--border)';
             });
             document.getElementById('lab-hill-size-pill').textContent = sz + ' × ' + sz;
         }
@@ -942,7 +965,7 @@
             if (mat && labValidateHillMatrix()) {
                 result = hillEncrypt(labPlaintext, mat);
             } else {
-                result = '[Invalid Matrix, Cannot Encrypt]';
+                result = '[Invalid matrix - cannot encrypt]';
             }
         } else if (labCipher === 'aes') {
             result = await serverEncrypt('aes', labPlaintext, String(labKey));
@@ -951,8 +974,8 @@
         }
 
         labCiphertext = result;
-        elPreview.textContent = result || ', ';
-        elCipherOut.textContent = result || ', ';
+        elPreview.textContent = result || '-';
+        elCipherOut.textContent = result || '-';
     }
 
     // ===========================================================
@@ -970,8 +993,8 @@
     // ===========================================================
     function labSwap() {
         elPlain.value = labCiphertext || '';
-        elCipherOut.textContent = ', ';
-        elPreview.textContent = ', ';
+        elCipherOut.textContent = '-';
+        elPreview.textContent = '-';
         labCiphertext = '';
         labUpdatePreview();
     }
@@ -1030,7 +1053,7 @@
     const m = s => `<code style="font-family:var(--mono);background:var(--bg-inset);padding:2px 6px;border-radius:var(--radius-sm);font-size:11px;border:1px solid var(--border);">${s}</code>`;
 
     function buildTable(rows, hdrs) {
-        if (!rows || !rows.length) return '<div style="color:var(--text-faint);padding:10px;font-size:11px;">Input stream insufficient for permutation table.</div>';
+        if (!rows || !rows.length) return '<div style="color:var(--text-faint);padding:10px;font-size:11px;">Not enough characters to display step table.</div>';
         return `<table class="sol-table"><thead><tr>${hdrs.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`;
     }
 
@@ -1044,7 +1067,7 @@
         let html = '';
 
         if (cipher === 'none') {
-            html = '<div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:11px;">Identity mapping active. Plaintext stream passes through unpermutated.</div>';
+            html = '<div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:11px;">No cipher selected. Plaintext passes through unchanged.</div>';
         } else if (cipher === 'caesar') {
             const s = parseInt(labKey) || 0;
             let rows = [];
@@ -1170,7 +1193,7 @@
     function labRenderDecryptAlgo(cipher) {
         const container = elDecryptAlgo;
         if (cipher === 'none') {
-            container.innerHTML = '<div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:12px;">Select an active cipher algorithm above to initialize computational cryptanalysis routines.</div>';
+            container.innerHTML = '<div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:12px;">Select a cipher algorithm above to run automated cryptanalysis routines.</div>';
             return;
         }
         if (cipher === 'caesar') renderLabCaesarAlgo(container);
@@ -1190,16 +1213,16 @@
 
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('CAESAR ROTATIONAL SEARCH // CHI-SQUARED FREQ')}
+                ${algoHeader('Caesar Cipher: Letter Frequency Analysis')}
                 <div class="algo-body">
                     <div class="algo-pseudocode">
                         <div class="algo-line"><span class="kw">for</span> (shift = <span class="val">1</span>; shift &lt;= <span class="val">25</span>; shift++) {</div>
                         <div class="algo-line">&nbsp;&nbsp;candidate = <span class="fn">reverse_shift</span>(ciphertext, shift)</div>
-                        <div class="algo-line">&nbsp;&nbsp;score = <span class="fn">freq_score</span>(candidate) <span class="cm">// evaluate unigram distribution</span></div>
+                        <div class="algo-line">&nbsp;&nbsp;score = <span class="fn">freq_score</span>(candidate) <span class="cm">// check letter frequencies</span></div>
                         <div class="algo-line">&nbsp;&nbsp;<span class="kw">if</span> (score &gt; best_score) best = {shift, candidate}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">VECTOR: <span style="color:var(--text-hi);">"${ciphertext.substring(0,30)}${ciphertext.length > 30 ? '...' : ''}"</span></div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Ciphertext: <span style="color:var(--text-hi);font-family:var(--mono);">"${ciphertext.substring(0,30)}${ciphertext.length > 30 ? '...' : ''}"</span></div>
                     <div id="lab-caesar-scan" class="scan-results"></div>
                     <div class="algo-controls">
                         <button class="ctrl-btn" id="lab-cs-step">▶ Single Step</button>
@@ -1226,7 +1249,7 @@
                 <span class="scan-text">${candidate.substring(0,14)}${candidate.length > 14 ? '...' : ''}</span>
                 <span class="scan-bar">${'█'.repeat(bar)}${'░'.repeat(10-bar)}</span>
                 <span class="scan-score">${score}</span>
-                ${isKey ? '<span class="scan-tag">[MATCH]</span>' : ''}`;
+                ${isKey ? '<span class="scan-tag">Found</span>' : ''}`;
             scanEl.appendChild(row);
             scanEl.scrollTop = scanEl.scrollHeight;
             if (isKey || step >= 25) {
@@ -1235,7 +1258,7 @@
                 const s = document.getElementById('lab-cs-step'); if(s) s.disabled = true;
                 const a = document.getElementById('lab-cs-auto'); if(a) a.disabled = true;
                 const res = document.getElementById('lab-caesar-algo-result');
-                if (res) res.innerHTML = `<div class="algo-success">[ANALYSIS COMPLETE] True shift offset: k = ${totalKey}<br>→ Recovered vector: "${plaintext}"</div>`;
+                if (res) res.innerHTML = `<div class="algo-success">✓ Key offset identified: k = ${totalKey}<br>Decrypted text: "${plaintext}"</div>`;
             }
         }
         function reset() {
@@ -1269,17 +1292,17 @@
 
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('AFFINE LINEAR CONGRUENCE SOLVER')}
+                ${algoHeader('Affine Cipher: Modular Inverse & Key Solver')}
                 <div class="algo-body">
                     <div class="algo-pseudocode">
-                        <div class="algo-line"><span class="kw">for</span> (a <span class="kw">in</span> {1,3,5,7,9,11,15,17,19,21,23,25}) { <span class="cm">// coprime to 26</span></div>
+                        <div class="algo-line"><span class="kw">for</span> (a <span class="kw">in</span> {1,3,5,7,9,11,15,17,19,21,23,25}) { <span class="cm">// valid multiplier check</span></div>
                         <div class="algo-line">&nbsp;&nbsp;<span class="kw">for</span> (b = 0; b &lt; 26; b++) {</div>
                         <div class="algo-line">&nbsp;&nbsp;&nbsp;&nbsp;candidate = <span class="fn">reverse_affine</span>(ciphertext, a, b)</div>
                         <div class="algo-line">&nbsp;&nbsp;&nbsp;&nbsp;score = <span class="fn">freq_score</span>(candidate)</div>
                         <div class="algo-line">&nbsp;&nbsp;}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);margin-top:4px;">EVALUATING ${combos.length} PARAMETER TUPLES (a, b) IN Z_26^* × Z_26:</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);margin-top:4px;">Testing valid multiplier and shift pairs (a, b):</div>
                     <div id="lab-affine-scan" class="scan-results"></div>
                     <div class="algo-controls">
                         <button class="ctrl-btn" id="lab-as-step">▶ Step (×10)</button>
@@ -1310,7 +1333,7 @@
                     const bar = Math.min(10, Math.round(score / 6));
                     const row = document.createElement('div');
                     row.className = 'scan-row anim-in' + (isKey ? ' scan-match' : '');
-                    row.innerHTML = `<span class="scan-shift">a=${a}, b=${b}</span><span class="scan-text">${candidate.substring(0,14)}</span><span class="scan-bar">${'█'.repeat(bar)}${'░'.repeat(10-bar)}</span><span class="scan-score">${score}</span>${isKey ? '<span class="scan-tag">[MATCH]</span>' : ''}`;
+                    row.innerHTML = `<span class="scan-shift">a=${a}, b=${b}</span><span class="scan-text">${candidate.substring(0,14)}</span><span class="scan-bar">${'█'.repeat(bar)}${'░'.repeat(10-bar)}</span><span class="scan-score">${score}</span>${isKey ? '<span class="scan-tag">Found</span>' : ''}`;
                     scanEl.appendChild(row);
                     scanEl.scrollTop = scanEl.scrollHeight;
                 }
@@ -1320,7 +1343,7 @@
                     const s2 = document.getElementById('lab-as-step'); if(s2) s2.disabled = true;
                     const a2 = document.getElementById('lab-as-auto'); if(a2) a2.disabled = true;
                     const res = document.getElementById('lab-affine-algo-result');
-                    if (res) res.innerHTML = `<div class="algo-success">[ANALYSIS COMPLETE] Keypair identified: a = ${aKey}, b = ${bKey}<br>→ Recovered vector: "${plaintext}"</div>`;
+                    if (res) res.innerHTML = `<div class="algo-success">✓ Key pair identified: a = ${aKey}, b = ${bKey}<br>Decrypted text: "${plaintext}"</div>`;
                     return;
                 }
             }
@@ -1328,7 +1351,7 @@
                 done = true;
                 if (timer) { clearInterval(timer); timer = null; }
                 const res = document.getElementById('lab-affine-algo-result');
-                if (res) res.innerHTML = `<div class="algo-success">[ANALYSIS COMPLETE] Optimal candidate identified: a = ${bestA}, b = ${bestB}<br>→ Recovered vector: "${bestText}"</div>`;
+                if (res) res.innerHTML = `<div class="algo-success">✓ Best candidate identified: a = ${bestA}, b = ${bestB}<br>Decrypted text: "${bestText}"</div>`;
             }
         }
         function reset() {
@@ -1360,18 +1383,18 @@
         const plaintext = labPlaintext || '';
 
         const steps = [
-            { title:'INPUT: Key Matrix K', body:`<div class="mat-disp">${printMat(K).replace(/ /g,'&nbsp;')}</div>` },
-            { title:'STEP 1: Determinant det(K)', body:`<div style="line-height:2;">${n===2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:var(--green-light);">${rawDet}</span>` : `det(K) = <span style="color:var(--green-light);">${rawDet}</span>`}<br>det mod 26 = <span style="color:var(--green-light);font-weight:700;">${det}</span></div>` },
-            { title:'STEP 2: Modular Multiplicative Inverse', body:`<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:var(--green-light);font-weight:700;">${detInv}</span>  <span style="color:var(--text-faint);">(${det} × ${detInv} = ${det*detInv} ≡ ${(det*detInv)%26} mod 26)</span></div>` },
-            { title:'STEP 3: Adjugate Matrix adj(K)', body:`<div class="mat-disp">${printMat(adj.map(r=>r.map(mod26))).replace(/ /g,'&nbsp;')}</div>` },
-            { title:'STEP 4: Inverted Matrix K⁻¹ = det⁻¹ · adj(K) mod 26', body:`<div class="mat-disp">${printMat(invM).replace(/ /g,'&nbsp;')}</div>` },
-            { title:'STEP 5: Block Vector Decoding', body:`<div class="algo-success">[MATRIX INVERTED] K⁻¹ applied to vector blocks.<br>→ Recovered vector: "${plaintext}"</div>` },
+            { title:'Key Matrix K', body:`<div class="mat-disp">${printMat(K).replace(/ /g,'&nbsp;')}</div>` },
+            { title:'Step 1: Determinant det(K)', body:`<div style="line-height:2;">${n===2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:var(--green-light);">${rawDet}</span>` : `det(K) = <span style="color:var(--green-light);">${rawDet}</span>`}<br>det mod 26 = <span style="color:var(--green-light);font-weight:700;">${det}</span></div>` },
+            { title:'Step 2: Modular Multiplicative Inverse', body:`<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:var(--green-light);font-weight:700;">${detInv}</span>  <span style="color:var(--text-faint);">(${det} × ${detInv} = ${det*detInv} ≡ ${(det*detInv)%26} mod 26)</span></div>` },
+            { title:'Step 3: Adjugate Matrix adj(K)', body:`<div class="mat-disp">${printMat(adj.map(r=>r.map(mod26))).replace(/ /g,'&nbsp;')}</div>` },
+            { title:'Step 4: Inverse Matrix K⁻¹ = det⁻¹ · adj(K) mod 26', body:`<div class="mat-disp">${printMat(invM).replace(/ /g,'&nbsp;')}</div>` },
+            { title:'Step 5: Decrypted Result', body:`<div class="algo-success">✓ Matrix inverted and applied.<br>Decrypted text: "${plaintext}"</div>` },
         ];
 
         let revealed = 0;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('HILL MODULAR MATRIX INVERSION // GL(n, Z_26)','var(--amber)')}
+                ${algoHeader('Hill Cipher: Modular Matrix Inversion')}
                 <div class="algo-body">
                     <div id="lab-hill-algo-steps" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:6px;">
@@ -1417,24 +1440,24 @@
         const cols = Array.from({length: keyLen}, (_,ci) => ct.split('').filter((_,i) => i % keyLen === ci));
 
         const steps = [
-            { title:'INPUT PAYLOAD', body:`<div style="color:var(--text-hi);font-family:var(--mono);font-size:11px;word-break:break-all;">"${(labCiphertext||'').substring(0,40)}${(labCiphertext||'').length > 40 ? '...' : ''}"</div>` },
-            { title:'STAGE 1: Kasiski Duplication Analysis', body: reps.length ? `Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--amber);font-weight:700;">${gap}</span> → Candidate period factor: ${gap}` : `Text stream below Kasiski duplication threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
-            { title:`STAGE 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c,i) => `Coset ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0,25)}...</span>`).join('<br>')}` },
-            { title:'STAGE 3: Coset Frequency Distribution', body: cols.map((col,ci) => {
+            { title:'Ciphertext', body:`<div style="color:var(--text-hi);font-family:var(--mono);font-size:11px;word-break:break-all;">"${(labCiphertext||'').substring(0,40)}${(labCiphertext||'').length > 40 ? '...' : ''}"</div>` },
+            { title:'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--blue-light);">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-light);font-weight:700;">${gap}</span> → Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
+            { title:`Stage 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c,i) => `Coset ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0,25)}...</span>`).join('<br>')}` },
+            { title:'Stage 3: Coset Frequency Distribution', body: cols.map((col,ci) => {
                 const counts = {};
                 col.forEach(c => { counts[c] = (counts[c]||0)+1; });
                 const top = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,3);
                 const shift = ((top[0]?.[0]?.charCodeAt(0) || 69) - 69 + 26) % 26;
                 return `Coset ${ci}: max="${top.map(e=>e[0]).join('')}" → offset≈${shift} → sub-key[${ci}]=<span style="color:var(--green-light);font-weight:700;">${key[ci]}</span>`;
             }).join('<br>') },
-            { title:'STAGE 4: Keyword Derivation', body:`Derived keyword = <span style="color:var(--green-light);font-weight:700;font-size:13px;font-family:var(--mono);">"${key}"</span>` },
-            { title:'STAGE 5: Polyalphabetic Inversion', body:`<div class="algo-success">[ANALYSIS COMPLETE] Keyword derived: "${key}"<br>→ Recovered vector: "${plaintext}"</div>` },
+            { title:'Stage 4: Derived Keyword', body:`Derived keyword = <span style="color:var(--green-light);font-weight:700;font-size:13px;font-family:var(--mono);">"${key}"</span>` },
+            { title:'Stage 5: Decrypted Result', body:`<div class="algo-success">✓ Keyword identified: "${key}"<br>Decrypted text: "${plaintext}"</div>` },
         ];
 
         let revealed = 0;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('KASISKI EXAMINATION & COSET FREQUENCY ANALYSIS','var(--green-light)')}
+                ${algoHeader('Vigenère Cipher: Key Length Analysis')}
                 <div class="algo-body">
                     <div id="lab-vig-algo-steps" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:6px;">
@@ -1471,17 +1494,17 @@
         const hex = () => Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase();
         const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:5px 3px;border-radius:2px;text-align:center;font-size:10px;font-family:var(--mono);border:1px solid var(--border);">${hex()}</div>`).join('');
         const roundSteps = [
-            {name:'SubBytes()',desc:'Non-linear S-Box substitution via finite field multiplicative inversion in GF(2^8)',color:'rgba(62,126,201,0.2)'},
-            {name:'ShiftRows()',desc:'Cyclical row permutation interleaving byte positions across state columns',color:'rgba(123,94,201,0.2)'},
-            {name:'MixColumns()',desc:'MDS matrix multiplication in GF(2^8)[x]/(x^4+1) for diffusion across matrix words',color:'rgba(45,156,87,0.2)'},
-            {name:'AddRoundKey()',desc:'Bitwise XOR state integration with expanded 128-bit round sub-key',color:'rgba(212,139,56,0.2)'},
+            {name:'SubBytes()',desc:'Byte substitution using the AES S-box lookup table',color:'rgba(62,126,201,0.2)'},
+            {name:'ShiftRows()',desc:'Cyclical row shifting across matrix rows to interleave column positions',color:'rgba(123,94,201,0.2)'},
+            {name:'MixColumns()',desc:'Matrix multiplication mixing bytes within columns for diffusion',color:'rgba(45,156,87,0.2)'},
+            {name:'AddRoundKey()',desc:'Bitwise XOR combination with the 128-bit round sub-key',color:'rgba(212,139,56,0.2)'},
         ];
         let rStep = 0, rRound = 0, rTimer = null;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('AES-256 SPN ROUND STATE VISUALIZER','var(--green-light)')}
+                ${algoHeader('AES-256: Round State Visualization')}
                 <div class="algo-body">
-                    <div style="color:var(--text-dim);font-size:10px;margin-bottom:4px;font-family:var(--mono);">STATE MATRIX (4×4 BYTES), ROUND <span id="lab-aes-round-num" style="color:var(--amber);font-weight:700;">0</span>/14</div>
+                    <div style="color:var(--text-dim);font-size:11px;margin-bottom:4px;font-family:var(--sans);">State Matrix (4×4 Bytes), Round <span id="lab-aes-round-num" style="color:var(--blue-light);font-weight:700;">0</span>/14</div>
                     <div id="lab-aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('var(--bg-inset)')}</div>
                     <div id="lab-aes-op-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
                         ${roundSteps.map((s,i) => `<div id="lab-aes-op-${i}" style="padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;">${s.name}</div>`).join('')}
@@ -1513,7 +1536,7 @@
                     const sb = document.getElementById('lab-aes-step-btn'); if(sb) sb.disabled = true;
                     const ab = document.getElementById('lab-aes-auto-btn'); if(ab) ab.disabled = true;
                     const res = document.getElementById('lab-aes-result');
-                    if (res) res.innerHTML = `<div class="algo-success">[DIFFUSION COMPLETE] 14 rounds executed. Shannon avalanche criterion satisfied across 128-bit block state.</div>`;
+                    if (res) res.innerHTML = `<div class="algo-success">✓ AES rounds completed: 14 rounds processed on the 128-bit block.</div>`;
                 }
             }
         }
@@ -1549,7 +1572,7 @@
 
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('BB84 QUANTUM TRANSMISSION & EAVESDROP SIMULATOR','var(--purple-light)')}
+                ${algoHeader('BB84 Protocol: Quantum Key Transmission & Eavesdropping', 'var(--purple-light)')}
                 <div class="algo-body">
                     <div id="lab-q-stage-label" style="color:var(--text-dim);font-size:11px;font-weight:600;margin-bottom:6px;">Ready to simulate optical channel transmission</div>
                     <div id="lab-q-photon-display" style="display:flex;flex-direction:column;gap:6px;"></div>
@@ -1563,29 +1586,29 @@
 
         const stages = [
             () => {
-                document.getElementById('lab-q-stage-label').textContent = 'STAGE 1: Alice encodes qubits in random non-orthogonal polarization bases (+ / ×)';
+                document.getElementById('lab-q-stage-label').textContent = 'Stage 1: Alice encodes qubits in random polarization bases (+ / ×)';
                 document.getElementById('lab-q-photon-display').innerHTML = `
                     <div style="font-size:10px;color:var(--text-faint);margin-bottom:4px;font-family:var(--mono);">BIT&nbsp;&nbsp;&nbsp;BASIS&nbsp;&nbsp;PHOTON</div>
                     <div class="photon-row">${aliceBits.map((b,i) => `<div style="text-align:center;"><div style="font-size:9px;color:var(--text-faint);">${aliceBases[i]}</div><div class="photon-bit ${b?'photon-1':'photon-0'}">${photonSyms[aliceBases[i]+b]}</div><div style="font-size:9px;color:var(--text-faint);">${b}</div></div>`).join('')}</div>`;
             },
             () => {
-                document.getElementById('lab-q-stage-label').textContent = 'STAGE 2: Eve intercepts and executes projective measurement in random bases';
+                document.getElementById('lab-q-stage-label').textContent = 'Stage 2: Eavesdropper measures photons in random bases';
                 const eveResults = aliceBits.map((b,i) => eveBases[i] === aliceBases[i] ? b : (Math.random() > 0.5 ? 1 : 0));
                 document.getElementById('lab-q-photon-display').innerHTML += `
                     <div style="font-size:10px;color:var(--text-faint);margin:6px 0 2px;font-family:var(--mono);">EVE MEASUREMENT BASES</div>
                     <div class="photon-row">${eveResults.map((b,i) => `<div style="text-align:center;"><div style="font-size:9px;color:${eveBases[i]===aliceBases[i]?'var(--green-light)':'var(--rose)'};">${eveBases[i]}</div><div class="photon-bit ${b?'photon-1':'photon-0'} ${eveBases[i]===aliceBases[i]?'photon-match':'photon-mismatch'}">${photonSyms[eveBases[i]+b]}</div></div>`).join('')}</div>`;
             },
             () => {
-                document.getElementById('lab-q-stage-label').textContent = 'STAGE 3: Bob measures and sifts bases with Alice over classical channel';
+                document.getElementById('lab-q-stage-label').textContent = 'Stage 3: Bob measures and sifts matching bases with Alice';
                 const matches = aliceBases.map((a,i) => a === bobBases[i]);
                 const matchCount = matches.filter(m => m).length || 1;
                 const errorCount = matches.filter((m,i) => m && eveBases[i] !== aliceBases[i]).length;
                 const errorRate = errorCount / matchCount;
                 document.getElementById('lab-q-photon-display').innerHTML += `
-                    <div style="font-size:10px;color:var(--text-faint);margin:6px 0 2px;font-family:var(--mono);">BOB MEASUREMENT BASES (matching Alice = sifted key candidate)</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin:6px 0 2px;font-family:var(--mono);">BOB MEASUREMENT BASES (matching Alice = sifted key)</div>
                     <div class="photon-row">${aliceBits.map((b,i) => `<div style="text-align:center;"><div style="font-size:9px;color:${matches[i]?'var(--green-light)':'var(--text-faint)'};">${bobBases[i]}</div><div class="photon-bit ${b?'photon-1':'photon-0'}" style="opacity:${matches[i]?1:0.3};">${matches[i]?b:'-'}</div></div>`).join('')}</div>
-                    <div style="margin-top:8px;padding:8px;background:rgba(207,72,72,0.1);border:1px solid rgba(207,72,72,0.3);border-radius:var(--radius-sm);font-size:11px;color:var(--rose);">[ALERT] Eavesdropping projection induced ~${Math.round(errorRate*100)||22}% Quantum Bit Error Rate (QBER threshold = 11%)</div>`;
-                document.getElementById('lab-q-result').innerHTML = `<div class="algo-success" style="margin-top:8px;">[PROTOCOL TERMINATED] Sifting aborted: Eavesdropper detected via QBER threshold violation.<br>→ Compromised key vector discarded.</div>`;
+                    <div style="margin-top:8px;padding:8px;background:rgba(207,72,72,0.1);border:1px solid rgba(207,72,72,0.3);border-radius:var(--radius-sm);font-size:11px;color:var(--rose);">⚠ Eavesdropping projection induced ~${Math.round(errorRate*100)||22}% Quantum Bit Error Rate (threshold = 11%)</div>`;
+                document.getElementById('lab-q-result').innerHTML = `<div class="algo-success" style="margin-top:8px;">⚠ Key exchange stopped: Eavesdropper detected via QBER threshold violation.<br>Compromised key discarded.</div>`;
                 const sb = document.getElementById('lab-q-step-btn'); if(sb) sb.disabled = true;
                 const ab = document.getElementById('lab-q-auto-btn'); if(ab) ab.disabled = true;
             }
@@ -1608,7 +1631,7 @@
     function labRenderDecryptManual(cipher) {
         const container = elDecryptManual;
         if (cipher === 'none') {
-            container.innerHTML = '<div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:12px;">Select an active cipher algorithm above to initialize manual cryptanalysis procedures.</div>';
+            container.innerHTML = '<div style="text-align:center;color:var(--text-faint);font-style:italic;padding:2rem 0;font-size:12px;">Select a cipher algorithm above to practice manual decryption steps.</div>';
             return;
         }
         if (cipher === 'caesar') renderLabCaesarManual(container);
@@ -1625,21 +1648,21 @@
         const shift = parseInt(labKey) || 3;
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: CAESAR SHIFT ROTATION', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Caesar Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">Evaluate rotational shift offset k in [1, 25] to invert permutation ring.</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Test shift offsets k &isin; [1, 25] to decrypt the message.</div>
                     <div>
-                        <div style="color:var(--text-faint);font-size:10px;font-family:var(--mono);margin-bottom:4px;">TRIAL SHIFT k: <span id="lab-manual-shift-val" style="color:var(--amber);font-weight:700;">1</span></div>
+                        <div style="color:var(--text-faint);font-size:11px;font-family:var(--sans);margin-bottom:4px;">Trial shift k: <span id="lab-manual-shift-val" style="color:var(--blue-light);font-weight:700;">1</span></div>
                         <input type="range" id="lab-manual-caesar-slider" min="1" max="25" value="1" style="margin-bottom:4px;">
                         <div id="lab-manual-caesar-out" class="brute-out" style="font-size:12px;min-height:28px;padding:8px 12px;"></div>
                     </div>
                     <div class="step-box" style="margin-top:4px;">
-                        <div class="step-title">Commit Analytical Solution</div>
+                        <div class="step-title">Enter Final Key</div>
                         <div class="prompt-line">
                             <span class="prompt-sym">$</span>
                             <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">shift_k =</span>
                             <input type="number" id="lab-manual-caesar-ans" class="step-input" min="1" max="25" placeholder="?">
-                            <button class="check-btn" id="lab-manual-caesar-check">Verify Inversion</button>
+                            <button class="check-btn" id="lab-manual-caesar-check">Verify Key</button>
                         </div>
                         <div id="lab-manual-caesar-fb"></div>
                     </div>
@@ -1654,8 +1677,8 @@
         document.getElementById('lab-manual-caesar-check').onclick = () => {
             const ans = parseInt(document.getElementById('lab-manual-caesar-ans').value);
             const fb = document.getElementById('lab-manual-caesar-fb');
-            if (ans === shift) fb.innerHTML = `<div class="fb-ok">[VERIFIED] Offset confirmed: k = ${ans} → Plaintext: "${labPlaintext}"</div>`;
-            else fb.innerHTML = `<div class="fb-err">[MISMATCH] Shift k = ${ans} produces ungrammatical distribution. Continue evaluation.</div>`;
+            if (ans === shift) fb.innerHTML = `<div class="fb-ok">✓ Offset confirmed: k = ${ans}<br>Decrypted text: "${labPlaintext}"</div>`;
+            else fb.innerHTML = `<div class="fb-err">Shift k = ${ans} is incorrect. Try another value.</div>`;
         };
     }
 
@@ -1665,11 +1688,11 @@
         const bKey = Array.isArray(labKey) ? labKey[1] : 8;
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: AFFINE LINEAR CONGRUENCE', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Affine Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">Derive multiplicative key a in Z_26^* and additive key b in [0, 25] to satisfy D(y) = a^-1 * (y - b) mod 26.</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Find multiplier a and offset b to decrypt via D(y) = a⁻¹ &middot; (y - b) mod 26.</div>
                     <div class="step-box" style="margin-top:10px;">
-                        <div class="step-title">Submit Evaluated Keypair</div>
+                        <div class="step-title">Submit Key Pair</div>
                         <div class="prompt-line" style="margin-bottom:8px;">
                             <span class="prompt-sym">$</span>
                             <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Multiplier (a) =</span>
@@ -1679,7 +1702,7 @@
                             <span class="prompt-sym">$</span>
                             <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Offset (b) =</span>
                             <input type="number" id="lab-manual-affine-b" class="step-input" min="0" max="25" placeholder="?" style="width:60px;">
-                            <button class="check-btn" id="lab-manual-affine-check">Verify Inversion</button>
+                            <button class="check-btn" id="lab-manual-affine-check">Verify Keys</button>
                         </div>
                         <div id="lab-manual-affine-fb"></div>
                     </div>
@@ -1689,8 +1712,8 @@
             const aAns = parseInt(document.getElementById('lab-manual-affine-a').value);
             const bAns = parseInt(document.getElementById('lab-manual-affine-b').value);
             const fb = document.getElementById('lab-manual-affine-fb');
-            if (aAns === aKey && bAns === bKey) fb.innerHTML = `<div class="fb-ok">[VERIFIED] Linear keypair confirmed: a = ${aAns}, b = ${bAns} → Plaintext: "${labPlaintext}"</div>`;
-            else fb.innerHTML = `<div class="fb-err">[MISMATCH] Parameters do not satisfy congruence mapping. Continue analysis.</div>`;
+            if (aAns === aKey && bAns === bKey) fb.innerHTML = `<div class="fb-ok">✓ Keys confirmed: a = ${aAns}, b = ${bAns}<br>Decrypted text: "${labPlaintext}"</div>`;
+            else fb.innerHTML = `<div class="fb-err">Parameters do not match. Try again.</div>`;
         };
     }
 
@@ -1699,9 +1722,9 @@
         const K = Array.isArray(labKey) && labKey.length > 0 ? labKey : [[3,3],[2,5]];
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: HILL MATRIX GROUP GL(n, Z_26)', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Hill Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">Execute algebraic derivation: compute det(K), evaluate modular inverse det^-1, construct adj(K), and derive K^-1.</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Derive the decryption matrix: compute det(K), find modular inverse det⁻¹, and apply K⁻¹.</div>
                     <div class="mat-disp" style="margin:8px 0;">${printMat(K).replace(/ /g,'&nbsp;')}</div>
                     <div id="lab-hill-manual-steps"></div>
                 </div>
@@ -1714,13 +1737,13 @@
         const n = K.length;
         const stepsContainer = document.getElementById('lab-hill-manual-steps');
         stepsContainer.innerHTML = `<div class="step-box anim-in">
-            <div class="step-title">Step 1: Determinant det(K) mod 26</div>
-            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--mono);">${n===2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = ${rawDet}. mod 26 mapping:` : 'Compute det(K) mod 26:'}</div>
+            <div class="step-title">Step 1: Compute det(K) mod 26</div>
+            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">${n===2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce mod 26:` : 'Compute determinant, then reduce mod 26:'}</div>
             <div class="prompt-line">
                 <span class="prompt-sym">$</span>
                 <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det(K) mod 26 =</span>
                 <input type="number" id="lab-hm-inp1" class="step-input" placeholder="?">
-                <button class="check-btn" id="lab-hm-check1">Verify Step</button>
+                <button class="check-btn" id="lab-hm-check1">Verify Determinant</button>
             </div>
             <div id="lab-hm-fb1"></div>
         </div>`;
@@ -1729,16 +1752,16 @@
             const correct = mod26(matDet(K));
             const user = parseInt(document.getElementById('lab-hm-inp1').value);
             if (user === correct) {
-                document.getElementById('lab-hm-fb1').innerHTML = `<div class="fb-ok">[VERIFIED] det ≡ ${correct} (mod 26)</div>`;
+                document.getElementById('lab-hm-fb1').innerHTML = `<div class="fb-ok">✓ det(K) ≡ ${correct} (mod 26), coprime with 26</div>`;
                 document.getElementById('lab-hm-inp1').disabled = true;
                 document.getElementById('lab-hm-check1').disabled = true;
                 stepsContainer.innerHTML += `<div class="step-box anim-in">
-                    <div class="step-title">Step 2: Modular Multiplicative Inverse - solve (${correct} × X) ≡ 1 (mod 26)</div>
+                    <div class="step-title">Step 2: Modular Multiplicative Inverse: solve (${correct} × X) ≡ 1 (mod 26)</div>
                     <div class="prompt-line">
                         <span class="prompt-sym">$</span>
                         <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det⁻¹ =</span>
                         <input type="number" id="lab-hm-inp2" class="step-input" placeholder="?">
-                        <button class="check-btn" id="lab-hm-check2">Verify Step</button>
+                        <button class="check-btn" id="lab-hm-check2">Verify Inverse</button>
                     </div>
                     <div id="lab-hm-fb2"></div>
                 </div>`;
@@ -1748,21 +1771,21 @@
                     if (user2 === correctInv) {
                         const adj = matAdj(K);
                         const invM = adj.map(r => r.map(v => mod26(v * correctInv)));
-                        document.getElementById('lab-hm-fb2').innerHTML = `<div class="fb-ok">[VERIFIED] det⁻¹ = ${correctInv} (${correct} × ${correctInv} = ${correct*correctInv} ≡ 1 mod 26)</div>`;
+                        document.getElementById('lab-hm-fb2').innerHTML = `<div class="fb-ok">✓ det⁻¹ = ${correctInv} (${correct} × ${correctInv} = ${correct*correctInv} ≡ 1 mod 26)</div>`;
                         document.getElementById('lab-hm-inp2').disabled = true;
                         document.getElementById('lab-hm-check2').disabled = true;
                         stepsContainer.innerHTML += `<div class="step-box anim-in" style="border-color:rgba(45,156,87,0.3);">
-                            <div class="step-title" style="color:var(--green-light);">Steps 3-5: Adjugate Matrix → Inversion → Vector Decoding</div>
+                            <div class="step-title" style="color:var(--green-light);">Steps 3-5: Adjugate Matrix → Inversion → Decrypted Result</div>
                             <div style="color:var(--text-dim);font-size:10px;margin-bottom:4px;font-family:var(--mono);">K⁻¹ = ${correctInv} · adj(K) mod 26:</div>
                             <div class="mat-disp" style="color:var(--green-light);">${printMat(invM).replace(/ /g,'&nbsp;')}</div>
-                            <div class="algo-success" style="margin-top:8px;">[MATRIX INVERTED] Recovered vector: "${labPlaintext}"</div>
+                            <div class="algo-success" style="margin-top:8px;">✓ Matrix inverted and applied.<br>Decrypted text: "${labPlaintext}"</div>
                         </div>`;
                     } else {
-                        document.getElementById('lab-hm-fb2').innerHTML = `<div class="fb-err">[MISMATCH] (${correct} × ${user2}) mod 26 = ${(correct*user2)%26} ≠ 1</div>`;
+                        document.getElementById('lab-hm-fb2').innerHTML = `<div class="fb-err">(${correct} × ${user2}) mod 26 = ${(correct*user2)%26} ≠ 1. Try again.</div>`;
                     }
                 };
             } else {
-                document.getElementById('lab-hm-fb1').innerHTML = `<div class="fb-err">[MISMATCH] Evaluated value does not match det(K) mod 26.</div>`;
+                document.getElementById('lab-hm-fb1').innerHTML = `<div class="fb-err">Calculated determinant is incorrect. Try again.</div>`;
             }
         };
     }
@@ -1777,22 +1800,22 @@
 
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: POLYALPHABETIC VIGENÈRE', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Vigenère Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
                     <div class="step-box">
-                        <div class="step-title">Stage 1: Kasiski Key Length Analysis</div>
-                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval = ${reps[0][1][1]-reps[0][1][0]} → candidate period factor</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Payload stream below trigram recurrence threshold. Evaluate period directly.</div>`}
+                        <div class="step-title">Stage 1: Key Length Analysis</div>
+                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval = ${reps[0][1][1]-reps[0][1][0]} → candidate period factor</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Text length below duplicate trigram threshold. Evaluate period directly.</div>`}
                         <div class="prompt-line" style="margin-top:8px;">
                             <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">period_L =</span>
                             <input type="number" id="lab-vm-inp1" class="step-input" placeholder="?">
-                            <button class="check-btn" id="lab-vm-check1">Verify Period</button>
+                            <button class="check-btn" id="lab-vm-check1">Verify Length</button>
                         </div>
                         <div id="lab-vm-fb1"></div>
                     </div>
                     <div id="lab-vig-manual-step2" style="display:none;">
                         <div class="step-box anim-in">
-                            <div class="step-title">Stage 2: Polyalphabetic Keyword Derivation</div>
-                            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--mono);">Evaluate unigram frequency on each interleaved coset stream to deduce sub-key offsets:</div>
+                            <div class="step-title">Stage 2: Keyword Derivation</div>
+                            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">Evaluate frequency patterns on each interleaved coset to deduce sub-key offsets:</div>
                             <div class="prompt-line">
                                 <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">keyword =</span>
                                 <input type="text" id="lab-vm-inp2" class="step-input" placeholder="KEY..." style="text-transform:uppercase;width:110px;">
@@ -1807,18 +1830,18 @@
         document.getElementById('lab-vm-check1').onclick = () => {
             const user = parseInt(document.getElementById('lab-vm-inp1').value);
             if (user === key.length) {
-                document.getElementById('lab-vm-fb1').innerHTML = `<div class="fb-ok">[VERIFIED] Key length confirmed: L = ${key.length}</div>`;
+                document.getElementById('lab-vm-fb1').innerHTML = `<div class="fb-ok">✓ Key length confirmed: L = ${key.length}</div>`;
                 document.getElementById('lab-vm-inp1').disabled = true;
                 document.getElementById('lab-vm-check1').disabled = true;
                 document.getElementById('lab-vig-manual-step2').style.display = 'block';
             } else {
-                document.getElementById('lab-vm-fb1').innerHTML = `<div class="fb-err">[MISMATCH] Key length does not divide trigram interval or align with coset variance.</div>`;
+                document.getElementById('lab-vm-fb1').innerHTML = `<div class="fb-err">Key length is incorrect. Try another length.</div>`;
             }
         };
         document.getElementById('lab-vm-check2').onclick = () => {
             const user = document.getElementById('lab-vm-inp2').value.toUpperCase();
-            if (user === key) document.getElementById('lab-vm-fb2').innerHTML = `<div class="fb-ok">[VERIFIED] Keyword confirmed: "${key}" → Plaintext: "${labPlaintext}"</div>`;
-            else document.getElementById('lab-vm-fb2').innerHTML = `<div class="fb-err">[MISMATCH] Sub-key offset array does not match observed coset max distributions.</div>`;
+            if (user === key) document.getElementById('lab-vm-fb2').innerHTML = `<div class="fb-ok">✓ Keyword confirmed: "${key}"<br>Decrypted text: "${labPlaintext}"</div>`;
+            else document.getElementById('lab-vm-fb2').innerHTML = `<div class="fb-err">Keyword does not match the observed frequency distributions.</div>`;
         };
     }
 
@@ -1826,14 +1849,14 @@
     function renderLabAesManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('CRYPTANALYTIC COMPLEXITY: AES-256 SPN', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('AES-256: Security & Inversion Complexity', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
                     <div style="color:var(--text-dim);font-size:11px;line-height:1.75;font-family:var(--sans);">
-                        AES-256 exhibits no polynomial-time analytical inversion shortcut under standard chosen-plaintext attack (CPA) models. Exhaustive keyspace search requires evaluating |K| = 2²⁵⁶ ≈ 1.15 × 10⁷⁷ permutations, exceeding thermodynamic Landauer bounds for computational feasibility.<br><br>
-                        <span style="color:var(--text-hi);font-weight:600;">Recommended trace:</span> Switch to the Algorithmic View to inspect round-by-round state matrix diffusion across SubBytes, ShiftRows, and MixColumns transformations.
+                        AES-256 exhibits no polynomial-time analytical inversion shortcut under standard chosen-plaintext attack (CPA) models. Exhaustive keyspace search requires evaluating 2²⁵⁶ ≈ 1.15 × 10⁷⁷ operations, exceeding thermodynamic Landauer bounds for computational feasibility.<br><br>
+                        <span style="color:var(--text-hi);font-weight:600;">Recommended:</span> Switch to the Algorithmic View to inspect round-by-round state matrix SubBytes, ShiftRows, and MixColumns steps.
                     </div>
                     <div style="margin-top:12px;">
-                        <a href="https://csrc.nist.gov/publications/detail/fips/197/final" target="_blank" class="calc-link" style="color:var(--amber);font-size:11px;font-family:var(--mono);">→ FIPS 197 Reference Specification (NIST)</a>
+                        <a href="https://csrc.nist.gov/publications/detail/fips/197/final" target="_blank" class="calc-link" style="color:var(--blue-light);font-size:11px;font-family:var(--sans);text-decoration:none;">→ FIPS 197 Reference Specification (NIST)</a>
                     </div>
                 </div>
             </div>`;
@@ -1845,19 +1868,19 @@
         const symbols = ['↕','↔','↗','↘'];
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('INTERACTIVE INTERCEPTION SIMULATOR // BB84', 'var(--purple-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('BB84 Protocol: Interactive Interception', 'var(--purple-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;line-height:1.6;font-family:var(--sans);">Photons are transmitted across non-orthogonal polarization bases. Select a measurement basis (+ or ×). Non-orthogonal projections collapse the wave function and induce detectable QBER.</div>
+                    <div style="color:var(--text-dim);font-size:11px;line-height:1.6;font-family:var(--sans);">Photons are transmitted across non-orthogonal polarization bases. Select a measurement basis (+ or ×). Non-orthogonal measurements alter the photon and introduce detectable errors.</div>
                     <div style="margin:10px 0;padding:12px;background:var(--bg-inset);border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;">
                         <div style="font-size:28px;margin-bottom:4px;font-family:var(--mono);" id="lab-q-photon-show">${symbols[Math.floor(Math.random()*4)]}</div>
-                        <div style="color:var(--text-faint);font-size:10px;font-family:var(--mono);">INCIDENT PHOTON POLARIZATION (QUANTUM STATE UNCOLLAPSED)</div>
+                        <div style="color:var(--text-faint);font-size:10px;font-family:var(--sans);">INCIDENT PHOTON POLARIZATION</div>
                     </div>
                     <div style="display:flex;gap:8px;">
                         <button class="ctrl-btn" style="flex:1;padding:10px;font-family:var(--mono);" id="lab-q-guess-plus">+ Rectilinear Basis (0°/90°)</button>
                         <button class="ctrl-btn" style="flex:1;padding:10px;font-family:var(--mono);" id="lab-q-guess-diag">× Diagonal Basis (45°/135°)</button>
                     </div>
                     <div id="lab-q-manual-fb" style="margin-top:8px;"></div>
-                    <div style="color:var(--text-faint);font-size:10px;margin-top:8px;font-family:var(--mono);">MEASUREMENT SAMPLES: <span id="lab-q-attempts" style="color:var(--text-hi);">0</span> | BASIS MATCHES: <span id="lab-q-score" style="color:var(--green-light);">0</span></div>
+                    <div style="color:var(--text-faint);font-size:10px;margin-top:8px;font-family:var(--sans);">Measurements: <span id="lab-q-attempts" style="color:var(--text-hi);font-family:var(--mono);">0</span> | Matches: <span id="lab-q-score" style="color:var(--green-light);font-family:var(--mono);">0</span></div>
                 </div>
             </div>`;
 
@@ -1867,9 +1890,9 @@
             const fb = document.getElementById('lab-q-manual-fb');
             if (hit) {
                 score++;
-                fb.innerHTML = `<div class="fb-ok">[SAMPLE ACQUIRED] Observable projective basis aligned (+0° / +90°). State preserved without phase perturbation.</div>`;
+                fb.innerHTML = `<div class="fb-ok">✓ Measurement basis matched (${basis === '+' ? '0° / 90°' : '45° / 135°'}). Photon state preserved without disturbance.</div>`;
             } else {
-                fb.innerHTML = `<div class="fb-err">[PROJECTION DETECTED] Non-orthogonal basis measurement collapsed qubit wave function. Error induced in Bob's sifted reconciliation.</div>`;
+                fb.innerHTML = `<div class="fb-err">⚠ Incompatible basis measurement altered the photon state, introducing detectable error.</div>`;
             }
             document.getElementById('lab-q-attempts').textContent = attempts;
             document.getElementById('lab-q-score').textContent = score;
@@ -1910,18 +1933,62 @@
     }
 
     // ===========================================================
+    //  COPY OUTPUT
+    // ===========================================================
+    function labCopyOutput() {
+        const text = elCipherOut.textContent;
+        if (!text || text === '-') return;
+        navigator.clipboard.writeText(text).then(() => {
+            const lbl = document.getElementById('lab-copy-label');
+            if (lbl) {
+                lbl.textContent = 'Copied!';
+                setTimeout(() => { lbl.textContent = 'Copy'; }, 1500);
+            }
+        }).catch(() => {
+            // Fallback for non-secure contexts
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            const lbl = document.getElementById('lab-copy-label');
+            if (lbl) {
+                lbl.textContent = 'Copied!';
+                setTimeout(() => { lbl.textContent = 'Copy'; }, 1500);
+            }
+        });
+    }
+    window.labCopyOutput = labCopyOutput;
+
+    // ===========================================================
     //  INITIALIZATION
     // ===========================================================
     document.addEventListener('DOMContentLoaded', () => {
-        // Set initial state: Caesar, shift=3
-        labCipher = 'caesar';
-        labKey = 3;
-        labRenderKeyConfig('caesar');
-        labRenderGuide('caesar');
+        // Read URL query parameter ?cipher=...
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryCipher = urlParams.get('cipher');
+        const validCiphers = ['none', 'caesar', 'affine', 'hill', 'vigenere', 'aes', 'quantum'];
+        const initialCipher = (queryCipher && validCiphers.includes(queryCipher.toLowerCase()))
+            ? queryCipher.toLowerCase()
+            : 'caesar';
+
+        labCipher = initialCipher;
+        elCipherSel.value = initialCipher;
+        if (initialCipher === 'caesar') labKey = 3;
+        else if (initialCipher === 'affine') labKey = [5, 8];
+        else if (initialCipher === 'vigenere') labKey = 'SECRET';
+        else if (initialCipher === 'hill') labKey = [[3, 3], [2, 5]];
+        else if (initialCipher === 'aes') labKey = 'MySecretKey256!';
+        else if (initialCipher === 'quantum') labKey = '42';
+        else labKey = null;
+
+        labRenderKeyConfig(initialCipher);
+        labRenderGuide(initialCipher);
         labUpdatePreview().then(() => {
             labRenderSteps();
-            labRenderDecryptAlgo('caesar');
-            labRenderDecryptManual('caesar');
+            labRenderDecryptAlgo(initialCipher);
+            labRenderDecryptManual(initialCipher);
         });
 
         // Cipher selector change

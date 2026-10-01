@@ -3,7 +3,7 @@
 {% block content %}
 <style>
     .lobby-wrapper {
-        min-height: calc(100vh - 48px);
+        min-height: calc(100vh - 52px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -13,12 +13,12 @@
 
     .lobby-card {
         width: 100%;
-        max-width: 460px;
+        max-width: 440px;
         background: var(--bg-2);
         border: 1px solid var(--border);
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-sm);
         padding: 24px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        box-shadow: var(--shadow-md);
     }
 
     .lobby-header {
@@ -28,13 +28,12 @@
     }
 
     .lobby-tag {
-        font-family: var(--mono);
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 600;
-        color: var(--amber);
+        color: var(--blue-light);
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 4px;
+        letter-spacing: 0.04em;
+        margin-bottom: 6px;
     }
 
     .lobby-title {
@@ -43,11 +42,10 @@
         letter-spacing: -0.01em;
         color: var(--text-hi);
         margin: 0 0 6px 0;
-        font-family: var(--sans);
     }
 
     .lobby-desc {
-        font-size: 12px;
+        font-size: 13px;
         color: var(--text-dim);
         margin: 0;
         line-height: 1.55;
@@ -59,11 +57,10 @@
 
     .field-label {
         display: block;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
         color: var(--text-dim);
         margin-bottom: 6px;
-        font-family: var(--sans);
     }
 
     .text-input {
@@ -74,12 +71,12 @@
         color: var(--text-hi);
         font-family: var(--sans);
         font-size: 13px;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-xs);
         outline: none;
         transition: border-color 0.15s;
     }
     .text-input:focus {
-        border-color: var(--border-hi);
+        border-color: var(--blue-light);
     }
     .text-input::placeholder {
         color: var(--text-faint);
@@ -87,8 +84,8 @@
 
     .code-input-field {
         font-family: var(--mono);
-        font-size: 13px;
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 600;
         letter-spacing: 0.15em;
         text-align: center;
         text-transform: uppercase;
@@ -97,10 +94,9 @@
     .field-error {
         font-size: 11px;
         color: var(--rose);
-        margin-top: 4px;
+        margin-top: 5px;
         min-height: 16px;
         display: block;
-        font-weight: 500;
     }
 
     .action-section {
@@ -112,24 +108,24 @@
     .btn-action-host {
         width: 100%;
         padding: 9px 16px;
-        background: linear-gradient(180deg, #d48b38 0%, #ba7526 100%);
-        color: #121418;
-        font-family: var(--sans);
-        font-size: 12px;
-        font-weight: 700;
-        border: 1px solid #e29845;
-        border-radius: var(--radius-sm);
+        background: var(--primary);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: var(--radius-xs);
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 1px 3px rgba(0,0,0,0.4);
-        transition: all 0.15s;
+        transition: background 0.15s ease, transform 0.05s ease;
     }
     .btn-action-host:hover {
-        background: linear-gradient(180deg, #e09845 0%, #c98230 100%);
-        border-color: #f0a855;
+        background: var(--primary-hover);
+    }
+    .btn-action-host:active {
+        transform: translateY(1px);
     }
     .btn-action-host:disabled {
         opacity: 0.45;
@@ -139,12 +135,11 @@
     .divider-text {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin: 4px 0;
+        gap: 12px;
+        margin: 2px 0;
         color: var(--text-faint);
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 500;
-        font-family: var(--mono);
     }
     .divider-text::before,
     .divider-text::after {
@@ -164,22 +159,20 @@
     }
 
     .btn-action-join {
-        padding: 8px 16px;
-        background: linear-gradient(180deg, #2b313d 0%, #1f232b 100%);
-        border: 1px solid #3c4556;
+        padding: 9px 18px;
+        background: var(--bg-3);
+        border: 1px solid var(--border-md);
         color: var(--text-hi);
-        font-family: var(--sans);
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 13px;
+        font-weight: 500;
         border-radius: var(--radius-sm);
         cursor: pointer;
         white-space: nowrap;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.35);
         transition: all 0.15s;
     }
     .btn-action-join:hover {
-        background: linear-gradient(180deg, #343c4a 0%, #252b35 100%);
-        border-color: #4f5b70;
+        background: #30363d;
+        border-color: #8b949e;
         color: #ffffff;
     }
     .btn-action-join:disabled {
@@ -188,41 +181,38 @@
     }
 
     .lobby-foot {
-        margin-top: 20px;
-        padding-top: 14px;
+        margin-top: 22px;
+        padding-top: 16px;
         border-top: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 11px;
+        font-size: 12px;
         color: var(--text-faint);
-        font-family: var(--mono);
     }
 
     .lobby-foot a {
         color: var(--text-dim);
         text-decoration: none;
-        font-family: var(--sans);
     }
     .lobby-foot a:hover {
         color: var(--text-hi);
-        text-decoration: underline;
     }
 </style>
 
 <div class="lobby-wrapper">
     <div class="lobby-card">
         <div class="lobby-header">
-            <div class="lobby-tag">Ephemeral Relay Channel</div>
-            <h2 class="lobby-title">Session Dispatcher</h2>
+            <div class="lobby-tag">Real-Time Messaging</div>
+            <h2 class="lobby-title">Chat Rooms</h2>
             <p class="lobby-desc">
-                Select an operator handle to host a new relay session, or provide an active 4-character room token to join an ongoing channel. Outgoing payloads encrypt locally prior to WebSocket transmission.
+                Choose a username to create a new room, or enter a 4-character room code to join an active session. Messages encrypt client-side before transmission.
             </p>
         </div>
 
         <form method="post" id="local-form">
             <div class="field-group">
-                <label class="field-label" for="username_input">Operator Handle</label>
+                <label class="field-label" for="username_input">Username</label>
                 <input
                     type="text"
                     id="username_input"
@@ -241,16 +231,14 @@
                 <div>
                     <button type="submit" formaction="/host" id="btn-host" class="btn-action-host">
                         <svg viewBox="0 0 20 20" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
-                            <rect x="2" y="2" width="16" height="7" rx="1.5"/>
-                            <rect x="2" y="11" width="16" height="7" rx="1.5"/>
-                            <circle cx="5.5" cy="5.5" r="1" fill="currentColor"/>
-                            <circle cx="5.5" cy="14.5" r="1" fill="currentColor"/>
+                            <line x1="10" y1="4" x2="10" y2="16"/>
+                            <line x1="4" y1="10" x2="16" y2="10"/>
                         </svg>
-                        Host New Session Room
+                        Create New Room
                     </button>
                 </div>
 
-                <div class="divider-text">// or connect with token</div>
+                <div class="divider-text">or join an existing room</div>
 
                 <div class="field-group" style="margin-bottom:0">
                     <div class="join-group">
@@ -263,7 +251,7 @@
                             maxlength="4"
                         >
                         <button type="submit" formaction="/join" id="btn-join" class="btn-action-join">
-                            Connect &rarr;
+                            Join Room &rarr;
                         </button>
                     </div>
                 </div>
@@ -271,7 +259,7 @@
         </form>
 
         <div class="lobby-foot">
-            <div>RAM-only session storage</div>
+            <div>Ephemeral sessions (in-memory only)</div>
             <div>
                 <a href="/lab">Open Workbench</a>
             </div>
@@ -303,7 +291,7 @@
             .then(res => res.json())
             .then(takenList => {
                 if (takenList.includes(username)) {
-                    warningText.textContent = 'Handle currently in use in an active session. Choose another.';
+                    warningText.textContent = 'Username already in use in an active session. Choose another.';
                     isUsernameTaken = true;
                     usernameInput.style.borderColor = 'var(--rose)';
                 } else {

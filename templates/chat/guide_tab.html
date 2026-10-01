@@ -1,38 +1,38 @@
 <div id="tab-guide" class="tab-pane active">
     <div id="sol-none" class="guide-placeholder-msg">
-        Select an active cipher above to inspect its mathematical formulation, key space, and known attack vectors. Plaintext transmission passes input bytes directly without permutation.
+        Select a cipher above to view how it works, its mathematical formulation, and common cryptanalysis methods.
     </div>
 
     <!-- Caesar Shift -->
     <div id="hist-caesar" class="history-block" style="display:none;">
         <div class="cipher-spec-header">
-            <span class="cipher-tag">Monoalphabetic Substitution</span>
+            <span class="cipher-tag">Substitution Cipher</span>
             <h3 class="cipher-spec-title">Caesar Shift</h3>
         </div>
 
         <p class="cipher-spec-intro">
-            The simplest historic shift cipher. Recorded by Suetonius in <em>De Vita Caesarum</em>, Julius Caesar used a fixed offset of 3 for military dispatches. Each character is shifted forward through the modular alphabet ring.
+            One of the earliest known substitution ciphers. Each letter is shifted forward in the alphabet by a fixed integer key.
         </p>
 
         <div class="spec-section">
-            <div class="spec-section-title">Mathematical Mapping</div>
+            <div class="spec-section-title">Mathematical Formulation</div>
             <div class="spec-math-formula">
                 <code>C_i = (P_i + k) mod 26</code>
-                <span class="formula-arrow">⇄</span>
+                <span class="formula-arrow">&harr;</span>
                 <code>P_i = (C_i - k + 26) mod 26</code>
             </div>
             <p class="spec-section-desc">
-                Where <code>k &isin; {1, 2, ..., 25}</code> represents the integer displacement key. Characters outside the standard Latin alphabet are passed through without modification.
+                Where <code>k &isin; {1, 2, ..., 25}</code> represents the integer shift offset. Characters outside the 26 standard letters pass through without alteration.
             </p>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Cryptanalysis & Key Space Vulnerability</div>
+            <div class="spec-section-title">Cryptanalysis & Vulnerabilities</div>
             <p class="spec-section-desc">
-                The total keyspace is constrained to exactly 25 non-trivial permutations. Consequently, exhaustive brute-force search requires only 25 test decryptions.
+                The key space consists of only 25 possible shifts, making brute force trivial with 25 attempts.
             </p>
             <p class="spec-section-desc">
-                In ciphertext-only scenarios without brute-force enumeration, frequency analysis solves the key instantly: in natural English, the letter <strong>E</strong> exhibits an expected frequency of approximately 12.7%, followed by <strong>T</strong> (9.1%) and <strong>A</strong> (8.2%). Computing the chi-squared statistic &chi;&sup2; against standard English unigram distributions identifies the true shift in one pass.
+                Using letter frequency analysis, the cipher can be solved automatically: in standard English, letter <strong>E</strong> occurs approximately 12.7% of the time, followed by <strong>T</strong> (9.1%) and <strong>A</strong> (8.2%). Comparing frequency distributions against English letter frequencies identifies the shift key in one pass.
             </p>
         </div>
     </div>
@@ -40,40 +40,40 @@
     <!-- Affine Cipher -->
     <div id="hist-affine" class="history-block" style="display:none;">
         <div class="cipher-spec-header">
-            <span class="cipher-tag">Linear Modular Mapping</span>
+            <span class="cipher-tag">Modular Arithmetic</span>
             <h3 class="cipher-spec-title">Affine Cipher</h3>
         </div>
 
         <p class="cipher-spec-intro">
-            A generalized monoalphabetic substitution combining modular multiplication and addition. Each character index is transformed through a linear congruence over &Zopf;<sub>26</sub>.
+            A generalized monoalphabetic substitution combining modular multiplication and addition. Each character index is transformed through a linear equation modulo 26.
         </p>
 
         <div class="spec-section">
-            <div class="spec-section-title">Mathematical Mapping & Decryption Inverse</div>
+            <div class="spec-section-title">Mathematical Formulation</div>
             <div class="spec-math-formula">
                 <code>E(x) = (a &middot; x + b) mod 26</code>
-                <span class="formula-arrow">⇄</span>
+                <span class="formula-arrow">&harr;</span>
                 <code>D(y) = a<sup>-1</sup> &middot; (y - b) mod 26</code>
             </div>
             <p class="spec-section-desc">
-                Decryption requires multiplying by <code>a<sup>-1</sup></code>, the modular multiplicative inverse of <code>a</code> modulo 26, such that <code>(a &middot; a<sup>-1</sup>) &equiv; 1 (mod 26)</code>.
+                Decryption requires multiplying by <code>a<sup>-1</sup></code>, the modular multiplicative inverse of <code>a</code> modulo 26, satisfying <code>(a &middot; a<sup>-1</sup>) &equiv; 1 (mod 26)</code>.
             </p>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">The Coprimality Constraint</div>
+            <div class="spec-section-title">Coprimality Requirement</div>
             <p class="spec-section-desc">
-                The multiplier <code>a</code> must be strictly coprime to 26: <code>gcd(a, 26) = 1</code>. Because the prime factorization of 26 is 2 &times; 13, <code>a</code> cannot share factors with 2 or 13.
+                The multiplier <code>a</code> must be coprime to 26: <code>gcd(a, 26) = 1</code>. Since 26 factors into 2 &times; 13, <code>a</code> cannot share factors with 2 or 13.
             </p>
             <p class="spec-section-desc">
-                This restricts <code>a</code> to the multiplicative group &Zopf;<sub>26</sub><sup>&times;</sup>, leaving exactly &phi;(26) = 12 permissible values: <code>{1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25}</code>. Selecting any other multiplier collapses distinct letters into identical ciphertext outputs, producing lossy collisions that cannot be reversed.
+                This leaves exactly 12 valid values for <code>a</code>: <code>{1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25}</code>. Choosing any other multiplier causes collisions where distinct letters map to the same ciphertext letter.
             </p>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Vulnerability Profile</div>
+            <div class="spec-section-title">Cryptanalysis</div>
             <p class="spec-section-desc">
-                The key space is limited to <code>12 &times; 26 = 312</code> distinct keypairs. In a known-plaintext attack, discovering just two character correspondences yields a pair of simultaneous linear congruences that reveals both <code>a</code> and <code>b</code> via the extended Euclidean algorithm.
+                The key space is limited to <code>12 &times; 26 = 312</code> key pairs. If an attacker knows two character mappings, they can solve for both the multiplier and shift offset using standard modular math.
             </p>
         </div>
     </div>
@@ -81,44 +81,41 @@
     <!-- Hill Matrix Cipher -->
     <div id="hist-hill" class="history-block" style="display:none;">
         <div class="cipher-spec-header">
-            <span class="cipher-tag">Polygraphic Matrix Substitution</span>
+            <span class="cipher-tag">Matrix Cipher</span>
             <h3 class="cipher-spec-title">Hill Matrix Cipher</h3>
         </div>
 
         <p class="cipher-spec-intro">
-            Invented in 1929 by mathematician Lester S. Hill. The algorithm treats blocks of <code>n</code> consecutive letters as column vectors in &Zopf;<sub>26</sub><sup>n</sup>, multiplying each vector by an <code>n &times; n</code> invertible key matrix.
+            The Hill cipher encrypts text in small blocks (typically pairs of 2 letters) by multiplying each letter pair by an invertible key matrix modulo 26.
         </p>
 
         <div class="spec-section">
-            <div class="spec-section-title">Transformation Formulation</div>
+            <div class="spec-section-title">Mathematical Formulation</div>
             <div class="spec-math-formula">
                 <code>C &equiv; K &middot; P (mod 26)</code>
-                <span class="formula-arrow">⇄</span>
+                <span class="formula-arrow">&harr;</span>
                 <code>P &equiv; K<sup>-1</sup> &middot; C (mod 26)</code>
             </div>
             <p class="spec-section-desc">
-                Plaintext blocks are formatted into numeric vectors (A=0, B=1, ..., Z=25). The ciphertext block is calculated via standard matrix multiplication reduced modulo 26.
+                Plaintext blocks are formatted into numeric vectors (A=0, B=1, ..., Z=25). The ciphertext block is calculated via matrix multiplication reduced modulo 26.
             </p>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Modular Matrix Invertibility Condition</div>
+            <div class="spec-section-title">Matrix Invertibility</div>
             <p class="spec-section-desc">
-                Decryption requires the inverse matrix <code>K<sup>-1</sup> = (det K)<sup>-1</sup> &middot; adj(K) mod 26</code>. For this inverse to exist, two conditions must hold:
+                Decryption requires the inverse matrix <code>K<sup>-1</sup> = (det K)<sup>-1</sup> &middot; adj(K) mod 26</code>. For the inverse to exist, two conditions must hold:
             </p>
             <ul class="spec-list">
                 <li><code>det(K) &ne; 0</code> (non-singular matrix).</li>
-                <li><code>gcd(det(K) mod 26, 26) = 1</code> (determinant must be coprime to 26, having an inverse in &Zopf;<sub>26</sub>).</li>
+                <li><code>gcd(det(K) mod 26, 26) = 1</code> (determinant must be coprime to 26).</li>
             </ul>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Cryptanalysis: Pure Linearity Flaw</div>
+            <div class="spec-section-title">Cryptanalysis</div>
             <p class="spec-section-desc">
-                Although polygraphic substitution diffuses single-letter frequencies by mixing characters across blocks, the entire cipher is strictly linear.
-            </p>
-            <p class="spec-section-desc">
-                Under a known-plaintext attack, an analyst who intercepts <code>n</code> distinct vector pairs can construct square matrices <code>P</code> and <code>C</code> such that <code>C &equiv; K &middot; P (mod 26)</code>. If <code>P</code> is invertible, the attacker calculates <code>K &equiv; C &middot; P<sup>-1</sup> (mod 26)</code>, completely extracting the secret key matrix without searching.
+                While polygraphic substitution obscures single-letter frequencies by mixing characters across blocks, the entire transformation is linear. Because matrix multiplication is linear, knowing a few plaintext and ciphertext pairs allows an attacker to compute the inverse and recover the key matrix.
             </p>
         </div>
     </div>
@@ -126,31 +123,31 @@
     <!-- AES-256 -->
     <div id="hist-aes" class="history-block" style="display:none;">
         <div class="cipher-spec-header">
-            <span class="cipher-tag">NIST Standard Symmetric Block Cipher</span>
+            <span class="cipher-tag">Symmetric Block Cipher</span>
             <h3 class="cipher-spec-title">AES-256 (Rijndael)</h3>
         </div>
 
         <p class="cipher-spec-intro">
-            Standardized in NIST FIPS 197 based on the design by Joan Daemen and Vincent Rijmen. Operates on 128-bit blocks organized as 4&times;4 byte state matrices, utilizing a 256-bit secret key expanded through the Rijndael key schedule into 15 round sub-keys.
+            Standard symmetric block cipher operating on 128-bit blocks organized as 4&times;4 byte state matrices, using a 256-bit key expanded across 14 rounds.
         </p>
 
         <div class="spec-section">
-            <div class="spec-section-title">14-Round SPN Architecture</div>
+            <div class="spec-section-title">14-Round Structure</div>
             <p class="spec-section-desc">
-                For a 256-bit key length, the algorithm executes 14 iterative rounds consisting of four algebraic transformations:
+                AES-256 executes 14 iterative rounds comprising four core operations:
             </p>
             <ul class="spec-list">
-                <li><strong>SubBytes:</strong> Non-linear byte substitution using a finite field multiplicative inversion in GF(2<sup>8</sup>) followed by an affine mapping. Provides resistance to differential and linear cryptanalysis.</li>
-                <li><strong>ShiftRows:</strong> Cyclical byte transposition across matrix rows, interleaving column dependencies.</li>
-                <li><strong>MixColumns:</strong> Matrix multiplication over the polynomial ring GF(2<sup>8</sup>)[x]/(x<sup>4</sup>+1) utilizing maximum distance separable (MDS) matrices, providing high diffusion. (Omitted in round 14).</li>
-                <li><strong>AddRoundKey:</strong> Bitwise XOR combination with the expanded 128-bit round sub-key.</li>
+                <li><strong>SubBytes:</strong> Byte substitution using the standard S-box lookup table.</li>
+                <li><strong>ShiftRows:</strong> Cyclical byte shifting across matrix rows to mix column positions.</li>
+                <li><strong>MixColumns:</strong> Matrix multiplication mixing bytes within columns for diffusion (omitted in round 14).</li>
+                <li><strong>AddRoundKey:</strong> Bitwise XOR combination with the round sub-key.</li>
             </ul>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Avalanche Effect & Security Margin</div>
+            <div class="spec-section-title">Security</div>
             <p class="spec-section-desc">
-                AES achieves strong Shannon confusion and diffusion. Altering a single plaintext bit or key bit flips approximately 50% of the ciphertext bits within two rounds. Exhaustive keyspace search requires 2<sup>256</sup> operations, rendering brute force computationally impossible across classical architectures.
+                AES-256 uses 14 rounds of substitution and mixing. Changing even one bit in the input scrambles roughly half the output bits, making brute force search impossible with modern computers.
             </p>
         </div>
     </div>
@@ -158,36 +155,30 @@
     <!-- Vigenère -->
     <div id="hist-vigenere" class="history-block" style="display:none;">
         <div class="cipher-spec-header">
-            <span class="cipher-tag">Periodic Polyalphabetic Substitution</span>
+            <span class="cipher-tag">Polyalphabetic Cipher</span>
             <h3 class="cipher-spec-title">Vigen&egrave;re Cipher</h3>
         </div>
 
         <p class="cipher-spec-intro">
-            First published by Giovan Battista Bellaso in 1553 and later misattributed to Blaise de Vigen&egrave;re. The cipher rotates through distinct Caesar shift offsets dictated by the sequential characters of a repeating keyword phrase.
+            A polyalphabetic cipher that rotates through Caesar shift offsets determined by the letters of a repeating keyword phrase.
         </p>
 
         <div class="spec-section">
-            <div class="spec-section-title">Mathematical Mapping</div>
+            <div class="spec-section-title">Mathematical Formulation</div>
             <div class="spec-math-formula">
                 <code>C_i = (P_i + K_{i mod m}) mod 26</code>
-                <span class="formula-arrow">⇄</span>
+                <span class="formula-arrow">&harr;</span>
                 <code>P_i = (C_i - K_{i mod m} + 26) mod 26</code>
             </div>
             <p class="spec-section-desc">
-                Where <code>m</code> denotes the character length of the repeating passphrase.
+                Where <code>m</code> denotes the character length of the repeating keyword.
             </p>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Historical Cryptanalysis: The Kasiski Method</div>
+            <div class="spec-section-title">Cryptanalysis</div>
             <p class="spec-section-desc">
-                Celebrated for three centuries as uncrackable, the cipher was systematically broken by Charles Babbage in 1854 and Friedrich Kasiski in 1863.
-            </p>
-            <p class="spec-section-desc">
-                When repeated sequences in natural language happen to align with the keyword period, they generate identical ciphertext trigrams. Finding greatest common divisors (GCDs) between the distances separating these duplicate strings reveals the candidate keyword length <code>m</code>.
-            </p>
-            <p class="spec-section-desc">
-                Once the key length <code>m</code> is established, the ciphertext decomposes into <code>m</code> independent monoalphabetic Caesar streams, each easily solved using standard frequency matching or the Index of Coincidence.
+                Repeating words in the plaintext often create repeated sequences in the ciphertext. Measuring the distance between these repetitions helps identify the key length. Once the length is known, each letter position can be solved like an ordinary Caesar cipher.
             </p>
         </div>
     </div>
@@ -195,33 +186,30 @@
     <!-- Quantum BB84 -->
     <div id="hist-quantum" class="history-block" style="display:none;">
         <div class="cipher-spec-header">
-            <span class="cipher-tag">Quantum Key Agreement Protocol</span>
-            <h3 class="cipher-spec-title">BB84 Quantum Key Simulation</h3>
+            <span class="cipher-tag">Quantum Key Distribution</span>
+            <h3 class="cipher-spec-title">BB84 Protocol</h3>
         </div>
 
         <p class="cipher-spec-intro">
-            Proposed in 1984 by Charles H. Bennett and Gilles Brassard. Unlike mathematical complexity-based ciphers, BB84 derives security from the fundamental laws of quantum physics: the Heisenberg Uncertainty Principle and the Wootters-Zurek No-Cloning Theorem.
+            Proposed in 1984 by Charles H. Bennett and Gilles Brassard. Unlike mathematical ciphers, BB84 derives security from quantum mechanics: measuring a photon disturbs its state.
         </p>
 
         <div class="spec-section">
-            <div class="spec-section-title">Photon Polarization & Basis Sifting</div>
+            <div class="spec-section-title">Photon Polarization & Sifting</div>
             <p class="spec-section-desc">
-                The protocol establishes a private shared symmetric key across an insecure optical channel:
+                The protocol establishes a private shared symmetric key across an insecure channel:
             </p>
             <ul class="spec-list">
-                <li><strong>State Preparation:</strong> Alice generates random bits and encodes each into a single photon using one of two non-orthogonal polarization bases: Rectilinear (<code>+</code>: 0&deg;, 90&deg;) or Diagonal (<code>&times;</code>: 45&deg;, 135&deg;).</li>
-                <li><strong>Measurement:</strong> Bob chooses his measurement bases independently at random. When Bob measures using the same basis Alice chose, he recovers her bit with 100% fidelity.</li>
-                <li><strong>Public Sifting:</strong> Over an authenticated classical channel, Alice and Bob announce their chosen bases (never the bit values). They discard all bits where their bases disagreed, yielding a sifted key roughly half the original transmission size.</li>
+                <li><strong>State Preparation:</strong> Alice generates random bits and encodes each into a photon using one of two polarization bases: Rectilinear (<code>+</code>: 0&deg;, 90&deg;) or Diagonal (<code>&times;</code>: 45&deg;, 135&deg;).</li>
+                <li><strong>Measurement:</strong> Bob chooses measurement bases independently at random. When Bob measures using the same basis Alice chose, he recovers her bit with 100% accuracy.</li>
+                <li><strong>Public Sifting:</strong> Over a classical channel, Alice and Bob announce their chosen bases (never bit values) and discard bits where bases disagreed.</li>
             </ul>
         </div>
 
         <div class="spec-section">
-            <div class="spec-section-title">Eavesdropper Detection via QBER</div>
+            <div class="spec-section-title">Eavesdropper Detection</div>
             <p class="spec-section-desc">
-                Because unknown quantum states cannot be copied without measurement (No-Cloning), an interceptor ("Eve") must guess a measurement basis. If Eve measures in the wrong basis, she collapses the photon's wave function.
-            </p>
-            <p class="spec-section-desc">
-                When Eve re-transmits the altered photon to Bob, she injects an expected 25% error rate into the matched-basis bits. Alice and Bob compare a small random sample of their sifted key: if the Quantum Bit Error Rate (QBER) exceeds ~11%, eavesdropping is confirmed and the key is immediately discarded.
+                Because unknown quantum photon states cannot be duplicated without disturbing them, an eavesdropper guessing the measurement basis will introduce detectable bit errors into the shared key. If the error rate exceeds ~11%, eavesdropping is detected and the key is discarded.
             </p>
         </div>
     </div>
@@ -229,12 +217,12 @@
     <!-- Dynamic Trace Container (Used by Chat & Inspector) -->
     <div id="sol-dynamic" style="display:none;">
         <div class="sol-box">
-            <div class="sol-title">Transmission Trace: Client Encryption</div>
+            <div class="sol-title">Encryption Steps</div>
             <div id="dyn-enc-explanation" class="sol-explain"></div>
             <div id="dyn-enc-steps" class="tscroll"></div>
         </div>
         <div class="sol-box">
-            <div class="sol-title">Receiver Trace: Decryption Inversion</div>
+            <div class="sol-title">Decryption Steps</div>
             <div id="dyn-dec-explanation" class="sol-explain"></div>
             <div id="dyn-dec-steps" class="tscroll"></div>
         </div>

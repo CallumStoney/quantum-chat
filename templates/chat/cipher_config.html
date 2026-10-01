@@ -1,20 +1,20 @@
         <div class="enc-panel">
             <div class="enc-panel-top" id="enc-top">
                 <div style="margin-bottom:14px;">
-                    <div style="font-size:11px;font-weight:700;color:var(--text-hi);margin-bottom:6px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.04em;">Active Outgoing Cipher</div>
+                    <div style="font-size:12px;font-weight:600;color:var(--text-hi);margin-bottom:6px;font-family:var(--sans);">Active Cipher</div>
                     <select id="encryption-selector" style="width:100%;">
                         <option value="none">Plaintext (No Encryption)</option>
                         <option value="caesar">Caesar Shift</option>
                         <option value="affine">Affine Cipher</option>
                         <option value="hill">Hill Matrix Cipher</option>
                         <option value="vigenere">Vigen&egrave;re Cipher</option>
-                        <option value="aes">AES-256 Block Cipher</option>
+                        <option value="aes">AES-256</option>
                         <option value="quantum">BB84 Quantum Key</option>
                     </select>
                 </div>
 
                 <div id="no-cipher-msg" style="color:var(--text-dim);font-style:italic;font-size:12px;margin-bottom:16px;">
-                    No encryption selected. Plaintext passes without permutation.
+                    No encryption selected. Messages will be sent in plaintext.
                 </div>
 
                 <!-- Caesar Controls -->
@@ -22,7 +22,7 @@
                     <div class="shift-row">
                         <div class="shift-badge" id="shift-badge">1</div>
                         <div style="flex:1;">
-                            <div class="enc-label" style="margin-bottom:6px;">Alphabet Shift Offset k &isin; [1, 25]</div>
+                            <div class="enc-label" style="margin-bottom:6px;">Shift Amount (k)</div>
                             <input type="range" id="caesar-slider" min="1" max="25" value="1">
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <div style="color:var(--text-faint);font-size:14px;">&rarr;</div>
                         <div>
                             <div class="alpha-label">Ciphertext</div>
-                            <div id="example-shift" class="alpha-letters" style="color:var(--amber);">B C D E F</div>
+                            <div id="example-shift" class="alpha-letters" style="color:var(--blue-light);">B C D E F</div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div id="affine-controls" class="enc-param-wrapper" style="display:none;">
                     <div style="display:flex; gap:10px; margin-bottom:10px;">
                         <div style="flex:1;">
-                            <div class="enc-label" style="margin-bottom:6px;">Multiplier a &isin; &Zopf;<sub>26</sub><sup>&times;</sup> [gcd(a,26)=1]</div>
+                            <div class="enc-label" style="margin-bottom:6px;">Multiplier a (Coprime to 26)</div>
                             <select id="affine-a" style="width:100%; padding:6px 8px; background: var(--bg-inset); border: 1px solid var(--border-md); color: var(--text-hi); font-size: 12px; border-radius: var(--radius-sm); outline: none; cursor: pointer; font-family: inherit;">
                                 <option value="1">1</option>
                                 <option value="3">3</option>
@@ -60,14 +60,14 @@
                             </select>
                         </div>
                         <div style="flex:1;">
-                            <div class="enc-label" style="margin-bottom:6px;">Shift Offset b &isin; [0, 25]</div>
+                            <div class="enc-label" style="margin-bottom:6px;">Shift Offset b</div>
                             <input type="number" id="affine-b" class="chat-input" value="8" min="0" max="25" style="width:100%; padding:6px 8px;">
                         </div>
                     </div>
                     <div class="alpha-strip">
                         <div>
-                            <div class="alpha-label">Linear Congruence Mapping</div>
-                            <div class="alpha-letters" style="color:var(--amber); font-size:12px;">E(x) = (a &middot; x + b) mod 26</div>
+                            <div class="alpha-label">Formula</div>
+                            <div class="alpha-letters" style="color:var(--blue-light); font-size:12px;">E(x) = (a &middot; x + b) mod 26</div>
                         </div>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
                 <div id="hill-controls" class="enc-param-wrapper" style="display:none;">
                     <div class="hill-header">
                         <div>
-                            <div class="enc-label" style="margin-bottom:5px;">Matrix Dimension n &times; n</div>
+                            <div class="enc-label" style="margin-bottom:5px;">Matrix Size</div>
                             <div id="hill-size-pill" class="hill-size-pill">2 &times; 2</div>
                         </div>
                         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;">
                             <div id="hill-grid-picker"></div>
-                            <span style="color:var(--text-faint);font-size:10px;font-family:var(--mono);">select size</span>
+                            <span style="color:var(--text-faint);font-size:10px;font-family:var(--sans);">select size</span>
                         </div>
                     </div>
                     <div id="hill-matrix-container"></div>
@@ -92,7 +92,7 @@
 
                 <!-- Text Key Controls (Vigenère / AES / Quantum) -->
                 <div id="text-key-controls" class="enc-param-wrapper" style="display:none;">
-                    <div class="enc-label">Secret Passphrase / Key</div>
+                    <div class="enc-label">Key / Password</div>
                     <div class="key-input-wrap">
                         <svg class="key-icon" viewBox="0 0 24 24" width="15" height="15" stroke="currentColor"
                             stroke-width="2" fill="none">
@@ -109,7 +109,7 @@
                 </div>
 
                 <div style="border-top:1px solid var(--border); padding-top:14px; margin-top:8px;">
-                    <div class="enc-label" style="margin-bottom:6px;">Live Cipher Test Vector</div>
+                    <div class="enc-label" style="margin-bottom:6px;">Live Test Message</div>
                     <textarea id="example-msg-input" class="chat-input" style="width:100%; height:55px; resize:none;"
                         placeholder="Type a sample message to preview encryption...">HELLO WORLD</textarea>
                 </div>

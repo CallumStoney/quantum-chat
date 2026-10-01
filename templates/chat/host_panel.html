@@ -1,13 +1,14 @@
             {% if is_host %}
             <div class="host-panel"
-                style="margin: 8px 10px 0; padding: 10px 12px; background: var(--bg-2); border: 1px solid var(--border-md); border-radius: var(--radius-sm); flex-shrink: 0;">
+                style="margin: 8px 12px 0; padding: 12px 14px; background: var(--bg-2); border: 1px solid var(--border-md); border-radius: var(--radius-sm); flex-shrink: 0;">
                 
                 <!-- Top Row: Title and Collapse Toggle -->
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 8px; gap: 8px;">
-                    <div style="font-size: 11px; font-weight: 700; color: var(--amber); letter-spacing: 0.05em; font-family: var(--mono); text-transform: uppercase;">
-                        [HOST CONSOLE] Session Administration
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 10px; gap: 8px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--blue-light); display: flex; align-items: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/><path d="M19 11v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                        Room Settings (Host Controls)
                     </div>
-                    <button id="host-controls-toggle" onclick="toggleHostControls()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:11px;padding:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;" title="Toggle controls">
+                    <button id="host-controls-toggle" onclick="toggleHostControls()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;" title="Toggle controls">
                         &#9660;
                     </button>
                 </div>
@@ -15,40 +16,40 @@
                 <!-- Collapsible Content -->
                 <div id="host-controls-content" style="display:block;overflow:hidden;">
                     <!-- Bold Message Toggle -->
-                    <label style="font-size: 11px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; margin-bottom: 8px; cursor: pointer; font-family: var(--sans);">
-                        <input type="checkbox" id="host-bold"> Emphasize operator dispatches (bold font)
+                    <label style="font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; margin-bottom: 10px; cursor: pointer; font-family: var(--sans);">
+                        <input type="checkbox" id="host-bold"> Make my messages bold
                     </label>
 
                     <!-- Middle Row: Global Settings -->
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px;">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px;">
                         <select id="host-force-cipher"
                             onchange="socket.emit('host_action', {room, action: 'force_cipher', cipher: this.value})">
-                            <option value="">Policy: Free Cipher Selection</option>
-                            <option value="none">Lock Channel: Plaintext</option>
-                            <option value="caesar">Lock Channel: Caesar Shift</option>
-                            <option value="affine">Lock Channel: Affine</option>
-                            <option value="hill">Lock Channel: Hill Matrix</option>
-                            <option value="vigenere">Lock Channel: Vigen&egrave;re</option>
-                            <option value="aes">Lock Channel: AES-256</option>
-                            <option value="quantum">Lock Channel: BB84 Quantum</option>
+                            <option value="">Cipher Policy: Free Selection</option>
+                            <option value="none">Lock Room: Plaintext</option>
+                            <option value="caesar">Lock Room: Caesar Shift</option>
+                            <option value="affine">Lock Room: Affine Cipher</option>
+                            <option value="hill">Lock Room: Hill Matrix</option>
+                            <option value="vigenere">Lock Room: Vigen&egrave;re</option>
+                            <option value="aes">Lock Room: AES-256</option>
+                            <option value="quantum">Lock Room: BB84 Quantum</option>
                         </select>
 
                         <button class="ctrl-btn" style="border-color: var(--border-md); color: var(--text); flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'toggle_global_mute'})">Toggle Global Channel Mute</button>
+                            onclick="socket.emit('host_action', {room, action: 'toggle_global_mute'})">Mute All Participants</button>
                     </div>
 
                     <!-- Bottom Row: User Management -->
-                    <div style="display: flex; gap: 6px; align-items: center; background: var(--bg-inset); padding: 6px 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); flex-wrap: wrap;">
-                        <input type="text" id="host-target" class="chat-input" placeholder="Target handle"
-                            style="flex: 1; min-width: 100px; padding: 5px 8px; font-size: 11px; border-radius: var(--radius-sm);">
+                    <div style="display: flex; gap: 6px; align-items: center; background: var(--bg-inset); padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); flex-wrap: wrap;">
+                        <input type="text" id="host-target" class="chat-input" placeholder="Username"
+                            style="flex: 1; min-width: 100px; padding: 5px 8px; font-size: 12px; border-radius: var(--radius-xs);">
                         <button class="ctrl-btn" style="flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'kick', target: document.getElementById('host-target').value})">Evict</button>
+                            onclick="socket.emit('host_action', {room, action: 'kick', target: document.getElementById('host-target').value})">Kick</button>
                         <button class="ctrl-btn" style="flex-shrink: 0;"
                             onclick="socket.emit('host_action', {room, action: 'toggle_user_mute', target: document.getElementById('host-target').value})">Mute/Unmute</button>
-                        <input type="text" id="host-rename" class="chat-input" placeholder="New handle"
-                            style="flex: 1; min-width: 80px; padding: 5px 8px; font-size: 11px; border-radius: var(--radius-sm);">
+                        <input type="text" id="host-rename" class="chat-input" placeholder="New name"
+                            style="flex: 1; min-width: 80px; padding: 5px 8px; font-size: 12px; border-radius: var(--radius-xs);">
                         <button class="ctrl-btn" style="flex-shrink: 0;"
-                            onclick="socket.emit('host_action', {room, action: 'rename', target: document.getElementById('host-target').value, new_name: document.getElementById('host-rename').value})">Assign Handle</button>
+                            onclick="socket.emit('host_action', {room, action: 'rename', target: document.getElementById('host-target').value, new_name: document.getElementById('host-rename').value})">Rename</button>
                     </div>
                 </div>
             </div>

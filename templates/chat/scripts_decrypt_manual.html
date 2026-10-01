@@ -5,21 +5,21 @@
     function renderCaesarManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: CAESAR SHIFT ROTATION', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Caesar Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">Evaluate rotational shift offset k in [1, 25] to invert permutation ring.</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Test shift offsets k &isin; [1, 25] to decrypt the message.</div>
                     <div>
-                        <div style="color:var(--text-faint);font-size:10px;font-family:var(--mono);margin-bottom:4px;">TRIAL SHIFT k: <span id="manual-shift-val" style="color:var(--amber);font-weight:700;">1</span></div>
+                        <div style="color:var(--text-faint);font-size:11px;font-family:var(--sans);margin-bottom:4px;">Trial shift k: <span id="manual-shift-val" style="color:var(--blue-light);font-weight:700;">1</span></div>
                         <input type="range" id="manual-caesar-slider" min="1" max="25" value="1" style="margin-bottom:4px;">
                         <div id="manual-caesar-out" class="brute-out" style="font-size:12px;min-height:28px;padding:8px 12px;"></div>
                     </div>
                     <div class="step-box" style="margin-top:4px;">
-                        <div class="step-title">Commit Analytical Solution</div>
+                        <div class="step-title">Enter Final Key</div>
                         <div class="prompt-line">
                             <span class="prompt-sym">$</span>
                             <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">shift_k =</span>
                             <input type="number" id="manual-caesar-ans" class="step-input" min="1" max="25" placeholder="?">
-                            <button class="check-btn" onclick="checkCaesarManual()">Verify Inversion</button>
+                            <button class="check-btn" onclick="checkCaesarManual()">Verify Key</button>
                         </div>
                         <div id="manual-caesar-fb"></div>
                     </div>
@@ -35,18 +35,18 @@
     function checkCaesarManual() {
         const ans = parseInt(document.getElementById('manual-caesar-ans').value);
         const fb = document.getElementById('manual-caesar-fb');
-        if (ans === parseInt(activeCipherKey)) fb.innerHTML = `<div class="fb-ok">[VERIFIED] Offset confirmed: k = ${ans} → Plaintext: "${activeOriginal}"</div>`;
-        else fb.innerHTML = `<div class="fb-err">[MISMATCH] Shift k = ${ans} produces ungrammatical distribution. Continue evaluation.</div>`;
+        if (ans === parseInt(activeCipherKey)) fb.innerHTML = `<div class="fb-ok">✓ Offset confirmed: k = ${ans}<br>Decrypted text: "${activeOriginal}"</div>`;
+        else fb.innerHTML = `<div class="fb-err">Shift k = ${ans} is incorrect. Try another value.</div>`;
     }
     
     function renderAffineManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: AFFINE LINEAR CONGRUENCE', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Affine Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">Derive multiplicative key a in Z_26^* and additive key b in [0, 25] to satisfy D(y) = a^-1 * (y - b) mod 26.</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Find multiplier a and offset b to decrypt via D(y) = a⁻¹ &middot; (y - b) mod 26.</div>
                     <div class="step-box" style="margin-top:10px;">
-                        <div class="step-title">Submit Evaluated Keypair</div>
+                        <div class="step-title">Submit Key Pair</div>
                         <div class="prompt-line" style="margin-bottom:8px;">
                             <span class="prompt-sym">$</span>
                             <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Multiplier (a) =</span>
@@ -56,7 +56,7 @@
                             <span class="prompt-sym">$</span>
                             <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Offset (b) =</span>
                             <input type="number" id="manual-affine-b" class="step-input" min="0" max="25" placeholder="?" style="width:60px;">
-                            <button class="check-btn" onclick="checkAffineManual()">Verify Inversion</button>
+                            <button class="check-btn" onclick="checkAffineManual()">Verify Keys</button>
                         </div>
                         <div id="manual-affine-fb"></div>
                     </div>
@@ -69,23 +69,23 @@
         const bAns = parseInt(document.getElementById('manual-affine-b').value);
         const fb = document.getElementById('manual-affine-fb');
         if (aAns === parseInt(activeCipherKey[0]) && bAns === parseInt(activeCipherKey[1])) {
-            fb.innerHTML = `<div class="fb-ok">[VERIFIED] Linear keypair confirmed: a = ${aAns}, b = ${bAns} → Plaintext: "${activeOriginal}"</div>`;
+            fb.innerHTML = `<div class="fb-ok">✓ Keys confirmed: a = ${aAns}, b = ${bAns}<br>Decrypted text: "${activeOriginal}"</div>`;
         } else {
-            fb.innerHTML = `<div class="fb-err">[MISMATCH] Parameters do not satisfy congruence mapping. Continue analysis.</div>`;
+            fb.innerHTML = `<div class="fb-err">Parameters do not match. Try again.</div>`;
         }
     }
 
     function renderHillManual(container) {
         if (!Array.isArray(activeCipherKey) || activeCipherKey.length === 0) {
-            container.innerHTML = `<div style="color:var(--text-faint);padding:16px;font-style:italic;font-size:11px;">Matrix parameter vector unavailable. Ensure active matrix is populated and coprime.</div>`;
+            container.innerHTML = `<div style="color:var(--text-faint);padding:16px;font-style:italic;font-size:12px;">Matrix parameters unavailable. Ensure active matrix is populated and coprime.</div>`;
             return;
         }
         const K = activeCipherKey;
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: HILL MATRIX GROUP GL(n, Z_26)', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Hill Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">Execute algebraic derivation: compute det(K), evaluate modular inverse det^-1, construct adj(K), and derive K^-1.</div>
+                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Derive the decryption matrix: compute det(K), find modular inverse det⁻¹, and apply K⁻¹.</div>
                     <div class="mat-disp" style="margin-bottom:4px;">${printMat(K).replace(/ /g, '&nbsp;')}</div>
                     <div id="hill-manual-steps"></div>
                 </div>
@@ -98,8 +98,8 @@
         const rawDet = matDet(K);
         const container = document.getElementById('hill-manual-steps');
         container.innerHTML = `<div class="step-box anim-in">
-            <div class="step-title">Stage 1: Evaluate det(K) mod 26</div>
-            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--mono);">${K.length === 2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce modulo 26.` : 'Compute determinant, then reduce modulo 26.'}</div>
+            <div class="step-title">Step 1: Compute det(K) mod 26</div>
+            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">${K.length === 2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce mod 26:` : 'Compute determinant, then reduce mod 26:'}</div>
             <div class="prompt-line">
                 <span class="prompt-sym">$</span>
                 <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det(K) mod 26 =</span>
@@ -115,11 +115,11 @@
         const correct = mod26(matDet(K));
         const user = parseInt(document.getElementById('hm-inp1').value);
         if (user === correct) {
-            document.getElementById('hm-fb1').innerHTML = `<div class="fb-ok">[VERIFIED] det(K) ≡ ${correct} (mod 26), coprime with 26 ✓</div>`;
+            document.getElementById('hm-fb1').innerHTML = `<div class="fb-ok">✓ det(K) ≡ ${correct} (mod 26), coprime with 26</div>`;
             document.getElementById('hm-inp1').disabled = true;
             document.getElementById('hill-manual-steps').innerHTML += `<div class="step-box anim-in">
-                <div class="step-title">Stage 2: Evaluate Modular Multiplicative Inverse (det⁻¹ mod 26)</div>
-                <div style="color:var(--text-dim);font-size:11px;margin-bottom:6px;font-family:var(--mono);">Solve linear congruence: (${correct} × X) ≡ 1 (mod 26)</div>
+                <div class="step-title">Step 2: Modular Multiplicative Inverse (det⁻¹ mod 26)</div>
+                <div style="color:var(--text-dim);font-size:11px;margin-bottom:6px;font-family:var(--sans);">Find modular inverse: (${correct} × X) ≡ 1 (mod 26)</div>
                 <div class="prompt-line">
                     <span class="prompt-sym">$</span>
                     <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det⁻¹ =</span>
@@ -129,7 +129,7 @@
                 <div id="hm-fb2"></div>
             </div>`;
         } else {
-            document.getElementById('hm-fb1').innerHTML = `<div class="fb-err">[MISMATCH] Evaluated ${user}; determinant computation does not match matrix parameters.</div>`;
+            document.getElementById('hm-fb1').innerHTML = `<div class="fb-err">Incorrect determinant. Try again.</div>`;
         }
     }
 
@@ -140,16 +140,16 @@
             const K = activeCipherKey;
             const adj = matAdj(K);
             const invM = adj.map(r => r.map(v => mod26(v * correct)));
-            document.getElementById('hm-fb2').innerHTML = `<div class="fb-ok">[VERIFIED] Modular inverse derived: det⁻¹ = ${correct} (${det} × ${correct} ≡ ${(det * correct) % 26} mod 26) ✓</div>`;
+            document.getElementById('hm-fb2').innerHTML = `<div class="fb-ok">✓ Inverse found: det⁻¹ = ${correct} (${det} × ${correct} ≡ 1 mod 26)</div>`;
             document.getElementById('hm-inp2').disabled = true;
-            document.getElementById('hill-manual-steps').innerHTML += `<div class="step-box anim-in" style="border-color:rgba(45,156,87,0.3);">
-                <div class="step-title" style="color:var(--green-light);">Stages 3-5: adj(K) → K⁻¹ Matrix Multiplication</div>
-                <div style="color:var(--text-dim);font-size:10px;margin-bottom:4px;font-family:var(--mono);">Inverted matrix K⁻¹ = ${correct} × adj(K) mod 26:</div>
+            document.getElementById('hill-manual-steps').innerHTML += `<div class="step-box anim-in" style="border-color:rgba(46,160,67,0.3);">
+                <div class="step-title" style="color:var(--green-light);">Steps 3-5: Inverted Matrix K⁻¹</div>
+                <div style="color:var(--text-dim);font-size:11px;margin-bottom:4px;font-family:var(--sans);">K⁻¹ = ${correct} × adj(K) mod 26:</div>
                 <div class="mat-disp" style="color:var(--green-light);">${printMat(invM).replace(/ /g, '&nbsp;')}</div>
-                <div class="algo-success" style="margin-top:8px;">[DECODING FINALIZED] Plaintext vector: "${activeOriginal}"</div>
+                <div class="algo-success" style="margin-top:8px;">✓ Decryption complete: "${activeOriginal}"</div>
             </div>`;
         } else {
-            document.getElementById('hm-fb2').innerHTML = `<div class="fb-err">[MISMATCH] (${det} × ${user}) mod 26 = ${(det * user) % 26} ≠ 1. Modular inverse condition failed.</div>`;
+            document.getElementById('hm-fb2').innerHTML = `<div class="fb-err">(${det} × ${user}) mod 26 ≠ 1. Try another value.</div>`;
         }
     }
 
@@ -161,26 +161,26 @@
         const reps = Object.entries(tri).filter(([, v]) => v.length > 1);
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('MANUAL INVERSION: VIGENÈRE KASISKI EXAMINATION', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Vigenère Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
                     <div class="step-box">
-                        <div class="step-title">Stage 1: Evaluate Period Length via Duplication Intervals</div>
-                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval interval = ${reps[0][1][1] - reps[0][1][0]} → factor analysis yields key length candidate</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Stream length insufficient for Kasiski trigram recurrence. Evaluate period by index of coincidence.</div>`}
+                        <div class="step-title">Stage 1: Find Keyword Length</div>
+                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> repeats at interval ${reps[0][1][1] - reps[0][1][0]} → factor suggests key length</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Message length below duplicate trigram threshold. Test candidate key lengths:</div>`}
                         <div class="prompt-line" style="margin-top:8px;">
-                            <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">period_m =</span>
+                            <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">key_length =</span>
                             <input type="number" id="vm-inp1" class="step-input" placeholder="?">
-                            <button class="check-btn" onclick="checkVigManual1()">Verify Period</button>
+                            <button class="check-btn" onclick="checkVigManual1()">Verify Length</button>
                         </div>
                         <div id="vm-fb1"></div>
                     </div>
                     <div id="vig-manual-step2" style="display:none;">
                         <div class="step-box anim-in">
-                            <div class="step-title">Stage 2: Commit Derived Keyword</div>
-                            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--mono);">Coset distribution analysis: evaluate chi-squared statistic across each coset to extract sub-key characters.</div>
+                            <div class="step-title">Stage 2: Enter Keyword</div>
+                            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">Enter the deduced keyword phrase:</div>
                             <div class="prompt-line">
                                 <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">keyword =</span>
-                                <input type="text" id="vm-inp2" class="prompt-input" placeholder="KEY..." style="text-transform:uppercase;width:90px;">
-                                <button class="check-btn" onclick="checkVigManual2()">Decrypt Cosets</button>
+                                <input type="text" id="vm-inp2" class="prompt-input" placeholder="KEY..." style="text-transform:uppercase;width:100px;">
+                                <button class="check-btn" onclick="checkVigManual2()">Decrypt</button>
                             </div>
                             <div id="vm-fb2"></div>
                         </div>
@@ -193,11 +193,11 @@
         const key = String(activeCipherKey).toUpperCase() || 'KEY';
         const user = parseInt(document.getElementById('vm-inp1').value);
         if (user === key.length) {
-            document.getElementById('vm-fb1').innerHTML = `<div class="fb-ok">[VERIFIED] Key length period confirmed: m = ${key.length} ✓</div>`;
+            document.getElementById('vm-fb1').innerHTML = `<div class="fb-ok">✓ Key length confirmed: ${key.length}</div>`;
             document.getElementById('vm-inp1').disabled = true;
             document.getElementById('vig-manual-step2').style.display = 'block';
         } else {
-            document.getElementById('vm-fb1').innerHTML = `<div class="fb-err">[MISMATCH] Evaluated period does not match trigram GCD factorization.</div>`;
+            document.getElementById('vm-fb1').innerHTML = `<div class="fb-err">Key length does not match. Try again.</div>`;
         }
     }
 
@@ -205,22 +205,22 @@
         const key = String(activeCipherKey).toUpperCase() || 'KEY';
         const user = document.getElementById('vm-inp2').value.toUpperCase();
         if (user === key) {
-            document.getElementById('vm-fb2').innerHTML = `<div class="fb-ok">[ANALYSIS COMPLETE] Keyword confirmed: "${key}" → Plaintext: "${activeOriginal}"</div>`;
+            document.getElementById('vm-fb2').innerHTML = `<div class="fb-ok">✓ Keyword confirmed: "${key}"<br>Decrypted text: "${activeOriginal}"</div>`;
         } else {
-            document.getElementById('vm-fb2').innerHTML = `<div class="fb-err">[MISMATCH] Keyword candidate does not solve coset streams.</div>`;
+            document.getElementById('vm-fb2').innerHTML = `<div class="fb-err">Keyword does not decrypt the text properly. Try again.</div>`;
         }
     }
 
     function renderAesManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('AES-256: CRYPTANALYTIC BOUNDARY', 'var(--amber)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('AES-256: Manual Cryptanalysis', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;line-height:1.7;">
-                        Complexity profile: AES-256 maintains a keyspace of 2^256 states with zero known analytical short-cuts below brute-force (the biclique attack reduces computational complexity to 2^126.1, which remains physically infeasible).<br><br>
-                        Manual algebraic inversion of 14 non-linear Galois field rounds cannot be computed by hand. Consult the SPN Round State Visualizer to inspect round matrix diffusion.
+                    <div style="color:var(--text-dim);font-size:12px;line-height:1.7;">
+                        AES-256 uses a 256-bit key space (approximately 1.15 &times; 10⁷⁷ possible keys). Its 14 rounds of substitution and mixing make manual cracking impossible without the key.<br><br>
+                        Switch to the Automated view to inspect the round transformations across SubBytes, ShiftRows, and MixColumns.
                     </div>
-                    <a href="https://www.nist.gov/publications/advanced-encryption-standard-aes" target="_blank" class="calc-link">→ NIST FIPS 197 Specification Reference</a>
+                    <a href="https://www.nist.gov/publications/advanced-encryption-standard-aes" target="_blank" class="calc-link">NIST FIPS 197 Specification &rarr;</a>
                 </div>
             </div>`;
     }
@@ -228,19 +228,19 @@
     function renderQuantumManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('BB84: INTERACTIVE QUANTUM INTERCEPTION', 'var(--purple-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('BB84 Protocol: Eavesdropping Simulation', 'var(--purple-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;line-height:1.6;">Interception testbed: Select projective measurement basis (+ rectilinear / × diagonal). Mismatched basis measurement collapses quantum superposition and induces detectable bit errors.</div>
-                    <div style="margin:10px 0;padding:10px;background:var(--bg-inset);border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;">
-                        <div style="font-size:26px;margin-bottom:6px;font-family:var(--mono);color:var(--amber);" id="q-photon-show">?</div>
-                        <div style="color:var(--text-faint);font-size:10px;font-family:var(--mono);">Single photon polarization state (basis unknown)</div>
+                    <div style="color:var(--text-dim);font-size:12px;line-height:1.6;">Eavesdropping test: Choose a measurement basis (+ rectilinear or &times; diagonal). Guessing the wrong basis alters the photon and creates a detectable error.</div>
+                    <div style="margin:10px 0;padding:12px;background:var(--bg-inset);border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;">
+                        <div style="font-size:28px;margin-bottom:6px;font-family:var(--mono);color:var(--blue-light);" id="q-photon-show">?</div>
+                        <div style="color:var(--text-faint);font-size:11px;">Single photon polarization (basis unknown)</div>
                     </div>
                     <div style="display:flex;gap:8px;">
-                        <button class="ctrl-btn" style="flex:1;padding:10px;" onclick="qManualGuess('+')">+ Rectilinear (0° / 90°)</button>
-                        <button class="ctrl-btn" style="flex:1;padding:10px;" onclick="qManualGuess('x')">× Diagonal (45° / 135°)</button>
+                        <button class="ctrl-btn" style="flex:1;padding:9px;" onclick="qManualGuess('+')">+ Rectilinear (0° / 90°)</button>
+                        <button class="ctrl-btn" style="flex:1;padding:9px;" onclick="qManualGuess('x')">&times; Diagonal (45° / 135°)</button>
                     </div>
                     <div id="q-manual-fb" style="margin-top:8px;"></div>
-                    <div style="color:var(--text-dim);font-size:10px;margin-top:6px;font-family:var(--mono);">Trials: <span id="q-attempts">0</span> | Matched Bases: <span id="q-score">0</span></div>
+                    <div style="color:var(--text-dim);font-size:11px;margin-top:6px;">Trials: <span id="q-attempts">0</span> | Matched Bases: <span id="q-score" style="color:var(--green-light);">0</span></div>
                 </div>
             </div>`;
         window._qManualScore = 0; window._qManualAttempts = 0;
@@ -253,9 +253,9 @@
         const hit = Math.random() > 0.5;
         if (hit) {
             window._qManualScore = (window._qManualScore || 0) + 1;
-            document.getElementById('q-manual-fb').innerHTML = `<div class="fb-ok">[EIGENSTATE PRESERVED] Measurement basis matched state preparation (0% induced error).</div>`;
+            document.getElementById('q-manual-fb').innerHTML = `<div class="fb-ok">✓ Basis matched! Photon state preserved.</div>`;
         } else {
-            document.getElementById('q-manual-fb').innerHTML = `<div class="fb-err">[STATE COLLAPSE] Basis mismatch induced state projection. Quantum Bit Error Rate threshold breached (~25% QBER).</div>`;
+            document.getElementById('q-manual-fb').innerHTML = `<div class="fb-err">Basis mismatch: The photon was altered, triggering a detectable error.</div>`;
         }
         document.getElementById('q-attempts').textContent = window._qManualAttempts;
         document.getElementById('q-score').textContent = window._qManualScore;

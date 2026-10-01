@@ -111,10 +111,10 @@
             }
         } else if (activeCipherType === 'aes') {
             activeCipherKey = textKeyInp.value;
-            activePayload = "[AES-256 BINARY PAYLOAD SIMULATION]";
+            activePayload = "[AES-256 Encrypted Block]";
         } else if (activeCipherType === 'quantum') {
             activeCipherKey = textKeyInp.value;
-            activePayload = "[BB84 QUANTUM PHOTON STREAM]";
+            activePayload = "[BB84 Sifted Key]";
         }
 
         document.getElementById('sel-payload').textContent = activePayload;
@@ -408,7 +408,7 @@
         } else {
             modalBody.innerHTML = `
                 <div style="background:var(--bg-3);padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:14px;">
-                    <div style="color:var(--text-faint);font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">Intercepted Payload</div>
+                    <div style="color:var(--text-faint);font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">Encrypted Message</div>
                     <div style="color:var(--text-hi);font-family:var(--mono);word-break:break-all;font-size:13px;">${cipherText}</div>
                 </div>
                 <div class="sol-box">
@@ -466,11 +466,11 @@
         } else if (type === 'hill') {
             if (!key) return `Matrix is singular (det = 0). Ensure det is coprime to modulus to allow inversion.`;
             const n = Array.isArray(key) ? key.length : 2;
-            return dec ? `Multiply ciphertext vector blocks by the inverse matrix K<sup>-1</sup> mod 26: ${m('[P] = K^{-1} * [C] (mod 26)')}` : `Multiply plaintext vector blocks of length ${n} by key matrix K mod 26: ${m('[C] = K * [P] (mod 26)')}`;
+            return dec ? `Multiply ciphertext blocks by the inverse matrix K<sup>-1</sup> mod 26: ${m('[P] = K^{-1} * [C] (mod 26)')}` : `Multiply plaintext blocks of length ${n} by key matrix K mod 26: ${m('[C] = K * [P] (mod 26)')}`;
         } else if (type === 'aes') {
-            return dec ? `AES executes 14 inverse transformation rounds (InvShiftRows, InvSubBytes, AddRoundKey, InvMixColumns). Exhaustive search requires 2<sup>256</sup> operations.` : `AES-256 expands the key into 15 round sub-keys, running 14 rounds of SubBytes, ShiftRows, MixColumns over GF(2<sup>8</sup>), and AddRoundKey.`;
+            return dec ? `AES executes 14 inverse transformation rounds (InvShiftRows, InvSubBytes, AddRoundKey, InvMixColumns).` : `AES-256 expands the key into 15 round sub-keys, running 14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey.`;
         } else if (type === 'quantum') {
-            return dec ? `Decryption applies the sifted key obtained from matched photon bases (+/x). Any eavesdropper perturbs quantum states, injecting an expected 25% QBER.` : `BB84 encodes key bits into polarized single photons across random non-orthogonal bases (+ and x). Matching basis choices form the shared key.`;
+            return dec ? `Decryption applies the sifted key obtained from matched photon bases (+ and ×).` : `BB84 encodes key bits into polarized photons across random bases (+ and ×). Matching basis choices form the shared key.`;
         }
         return '';
     }
@@ -498,7 +498,7 @@
             for (let i = 0; i < pC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${pC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
             return buildTable(rows, [`PLAIN(x${n})`, 'OP', `CIPHER(x${n})`]);
         }
-        return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">[Block-level cipher, character trace not applicable]</div>`;
+        return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">Block-level cipher (character trace not applicable)</div>`;
     }
     function decTable(plain, cipher, type, key) {
         let rows = [], pC = plain.replace(/[^a-zA-Z]/g, '').toUpperCase(), cC = cipher.replace(/[^a-zA-Z]/g, '').toUpperCase(), L = 18;
@@ -520,6 +520,6 @@
             for (let i = 0; i < cC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${cC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* K⁻¹ mod 26</td><td class="hi-cell">[${pC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
             return buildTable(rows, [`CIPHER(x${n})`, 'INV MATRIX', `PLAIN(x${n})`]);
         }
-        return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">[Block-level, requires key for reversal]</div>`;
+        return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">Block-level cipher (requires key for reversal)</div>`;
     }
 
