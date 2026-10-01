@@ -5,11 +5,11 @@
     function renderCaesarManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Caesar Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Caesar Cipher: Manual Decryption', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Test shift offsets k &isin; [1, 25] to decrypt the message.</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Test shift offsets k &isin; [1, 25] to decrypt the message.</div>
                     <div>
-                        <div style="color:var(--text-faint);font-size:11px;font-family:var(--sans);margin-bottom:4px;">Trial shift k: <span id="manual-shift-val" style="color:var(--blue-light);font-weight:700;">1</span></div>
+                        <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);margin-bottom:4px;">Trial shift k: <span id="manual-shift-val" style="color:var(--stamp-red);font-weight:700;">1</span></div>
                         <input type="range" id="manual-caesar-slider" min="1" max="25" value="1" style="margin-bottom:4px;">
                         <div id="manual-caesar-out" class="brute-out" style="font-size:12px;min-height:28px;padding:8px 12px;"></div>
                     </div>
@@ -17,7 +17,7 @@
                         <div class="step-title">Enter Final Key</div>
                         <div class="prompt-line">
                             <span class="prompt-sym">$</span>
-                            <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">shift_k =</span>
+                            <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">shift_k =</span>
                             <input type="number" id="manual-caesar-ans" class="step-input" min="1" max="25" placeholder="?">
                             <button class="check-btn" onclick="checkCaesarManual()">Verify Key</button>
                         </div>
@@ -42,19 +42,19 @@
     function renderAffineManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Affine Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Affine Cipher: Manual Decryption', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Find multiplier a and offset b to decrypt via D(y) = a⁻¹ &middot; (y - b) mod 26.</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Find multiplier a and offset b to decrypt via D(y) = a⁻¹ &middot; (y - b) mod 26.</div>
                     <div class="step-box" style="margin-top:10px;">
                         <div class="step-title">Submit Key Pair</div>
                         <div class="prompt-line" style="margin-bottom:8px;">
                             <span class="prompt-sym">$</span>
-                            <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Multiplier (a) =</span>
+                            <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">Multiplier (a) =</span>
                             <input type="number" id="manual-affine-a" class="step-input" placeholder="?" style="width:60px;">
                         </div>
                         <div class="prompt-line">
                             <span class="prompt-sym">$</span>
-                            <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Offset (b) =</span>
+                            <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">Offset (b) =</span>
                             <input type="number" id="manual-affine-b" class="step-input" min="0" max="25" placeholder="?" style="width:60px;">
                             <button class="check-btn" onclick="checkAffineManual()">Verify Keys</button>
                         </div>
@@ -83,9 +83,9 @@
         const K = activeCipherKey;
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Hill Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Hill Cipher: Manual Decryption', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Derive the decryption matrix: compute det(K), find modular inverse det⁻¹, and apply K⁻¹.</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Derive the decryption matrix: compute det(K), find modular inverse det⁻¹, and apply K⁻¹.</div>
                     <div class="mat-disp" style="margin-bottom:4px;">${printMat(K).replace(/ /g, '&nbsp;')}</div>
                     <div id="hill-manual-steps"></div>
                 </div>
@@ -99,10 +99,10 @@
         const container = document.getElementById('hill-manual-steps');
         container.innerHTML = `<div class="step-box anim-in">
             <div class="step-title">Step 1: Compute det(K) mod 26</div>
-            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">${K.length === 2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce mod 26:` : 'Compute determinant, then reduce mod 26:'}</div>
+            <div style="color:var(--ink-dim);font-size:11px;margin-bottom:8px;font-family:var(--font-typewriter);">${K.length === 2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce mod 26:` : 'Compute determinant, then reduce mod 26:'}</div>
             <div class="prompt-line">
                 <span class="prompt-sym">$</span>
-                <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det(K) mod 26 =</span>
+                <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">det(K) mod 26 =</span>
                 <input type="number" id="hm-inp1" class="step-input" placeholder="?">
                 <button class="check-btn" onclick="checkHillManual1()">Verify Determinant</button>
             </div>
@@ -122,7 +122,7 @@
                 <div style="color:var(--text-dim);font-size:11px;margin-bottom:6px;font-family:var(--sans);">Find modular inverse: (${correct} × X) ≡ 1 (mod 26)</div>
                 <div class="prompt-line">
                     <span class="prompt-sym">$</span>
-                    <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det⁻¹ =</span>
+                    <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">det⁻¹ =</span>
                     <input type="number" id="hm-inp2" class="step-input" placeholder="?">
                     <button class="check-btn" onclick="checkHillManual2(${correct})">Verify Inverse</button>
                 </div>
@@ -161,13 +161,13 @@
         const reps = Object.entries(tri).filter(([, v]) => v.length > 1);
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Vigenère Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Vigen\u00e8re Cipher: Manual Decryption', 'var(--ink)')}.replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
                     <div class="step-box">
                         <div class="step-title">Stage 1: Find Keyword Length</div>
-                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> repeats at interval ${reps[0][1][1] - reps[0][1][0]} (factor suggests candidate key length)</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Message length below duplicate trigram threshold. Test candidate key lengths:</div>`}
+                        ${reps.length ? `<div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Trigram <span style="color:var(--stamp-red);font-weight:700;">"${reps[0][0]}"</span> repeats at interval ${reps[0][1][1] - reps[0][1][0]} (factor suggests candidate key length)</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Message length below duplicate trigram threshold. Test candidate key lengths:</div>`}
                         <div class="prompt-line" style="margin-top:8px;">
-                            <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">key_length =</span>
+                            <span class="prompt-sym">$</span><span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">key_length =</span>
                             <input type="number" id="vm-inp1" class="step-input" placeholder="?">
                             <button class="check-btn" onclick="checkVigManual1()">Verify Length</button>
                         </div>
@@ -176,9 +176,9 @@
                     <div id="vig-manual-step2" style="display:none;">
                         <div class="step-box anim-in">
                             <div class="step-title">Stage 2: Enter Keyword</div>
-                            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">Enter the deduced keyword phrase:</div>
+                            <div style="color:var(--ink-dim);font-size:11px;margin-bottom:8px;font-family:var(--font-typewriter);">Enter the deduced keyword phrase:</div>
                             <div class="prompt-line">
-                                <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">keyword =</span>
+                                <span class="prompt-sym">$</span><span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">keyword =</span>
                                 <input type="text" id="vm-inp2" class="prompt-input" placeholder="KEY..." style="text-transform:uppercase;width:100px;">
                                 <button class="check-btn" onclick="checkVigManual2()">Decrypt</button>
                             </div>
@@ -214,9 +214,9 @@
     function renderAesManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('AES-256: Manual Cryptanalysis', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('AES-256: Manual Cryptanalysis', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:12px;line-height:1.7;">
+                    <div style="color:var(--ink-dim);font-size:12px;line-height:1.7;font-family:var(--font-typewriter);">
                         AES-256 uses a 256-bit key space (approximately 1.15 &times; 10⁷⁷ possible keys). Its 14 rounds of substitution and mixing make manual cracking impossible without the key.<br><br>
                         Switch to the Automated view to inspect the round transformations across SubBytes, ShiftRows, and MixColumns.
                     </div>
@@ -228,19 +228,19 @@
     function renderQuantumManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('BB84 Protocol: Eavesdropping Simulation', 'var(--purple-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('BB84 Protocol: Eavesdropping Simulation', 'var(--blue-ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:12px;line-height:1.6;">Eavesdropping test: Choose a measurement basis (+ rectilinear or &times; diagonal). Guessing the wrong basis alters the photon and creates a detectable error.</div>
-                    <div style="margin:10px 0;padding:12px;background:var(--bg-inset);border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;">
-                        <div style="font-size:28px;margin-bottom:6px;font-family:var(--mono);color:var(--blue-light);" id="q-photon-show">?</div>
-                        <div style="color:var(--text-faint);font-size:11px;">Single photon polarization (basis unknown)</div>
+                    <div style="color:var(--ink-dim);font-size:12px;line-height:1.6;font-family:var(--font-typewriter);">Eavesdropping test: Choose a measurement basis (+ rectilinear or &times; diagonal). Guessing the wrong basis alters the photon and creates a detectable error.</div>
+                    <div style="margin:10px 0;padding:12px;background:rgba(255,255,255,0.7);border-radius:1px;border:1px solid var(--ink-faint);text-align:center;">
+                        <div style="font-size:28px;margin-bottom:6px;font-family:var(--font-typewriter);color:var(--blue-ink);font-weight:700;" id="q-photon-show">?</div>
+                        <div style="color:var(--ink-faint);font-size:11px;font-family:var(--font-typewriter);">Single photon polarization (basis unknown)</div>
                     </div>
                     <div style="display:flex;gap:8px;">
                         <button class="ctrl-btn" style="flex:1;padding:9px;" onclick="qManualGuess('+')">+ Rectilinear (0° / 90°)</button>
                         <button class="ctrl-btn" style="flex:1;padding:9px;" onclick="qManualGuess('x')">&times; Diagonal (45° / 135°)</button>
                     </div>
                     <div id="q-manual-fb" style="margin-top:8px;"></div>
-                    <div style="color:var(--text-dim);font-size:11px;margin-top:6px;">Trials: <span id="q-attempts">0</span> | Matched Bases: <span id="q-score" style="color:var(--green-light);">0</span></div>
+                    <div style="color:var(--ink-dim);font-size:11px;margin-top:6px;font-family:var(--font-typewriter);">Trials: <span id="q-attempts" style="color:var(--ink);font-weight:700;">0</span> | Matched Bases: <span id="q-score" style="color:#1a6b32;font-weight:700;">0</span></div>
                 </div>
             </div>`;
         window._qManualScore = 0; window._qManualAttempts = 0;

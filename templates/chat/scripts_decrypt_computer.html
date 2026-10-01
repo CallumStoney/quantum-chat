@@ -3,10 +3,10 @@
     // ===========================================================
     function algoHeader(title, color) {
         return `<div class="algo-header">
-            <span class="algo-terminal-icon">
+            <span class="algo-terminal-icon" style="color:var(--stamp-red);">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
             </span>
-            <div class="algo-title" style="color:${color || 'var(--text-hi)'};">${title}</div>
+            <div class="algo-title" style="color:${color || 'var(--ink)'};font-family:var(--font-stamp);font-weight:700;">${title}</div>
         </div>`;
     }
 
@@ -26,7 +26,7 @@
                         <div class="algo-line">&nbsp;&nbsp;<span class="kw">if</span> (score &gt; best_score) best = {shift, candidate}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Ciphertext: <span style="color:var(--text-hi);font-family:var(--mono);">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Ciphertext: <span style="color:var(--blue-ink);font-family:var(--font-typewriter);font-weight:700;">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
                     <div id="caesar-scan" class="scan-results"></div>
                     <div class="algo-controls">
                         <button class="ctrl-btn" id="cs-step">▶ Single Step</button>
@@ -98,7 +98,7 @@
                         <div class="algo-line">&nbsp;&nbsp;}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);margin-top:8px;">Ciphertext: <span style="color:var(--text-hi);font-family:var(--mono);">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);margin-top:8px;">Ciphertext: <span style="color:var(--blue-ink);font-family:var(--font-typewriter);font-weight:700;">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
                     <div id="affine-algo-result" style="margin-top:12px;">
                         <div class="algo-success">✓ Key pair identified: a = ${activeCipherKey[0]}, b = ${activeCipherKey[1]}<br>Decrypted text: "${activeOriginal}"</div>
                     </div>
@@ -121,8 +121,8 @@
         const invM = adj.map(r => r.map(v => mod26(v * detInv)));
         const steps = [
             { id: 'hs0', title: 'Key Matrix K', body: `<div class="mat-disp">${printMat(K).replace(/ /g, '&nbsp;')}</div>` },
-            { id: 'hs1', title: 'Step 1: Determinant det(K)', body: `<div style="line-height:2;">${n === 2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:var(--green-light);">${rawDet}</span>` : `det(K) = <span style="color:var(--green-light);">${rawDet}</span>`}<br>det mod 26 = <span style="color:var(--green-light);font-weight:700;">${det}</span></div>` },
-            { id: 'hs2', title: 'Step 2: Modular Multiplicative Inverse', body: `<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:var(--green-light);font-weight:700;">${detInv}</span> <span style="color:var(--text-faint);">(${det} × ${detInv} = ${det * detInv} ≡ ${(det * detInv) % 26} mod 26)</span></div>` },
+            { id: 'hs1', title: 'Step 1: Determinant det(K)', body: `<div style="line-height:2;">${n === 2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:#1a6b32;font-weight:700;">${rawDet}</span>` : `det(K) = <span style="color:#1a6b32;font-weight:700;">${rawDet}</span>`}<br>det mod 26 = <span style="color:#1a6b32;font-weight:700;">${det}</span></div>` },
+            { id: 'hs2', title: 'Step 2: Modular Multiplicative Inverse', body: `<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:#1a6b32;font-weight:700;">${detInv}</span> <span style="color:var(--ink-faint);font-family:var(--font-typewriter);">(${det} × ${detInv} = ${det * detInv} ≡ ${(det * detInv) % 26} mod 26)</span></div>` },
             { id: 'hs3', title: 'Step 3: Adjugate Matrix adj(K)', body: `<div class="mat-disp">${printMat(adj.map(r => r.map(mod26))).replace(/ /g, '&nbsp;')}</div>` },
             { id: 'hs4', title: 'Step 4: Inverse Matrix K⁻¹ = det⁻¹ · adj(K) mod 26', body: `<div class="mat-disp">${printMat(invM).replace(/ /g, '&nbsp;')}</div>` },
             { id: 'hs5', title: 'Step 5: Decrypted Result', body: `<div class="algo-success">✓ Matrix inverted and applied.<br>Decrypted text: "${activeOriginal}"</div>` },
@@ -175,19 +175,19 @@
         const cols = Array.from({ length: keyLen }, (_, ci) => ct.split('').filter((_, i) => i % keyLen === ci));
 
         const steps = [
-            { title: 'Ciphertext', body: `<div style="color:var(--text-hi);font-family:var(--mono);font-size:11px;word-break:break-all;">"${activePayload.substring(0, 40)}${activePayload.length > 40 ? '...' : ''}"</div>` },
-            { title: 'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--blue-light);">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-light);font-weight:700;">${gap}</span> // Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
-            { title: `Stage 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c, i) => `Coset ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0, 25)}...</span>`).join('<br>')}` },
+            { title: 'Ciphertext', body: `<div style="color:var(--blue-ink);font-family:var(--font-typewriter);font-weight:700;font-size:11px;word-break:break-all;">"${activePayload.substring(0, 40)}${activePayload.length > 40 ? '...' : ''}"</div>` },
+            { title: 'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--stamp-red);font-weight:700;">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-ink);font-weight:700;">${gap}</span> // Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:#1a6b32;font-weight:700;">${keyLen}</span>` },
+            { title: `Stage 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c, i) => `Coset ${i}: <span style="color:var(--blue-ink);font-weight:700;">${c.join('').substring(0, 25)}...</span>`).join('<br>')}` },
             {
                 title: 'Stage 3: Coset Frequency Distribution', body: cols.map((col, ci) => {
                     const counts = {};
                     col.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
                     const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
                     const shift = ((top[0]?.[0]?.charCodeAt(0) || 69) - 69 + 26) % 26;
-                    return `Coset ${ci}: max="${top.map(e => e[0]).join('')}" // offset≈${shift} // sub-key[${ci}]=<span style="color:var(--green-light);font-weight:700;">${key[ci]}</span>`;
+                    return `Coset ${ci}: max="${top.map(e => e[0]).join('')}" // offset≈${shift} // sub-key[${ci}]=<span style="color:var(--stamp-red);font-weight:700;">${key[ci]}</span>`;
                 }).join('<br>')
             },
-            { title: 'Stage 4: Derived Keyword', body: `Derived keyword = <span style="color:var(--green-light);font-weight:700;font-size:13px;font-family:var(--mono);">"${key}"</span>` },
+            { title: 'Stage 4: Derived Keyword', body: `Derived keyword = <span style="color:var(--stamp-red);font-weight:700;font-size:13px;font-family:var(--font-typewriter);">"${key}"</span>` },
             { title: 'Stage 5: Decrypted Result', body: `<div class="algo-success">✓ Keyword identified: "${key}"<br>Decrypted text: "${activeOriginal}"</div>` },
         ];
 
@@ -229,7 +229,7 @@
     // -- AES Round State Visualizer ---------------------------
     function renderAesComputer(container) {
         const hex = () => Math.floor(Math.random() * 256).toString(16).padStart(2, '0').toUpperCase();
-        const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:5px 3px;border-radius:2px;text-align:center;font-size:10px;font-family:var(--mono);border:1px solid var(--border);">${hex()}</div>`).join('');
+        const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:5px 3px;border-radius:1px;text-align:center;font-size:10px;font-family:var(--font-typewriter);border:1px solid var(--ink-faint);color:var(--ink);font-weight:700;">${hex()}</div>`).join('');
         const roundSteps = [
             { name: 'SubBytes()', desc: 'Byte substitution using the AES S-box lookup table', color: 'rgba(62,126,201,0.2)' },
             { name: 'ShiftRows()', desc: 'Cyclical row shifting across matrix rows to interleave column positions', color: 'rgba(123,94,201,0.2)' },
@@ -241,12 +241,12 @@
             <div class="algo-terminal anim-in">
                 ${algoHeader('AES-256: Round State Visualization')}
                 <div class="algo-body">
-                    <div style="color:var(--text-dim);font-size:11px;margin-bottom:4px;font-family:var(--sans);">State Matrix (4×4 Bytes), Round <span id="aes-round-num" style="color:var(--blue-light);font-weight:700;">0</span>/14</div>
-                    <div id="aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('var(--bg-inset)')}</div>
+                    <div style="color:var(--ink-dim);font-size:11px;margin-bottom:4px;font-family:var(--font-typewriter);">State Matrix (4×4 Bytes), Round <span id="aes-round-num" style="color:var(--stamp-red);font-weight:700;">0</span>/14</div>
+                    <div id="aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('rgba(255,255,255,0.7)')}</div>
                     <div id="aes-op-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-                        ${roundSteps.map((s, i) => `<div id="aes-op-${i}" style="padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;">${s.name}</div>`).join('')}
+                        ${roundSteps.map((s, i) => `<div id="aes-op-${i}" style="padding:4px 8px;border-radius:1px;border:1px solid var(--ink-faint);font-size:10px;font-family:var(--font-typewriter);color:var(--ink-dim);background:var(--paper-aged);transition:all 0.2s;">${s.name}</div>`).join('')}
                     </div>
-                    <div id="aes-desc" style="color:var(--text-dim);font-size:11px;min-height:18px;"></div>
+                    <div id="aes-desc" style="color:var(--ink-dim);font-size:11px;min-height:18px;font-family:var(--font-typewriter);"></div>
                     <div class="algo-controls" style="margin-top:8px;">
                         <button class="ctrl-btn" id="aes-step-btn">▶ Step Round</button>
                         <button class="ctrl-btn" id="aes-auto-btn">⏩ Run Rounds</button>
@@ -258,10 +258,10 @@
 
         function aesStep() {
             const ops = document.querySelectorAll('[id^="aes-op-"]');
-            ops.forEach(o => o.style.cssText = 'padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;');
+            ops.forEach(o => o.style.cssText = 'padding:4px 8px;border-radius:1px;border:1px solid var(--ink-faint);font-size:10px;font-family:var(--font-typewriter);color:var(--ink-dim);background:var(--paper-aged);transition:all 0.2s;');
             const op = roundSteps[rStep];
             const opEl = document.getElementById('aes-op-' + rStep);
-            if (opEl) { opEl.style.background = op.color; opEl.style.color = 'var(--text-hi)'; opEl.style.borderColor = 'var(--border-hi)'; }
+            if (opEl) { opEl.style.background = op.color; opEl.style.color = 'var(--ink)'; opEl.style.borderColor = 'var(--blue-ink)'; opEl.style.fontWeight = '700'; }
             document.getElementById('aes-grid').innerHTML = makeGrid(op.color);
             document.getElementById('aes-desc').textContent = op.desc;
             rStep = (rStep + 1) % 4;
@@ -279,7 +279,7 @@
         function aesReset() {
             rStep = 0; rRound = 0;
             if (rTimer) { clearInterval(rTimer); rTimer = null; }
-            document.getElementById('aes-grid').innerHTML = makeGrid('var(--bg-inset)');
+            document.getElementById('aes-grid').innerHTML = makeGrid('rgba(255,255,255,0.7)');
             document.getElementById('aes-round-num').textContent = '0';
             document.getElementById('aes-desc').textContent = '';
             document.getElementById('aes-result').innerHTML = '';
@@ -308,9 +308,9 @@
         let step = -1;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('BB84 Protocol: Quantum Key Transmission & Eavesdropping', 'var(--purple-light)')}
+                ${algoHeader('BB84 Protocol: Quantum Key Transmission & Eavesdropping', 'var(--blue-ink)')}
                 <div class="algo-body">
-                    <div id="q-stage-label" style="color:var(--text-dim);font-size:11px;font-weight:600;margin-bottom:6px;">Ready to simulate optical channel transmission</div>
+                    <div id="q-stage-label" style="color:var(--ink-dim);font-size:11px;font-weight:700;margin-bottom:6px;font-family:var(--font-typewriter);">Ready to simulate optical channel transmission</div>
                     <div id="q-photon-display" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:8px;">
                         <button class="ctrl-btn" id="q-step-btn">▶ Next Stage</button>

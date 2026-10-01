@@ -452,48 +452,72 @@
         margin-bottom: 4px;
     }
 
-    #tab-guide { display: block !important; }
-    #tab-guide .history-block {
+    #lab-tab-guide { display: block !important; }
+    #lab-tab-guide .history-block,
+    .history-block {
         display: none;
+        background: rgba(255, 255, 255, 0.7) !important;
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-left: 3px solid var(--stamp-red) !important;
+        border-radius: 1px !important;
+        padding: 16px 18px !important;
+        margin-bottom: 14px !important;
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05) !important;
+        color: var(--ink) !important;
     }
-    #tab-guide .history-block h3 {
-        color: var(--ink);
-        margin: 0 0 8px 0;
-        font-size: 15px;
+    #lab-tab-guide .history-block h3,
+    .history-block h3,
+    .cipher-spec-title {
+        color: var(--ink) !important;
+        margin: 4px 0 0 0;
+        font-size: 16px;
         font-weight: 700;
-        font-family: var(--font-stamp);
+        font-family: var(--font-stamp) !important;
     }
-    #tab-guide .history-block h4 {
-        color: var(--blue-ink);
-        font-family: var(--font-stamp);
-        font-size: 13px;
-        font-weight: 600;
+    #lab-tab-guide .history-block h4,
+    .history-block h4,
+    .spec-section-title {
+        color: var(--blue-ink) !important;
+        font-family: var(--font-stamp) !important;
+        font-size: 12.5px !important;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
         margin: 14px 0 6px 0;
     }
-    #tab-guide .history-block p {
+    #lab-tab-guide .history-block p,
+    .history-block p,
+    .cipher-spec-intro,
+    .spec-section-desc {
         margin-top: 0;
         margin-bottom: 8px;
-        color: var(--ink-dim);
-        font-size: 13px;
+        color: var(--ink-dim) !important;
+        font-size: 12.5px;
         line-height: 1.6;
+        font-family: var(--font-typewriter) !important;
     }
-    #tab-guide .history-block ol {
+    .cipher-spec-intro {
+        color: var(--ink) !important;
+    }
+    #lab-tab-guide .history-block ol,
+    .history-block ol {
         margin-top: 6px;
         padding-left: 18px;
-        color: var(--ink-dim);
+        color: var(--ink-dim) !important;
     }
-    #tab-guide .history-block ol li {
+    #lab-tab-guide .history-block ol li,
+    .history-block ol li {
         margin-bottom: 4px;
-        font-size: 13px;
+        font-size: 12.5px;
     }
-    #tab-guide #sol-none {
+    #lab-tab-guide #sol-none {
         display: block;
         text-align: center;
         color: var(--ink-faint);
         font-style: italic;
         padding-top: 14px;
     }
-    #tab-guide #sol-dynamic { display: none; }
+    #lab-tab-guide #sol-dynamic { display: none; }
 
     /* === STEP-BY-STEP SOLUTION CARDS === */
     .sol-box {
@@ -611,8 +635,13 @@
         align-items: center;
         gap: 8px;
     }
+    .algo-terminal-icon {
+        display: flex;
+        align-items: center;
+        color: var(--stamp-red) !important;
+    }
     .algo-title, .manual-title {
-        color: var(--ink);
+        color: var(--ink) !important;
         font-size: 12px;
         font-weight: 700;
         flex: 1;
@@ -627,33 +656,156 @@
         color: var(--ink);
         font-family: var(--font-typewriter);
     }
+    .algo-body [style*="color:var(--text-hi)"],
+    .manual-body [style*="color:var(--text-hi)"],
+    .algo-body [style*="color:var(--text-dim)"],
+    .manual-body [style*="color:var(--text-dim)"],
+    .algo-body [style*="color:var(--text-faint)"],
+    .manual-body [style*="color:var(--text-faint)"] {
+        color: var(--ink) !important;
+    }
+    .algo-body [style*="color:var(--blue-light)"],
+    .manual-body [style*="color:var(--blue-light)"] {
+        color: var(--blue-ink) !important;
+        font-weight: 700;
+    }
     .algo-pseudocode {
-        background: rgba(0,0,0,0.04);
+        background: rgba(255,255,255,0.65);
         border: 1px solid var(--ink-faint);
         border-radius: 1px;
         padding: 10px 14px;
         font-family: var(--font-typewriter);
     }
-    .algo-line { color: var(--ink-dim); line-height: 1.8; font-size: 11px; }
+    .algo-line { color: var(--ink-dim); line-height: 1.8; font-size: 11.5px; }
     .algo-line .kw { color: var(--stamp-red); font-weight: 700; }
     .algo-line .fn { color: var(--blue-ink); font-weight: 600; }
-    .algo-line .val { color: var(--ink); font-weight: 600; }
+    .algo-line .val { color: var(--ink); font-weight: 700; }
     .algo-line .cm { color: var(--ink-faint); font-style: italic; }
 
     .ctrl-btn {
-        background: var(--paper);
+        background: var(--paper-aged);
         border: 1px solid var(--ink-dim);
         color: var(--ink);
         font-family: var(--font-typewriter);
         padding: 6px 12px;
-        border-radius: 2px;
+        border-radius: 1px;
         cursor: pointer;
         font-size: 11.5px;
+        font-weight: 600;
+        transition: all 0.15s;
     }
     .ctrl-btn:hover {
         background: var(--paper-dark);
-        border-color: var(--ink);
+        border-color: var(--stamp-red);
+        color: var(--stamp-red);
     }
+
+    /* Manual Walkthrough Components */
+    .step-box {
+        background: rgba(255, 255, 255, 0.65) !important;
+        border: 1.5px dashed var(--ink-faint) !important;
+        border-radius: 1px !important;
+        padding: 12px 14px !important;
+        margin-bottom: 8px !important;
+        color: var(--ink) !important;
+    }
+    .step-title {
+        color: var(--ink) !important;
+        font-weight: 700 !important;
+        font-size: 12px !important;
+        font-family: var(--font-stamp) !important;
+        letter-spacing: 0.04em !important;
+        text-transform: uppercase !important;
+        margin-bottom: 6px !important;
+    }
+    .step-input {
+        width: 65px;
+        padding: 5px 8px;
+        background: rgba(255, 255, 255, 0.85) !important;
+        border: 1px solid var(--ink-dim) !important;
+        color: var(--ink) !important;
+        font-family: var(--font-typewriter) !important;
+        font-size: 12.5px !important;
+        border-radius: 1px !important;
+        text-align: center;
+        outline: none;
+        transition: border-color 0.15s;
+    }
+    .step-input:focus { border-color: var(--blue-ink) !important; }
+    .brute-out {
+        background: rgba(45, 74, 122, 0.06) !important;
+        border: 1.5px dashed var(--blue-ink) !important;
+        border-radius: 1px !important;
+        padding: 8px 12px !important;
+        margin-top: 6px !important;
+        font-family: var(--font-typewriter) !important;
+        font-size: 12px !important;
+        color: var(--blue-ink) !important;
+        font-weight: 700 !important;
+        min-height: 28px !important;
+        word-break: break-all !important;
+    }
+    .prompt-line { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-family: var(--font-typewriter); }
+    .prompt-sym { color: var(--stamp-red) !important; font-family: var(--font-stamp); font-weight: 700; }
+    .prompt-input {
+        flex: 1; background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--ink-dim); border-radius: 1px;
+        color: var(--ink); font-family: var(--font-typewriter);
+        font-size: 12px; padding: 5px 10px; outline: none;
+        transition: border-color 0.15s;
+    }
+    .prompt-input:focus { border-color: var(--blue-ink); }
+    .check-btn {
+        background: var(--stamp-red) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 2px !important;
+        font-family: var(--font-stamp) !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        padding: 5px 12px !important;
+        cursor: pointer !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+        transition: all 0.15s !important;
+    }
+    .check-btn:hover { background: #9e2a28 !important; }
+    .fb-ok {
+        background: rgba(46, 160, 67, 0.1) !important;
+        border: 1px solid rgba(46, 160, 67, 0.35) !important;
+        color: #1a6b32 !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        font-family: var(--font-typewriter) !important;
+        padding: 8px 12px !important;
+        border-radius: 1px !important;
+        margin-top: 6px !important;
+    }
+    .fb-err {
+        background: rgba(184, 49, 47, 0.1) !important;
+        border: 1px solid rgba(184, 49, 47, 0.35) !important;
+        color: var(--stamp-red) !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        font-family: var(--font-typewriter) !important;
+        padding: 8px 12px !important;
+        border-radius: 1px !important;
+        margin-top: 6px !important;
+    }
+    .scan-results { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 3px; }
+    .scan-row {
+        display: flex; align-items: center; gap: 8px; padding: 5px 10px;
+        border-radius: 1px; background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(0, 0, 0, 0.06); font-size: 11px;
+        font-family: var(--font-typewriter); color: var(--ink);
+    }
+    .scan-match { background: rgba(45, 74, 122, 0.12) !important; border-color: var(--blue-ink) !important; }
+    .scan-shift { color: var(--ink-dim); width: 66px; flex-shrink: 0; }
+    .scan-text { flex: 1; color: var(--ink); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 140px; font-weight: 600; }
+    .scan-bar { color: var(--blue-ink); width: 65px; flex-shrink: 0; font-size: 10px; }
+    .scan-score { color: var(--ink-faint); width: 24px; text-align: right; flex-shrink: 0; font-size: 10px; }
+    .scan-tag { color: var(--stamp-red); font-weight: 700; font-size: 11px; flex-shrink: 0; font-family: var(--font-stamp); }
 
     /* Parameter Controls */
     .shift-row {
@@ -1040,12 +1192,12 @@
                     <div class="alpha-strip">
                         <div>
                             <div class="alpha-label">Plain</div>
-                            <div class="alpha-letters" style="color:#fff;">A B C D E</div>
+                            <div class="alpha-letters" style="color:var(--ink);font-weight:700;">A B C D E</div>
                         </div>
                         <div style="color:var(--text-faint);font-size:14px;font-family:var(--font-mono);">:</div>
                         <div>
                             <div class="alpha-label">Cipher</div>
-                            <div id="lab-example-shift" class="alpha-letters" style="color:var(--green-light);">D E F G H</div>
+                            <div id="lab-example-shift" class="alpha-letters" style="color:var(--stamp-red);font-weight:700;">D E F G H</div>
                         </div>
                     </div>
                 </div>`;
@@ -1084,7 +1236,7 @@
                     <div class="alpha-strip">
                         <div>
                             <div class="alpha-label">Formula</div>
-                            <div class="alpha-letters" style="color:var(--purple-light);font-size:12px;">E(x) = (A × x + B) mod 26</div>
+                            <div class="alpha-letters" style="color:var(--blue-ink);font-size:12px;font-weight:700;">E(x) = (A × x + B) mod 26</div>
                         </div>
                     </div>
                 </div>`;
@@ -1104,7 +1256,7 @@
                             <span style="color:var(--muted);font-size:9px;">click to resize</span>
                         </div>
                     </div>
-                    <div id="lab-hill-matrix-container" style="display:grid;gap:6px;background:rgba(0,0,0,0.3);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);transition:border-color 0.3s,box-shadow 0.3s;"></div>
+                    <div id="lab-hill-matrix-container" style="display:grid;gap:6px;background:rgba(255,255,255,0.7);padding:12px;border-radius:1px;border:1px solid var(--ink-faint);transition:border-color 0.3s,box-shadow 0.3s;"></div>
                     <div id="lab-hill-validation" class="matrix-valid pending">
                         <div class="valid-dot"></div><span>Enter matrix values to check invertibility...</span>
                     </div>
@@ -1160,7 +1312,7 @@
                         <input type="text" id="lab-q-seed" class="chat-input key-inp" value="42" style="width:100%;">
                     </div>
                     <div class="key-meta">
-                        <span class="key-len" style="color:var(--purple-light);">BB84 Simulation</span>
+                        <span class="key-len" style="color:var(--stamp-red);font-weight:700;">BB84 Simulation</span>
                     </div>
                 </div>`;
             labKey = '42';
@@ -1424,7 +1576,7 @@
     // ===========================================================
     //  STEP-BY-STEP TABLE GENERATION
     // ===========================================================
-    const m = s => `<code style="font-family:var(--mono);background:var(--bg-inset);padding:2px 6px;border-radius:var(--radius-sm);font-size:11px;border:1px solid var(--border);">${s}</code>`;
+    const m = s => `<code style="font-family:var(--font-typewriter);background:rgba(45,74,122,0.08);color:var(--blue-ink);padding:2px 6px;border-radius:1px;font-size:11px;border:1px dashed var(--blue-ink);font-weight:700;">${s}</code>`;
 
     function buildTable(rows, hdrs) {
         if (!rows || !rows.length) return '<div style="color:var(--text-faint);padding:10px;font-size:11px;">Not enough characters to display step table.</div>';
@@ -1448,7 +1600,7 @@
             for (let i = 0; i < Math.min(pC.length, L); i++) {
                 const pv = pC[i].charCodeAt(0) - 65;
                 const cv = (pv + s) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${pv}</td><td class="op-cell">+ ${s}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}</td><td class="op-cell">${pv}</td><td class="op-cell">+ ${s}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Caesar Encryption (Shift ${s})</div>
@@ -1462,7 +1614,7 @@
             for (let i = 0; i < Math.min(pC.length, L); i++) {
                 const x = pC[i].charCodeAt(0) - 65;
                 const cv = (a * x + b) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${x}</td><td class="op-cell">${a}*${x}+${b} = ${a*x+b}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}</td><td class="op-cell">${x}</td><td class="op-cell">${a}*${x}+${b} = ${a*x+b}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Affine Encryption (A=${a}, B=${b})</div>
@@ -1477,7 +1629,7 @@
                 const kv = kc.charCodeAt(0) - 65;
                 const pv = pC[i].charCodeAt(0) - 65;
                 const cv = (pv + kv) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${kc} (${kv})</td><td class="op-cell">${pv}+${kv} = ${pv+kv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}</td><td class="op-cell">${kc} (${kv})</td><td class="op-cell">${pv}+${kv} = ${pv+kv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Vigenère Encryption (Key "${k}")</div>
@@ -1491,7 +1643,7 @@
             for (let i = 0; i < pC.length; i += n) {
                 const block = pC.substring(i, i + n).padEnd(n, 'X');
                 const cBlock = cC.substring(i, i + n).padEnd(n, '?');
-                rows.push(`<tr><td style="color:#fff;">[${block.split('').join(', ')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cBlock.split('').join(', ')}]</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">[${block.split('').join(', ')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cBlock.split('').join(', ')}]</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Hill Cipher (${n}x${n} Matrix Multiplication)</div>
@@ -1504,24 +1656,24 @@
                 <div class="sol-title">AES-256 Block Cipher</div>
                 <div class="sol-explain">AES operates on 128-bit blocks through 14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey. Each round's state is a 4x4 byte matrix.</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:12px 0;">
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 1</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">SubBytes</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 1</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">SubBytes</div>
                     </div>
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 2</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">ShiftRows</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 2</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">ShiftRows</div>
                     </div>
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 3</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">MixColumns</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 3</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">MixColumns</div>
                     </div>
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 4</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">AddRoundKey</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 4</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">AddRoundKey</div>
                     </div>
                 </div>
-                <div style="color:var(--text-dim);font-size:11px;line-height:1.6;">
+                <div style="color:var(--ink-dim);font-size:11px;line-height:1.6;font-family:var(--font-typewriter);">
                     This 4-step process repeats for all 14 rounds. The key schedule expands the 256-bit key into 15 round sub-keys. The final round omits MixColumns.
                 </div>
             </div>`;
@@ -1530,17 +1682,17 @@
             const bits = Array.from({length: N}, () => Math.random() > 0.5 ? 1 : 0);
             const bases = Array.from({length: N}, () => Math.random() > 0.5 ? '+' : '×');
             const photonSyms = {'+0':'↕','+1':'↔','×0':'↗','×1':'↘'};
-            html = `<div class="sol-box" style="border-color:rgba(139,92,246,0.3);">
-                <div class="sol-title" style="color:var(--purple-light);">BB84 Quantum Key Distribution</div>
+            html = `<div class="sol-box" style="border:1.5px dashed var(--stamp-red);">
+                <div class="sol-title" style="color:var(--stamp-red);font-family:var(--font-stamp);">BB84 Quantum Key Distribution</div>
                 <div class="sol-explain">Photons are encoded in random bases. Only matching-basis measurements survive the sift to form the shared key.</div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;">
                     ${bits.map((b, i) => `<div style="text-align:center;">
-                        <div style="font-size:9px;color:var(--muted);">${bases[i]}</div>
+                        <div style="font-size:9px;color:var(--ink-faint);font-family:var(--font-typewriter);">${bases[i]}</div>
                         <div class="photon-bit ${b ? 'photon-1' : 'photon-0'}">${photonSyms[bases[i]+b]}</div>
-                        <div style="font-size:9px;color:var(--muted);">${b}</div>
+                        <div style="font-size:9px;color:var(--ink-faint);font-family:var(--font-typewriter);">${b}</div>
                     </div>`).join('')}
                 </div>
-                <div style="color:var(--muted-2);font-size:0.6875rem;line-height:1.7;">
+                <div style="color:var(--ink-dim);font-size:11px;line-height:1.7;font-family:var(--font-typewriter);">
                     Alice sends each bit as a polarized photon in a random basis (+ or ×). Bob measures in his own random basis. They publicly compare bases and keep only matching ones. The surviving bits form the shared secret key, which is then used as a one-time pad (XOR) for encryption.
                 </div>
             </div>`;
@@ -1554,10 +1706,10 @@
     // ===========================================================
     function algoHeader(title, color) {
         return `<div class="algo-header">
-            <span class="algo-terminal-icon">
+            <span class="algo-terminal-icon" style="color:var(--stamp-red);">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
             </span>
-            <div class="algo-title" style="color:${color || 'var(--text-hi)'};">${title}</div>
+            <div class="algo-title" style="color:${color || 'var(--ink)'};font-family:var(--font-stamp);font-weight:700;">${title}</div>
         </div>`;
     }
 
@@ -1596,7 +1748,7 @@
                         <div class="algo-line">&nbsp;&nbsp;<span class="kw">if</span> (score &gt; best_score) best = {shift, candidate}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Ciphertext: <span style="color:var(--text-hi);font-family:var(--mono);">"${ciphertext.substring(0,30)}${ciphertext.length > 30 ? '...' : ''}"</span></div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Ciphertext: <span style="color:var(--blue-ink);font-family:var(--font-typewriter);font-weight:700;">"${ciphertext.substring(0,30)}${ciphertext.length > 30 ? '...' : ''}"</span></div>
                     <div id="lab-caesar-scan" class="scan-results"></div>
                     <div class="algo-controls">
                         <button class="ctrl-btn" id="lab-cs-step">▶ Single Step</button>
@@ -1676,7 +1828,7 @@
                         <div class="algo-line">&nbsp;&nbsp;}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);margin-top:4px;">Testing valid multiplier and shift pairs (a, b):</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);margin-top:4px;">Testing valid multiplier and shift pairs (a, b):</div>
                     <div id="lab-affine-scan" class="scan-results"></div>
                     <div class="algo-controls">
                         <button class="ctrl-btn" id="lab-as-step">▶ Step (×10)</button>
@@ -1758,8 +1910,8 @@
 
         const steps = [
             { title:'Key Matrix K', body:`<div class="mat-disp">${printMat(K).replace(/ /g,'&nbsp;')}</div>` },
-            { title:'Step 1: Determinant det(K)', body:`<div style="line-height:2;">${n===2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:var(--green-light);">${rawDet}</span>` : `det(K) = <span style="color:var(--green-light);">${rawDet}</span>`}<br>det mod 26 = <span style="color:var(--green-light);font-weight:700;">${det}</span></div>` },
-            { title:'Step 2: Modular Multiplicative Inverse', body:`<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:var(--green-light);font-weight:700;">${detInv}</span>  <span style="color:var(--text-faint);">(${det} × ${detInv} = ${det*detInv} ≡ ${(det*detInv)%26} mod 26)</span></div>` },
+            { title:'Step 1: Determinant det(K)', body:`<div style="line-height:2;">${n===2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:#1a6b32;font-weight:700;">${rawDet}</span>` : `det(K) = <span style="color:#1a6b32;font-weight:700;">${rawDet}</span>`}<br>det mod 26 = <span style="color:#1a6b32;font-weight:700;">${det}</span></div>` },
+            { title:'Step 2: Modular Multiplicative Inverse', body:`<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:#1a6b32;font-weight:700;">${detInv}</span>  <span style="color:var(--ink-faint);font-family:var(--font-typewriter);">(${det} × ${detInv} = ${det*detInv} ≡ ${(det*detInv)%26} mod 26)</span></div>` },
             { title:'Step 3: Adjugate Matrix adj(K)', body:`<div class="mat-disp">${printMat(adj.map(r=>r.map(mod26))).replace(/ /g,'&nbsp;')}</div>` },
             { title:'Step 4: Inverse Matrix K⁻¹ = det⁻¹ · adj(K) mod 26', body:`<div class="mat-disp">${printMat(invM).replace(/ /g,'&nbsp;')}</div>` },
             { title:'Step 5: Decrypted Result', body:`<div class="algo-success">✓ Matrix inverted and applied.<br>Decrypted text: "${plaintext}"</div>` },
@@ -1814,17 +1966,17 @@
         const cols = Array.from({length: keyLen}, (_,ci) => ct.split('').filter((_,i) => i % keyLen === ci));
 
         const steps = [
-            { title:'Ciphertext', body:`<div style="color:var(--text-hi);font-family:var(--mono);font-size:11px;word-break:break-all;">"${(labCiphertext||'').substring(0,40)}${(labCiphertext||'').length > 40 ? '...' : ''}"</div>` },
-            { title:'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--blue-light);">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-light);font-weight:700;">${gap}</span> // Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
-            { title:`Stage 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c,i) => `Coset ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0,25)}...</span>`).join('<br>')}` },
+            { title:'Ciphertext', body:`<div style="color:var(--blue-ink);font-family:var(--font-typewriter);font-weight:700;font-size:11px;word-break:break-all;">"${(labCiphertext||'').substring(0,40)}${(labCiphertext||'').length > 40 ? '...' : ''}"</div>` },
+            { title:'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--stamp-red);font-weight:700;">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-ink);font-weight:700;">${gap}</span> // Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:#1a6b32;font-weight:700;">${keyLen}</span>` },
+            { title:`Stage 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c,i) => `Coset ${i}: <span style="color:var(--blue-ink);font-weight:700;">${c.join('').substring(0,25)}...</span>`).join('<br>')}` },
             { title:'Stage 3: Coset Frequency Distribution', body: cols.map((col,ci) => {
                 const counts = {};
                 col.forEach(c => { counts[c] = (counts[c]||0)+1; });
                 const top = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,3);
                 const shift = ((top[0]?.[0]?.charCodeAt(0) || 69) - 69 + 26) % 26;
-                return `Coset ${ci}: max="${top.map(e=>e[0]).join('')}" // offset≈${shift} // sub-key[${ci}]=<span style="color:var(--green-light);font-weight:700;">${key[ci]}</span>`;
+                return `Coset ${ci}: max="${top.map(e=>e[0]).join('')}" // offset≈${shift} // sub-key[${ci}]=<span style="color:var(--stamp-red);font-weight:700;">${key[ci]}</span>`;
             }).join('<br>') },
-            { title:'Stage 4: Derived Keyword', body:`Derived keyword = <span style="color:var(--green-light);font-weight:700;font-size:13px;font-family:var(--mono);">"${key}"</span>` },
+            { title:'Stage 4: Derived Keyword', body:`Derived keyword = <span style="color:var(--stamp-red);font-weight:700;font-size:13px;font-family:var(--font-typewriter);">"${key}"</span>` },
             { title:'Stage 5: Decrypted Result', body:`<div class="algo-success">✓ Keyword identified: "${key}"<br>Decrypted text: "${plaintext}"</div>` },
         ];
 
@@ -1866,7 +2018,7 @@
     // -- AES Algorithm --
     function renderLabAesAlgo(container) {
         const hex = () => Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase();
-        const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:5px 3px;border-radius:2px;text-align:center;font-size:10px;font-family:var(--mono);border:1px solid var(--border);">${hex()}</div>`).join('');
+        const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:5px 3px;border-radius:1px;text-align:center;font-size:10px;font-family:var(--font-typewriter);border:1px solid var(--ink-faint);color:var(--ink);font-weight:700;">${hex()}</div>`).join('');
         const roundSteps = [
             {name:'SubBytes()',desc:'Byte substitution using the AES S-box lookup table',color:'rgba(62,126,201,0.2)'},
             {name:'ShiftRows()',desc:'Cyclical row shifting across matrix rows to interleave column positions',color:'rgba(123,94,201,0.2)'},
@@ -1878,12 +2030,12 @@
             <div class="algo-terminal anim-in">
                 ${algoHeader('AES-256: Round State Visualization')}
                 <div class="algo-body">
-                    <div style="color:var(--text-dim);font-size:11px;margin-bottom:4px;font-family:var(--sans);">State Matrix (4×4 Bytes), Round <span id="lab-aes-round-num" style="color:var(--blue-light);font-weight:700;">0</span>/14</div>
-                    <div id="lab-aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('var(--bg-inset)')}</div>
+                    <div style="color:var(--ink-dim);font-size:11px;margin-bottom:4px;font-family:var(--font-typewriter);">State Matrix (4×4 Bytes), Round <span id="lab-aes-round-num" style="color:var(--stamp-red);font-weight:700;">0</span>/14</div>
+                    <div id="lab-aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('rgba(255,255,255,0.7)')}</div>
                     <div id="lab-aes-op-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-                        ${roundSteps.map((s,i) => `<div id="lab-aes-op-${i}" style="padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;">${s.name}</div>`).join('')}
+                        ${roundSteps.map((s,i) => `<div id="lab-aes-op-${i}" style="padding:4px 8px;border-radius:1px;border:1px solid var(--ink-faint);font-size:10px;font-family:var(--font-typewriter);color:var(--ink-dim);background:var(--paper-aged);transition:all 0.2s;">${s.name}</div>`).join('')}
                     </div>
-                    <div id="lab-aes-desc" style="color:var(--text-dim);font-size:11px;min-height:18px;"></div>
+                    <div id="lab-aes-desc" style="color:var(--ink-dim);font-size:11px;min-height:18px;font-family:var(--font-typewriter);"></div>
                     <div class="algo-controls" style="margin-top:8px;">
                         <button class="ctrl-btn" id="lab-aes-step-btn">▶ Step Round</button>
                         <button class="ctrl-btn" id="lab-aes-auto-btn">⏩ Run Rounds</button>
@@ -1895,10 +2047,10 @@
 
         function aesStep() {
             const ops = document.querySelectorAll('[id^="lab-aes-op-"]');
-            ops.forEach(o => o.style.cssText = 'padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;');
+            ops.forEach(o => o.style.cssText = 'padding:4px 8px;border-radius:1px;border:1px solid var(--ink-faint);font-size:10px;font-family:var(--font-typewriter);color:var(--ink-dim);background:var(--paper-aged);transition:all 0.2s;');
             const op = roundSteps[rStep];
             const opEl = document.getElementById('lab-aes-op-' + rStep);
-            if (opEl) { opEl.style.background = op.color; opEl.style.color = 'var(--text-hi)'; opEl.style.borderColor = 'var(--border-hi)'; }
+            if (opEl) { opEl.style.background = op.color; opEl.style.color = 'var(--ink)'; opEl.style.borderColor = 'var(--blue-ink)'; opEl.style.fontWeight = '700'; }
             const grid = document.getElementById('lab-aes-grid'); if(grid) grid.innerHTML = makeGrid(op.color);
             const desc = document.getElementById('lab-aes-desc'); if(desc) desc.textContent = op.desc;
             rStep = (rStep + 1) % 4;
@@ -1917,7 +2069,7 @@
         function aesReset() {
             rStep = 0; rRound = 0;
             if (rTimer) { clearInterval(rTimer); rTimer = null; }
-            const grid = document.getElementById('lab-aes-grid'); if(grid) grid.innerHTML = makeGrid('var(--bg-inset)');
+            const grid = document.getElementById('lab-aes-grid'); if(grid) grid.innerHTML = makeGrid('rgba(255,255,255,0.7)');
             const rn = document.getElementById('lab-aes-round-num'); if(rn) rn.textContent = '0';
             const desc = document.getElementById('lab-aes-desc'); if(desc) desc.textContent = '';
             const res = document.getElementById('lab-aes-result'); if(res) res.innerHTML = '';
@@ -1946,9 +2098,9 @@
 
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('BB84 Protocol: Quantum Key Transmission & Eavesdropping', 'var(--purple-light)')}
+                ${algoHeader('BB84 Protocol: Quantum Key Transmission & Eavesdropping', 'var(--blue-ink)')}
                 <div class="algo-body">
-                    <div id="lab-q-stage-label" style="color:var(--text-dim);font-size:11px;font-weight:600;margin-bottom:6px;">Ready to simulate optical channel transmission</div>
+                    <div id="lab-q-stage-label" style="color:var(--ink-dim);font-size:11px;font-weight:700;margin-bottom:6px;font-family:var(--font-typewriter);">Ready to simulate optical channel transmission</div>
                     <div id="lab-q-photon-display" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:8px;">
                         <button class="ctrl-btn" id="lab-q-step-btn">▶ Next Stage</button>
@@ -2022,11 +2174,11 @@
         const shift = parseInt(labKey) || 3;
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Caesar Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Caesar Cipher: Manual Decryption', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Test shift offsets k &isin; [1, 25] to decrypt the message.</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Test shift offsets k &isin; [1, 25] to decrypt the message.</div>
                     <div>
-                        <div style="color:var(--text-faint);font-size:11px;font-family:var(--sans);margin-bottom:4px;">Trial shift k: <span id="lab-manual-shift-val" style="color:var(--blue-light);font-weight:700;">1</span></div>
+                        <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);margin-bottom:4px;">Trial shift k: <span id="lab-manual-shift-val" style="color:var(--stamp-red);font-weight:700;">1</span></div>
                         <input type="range" id="lab-manual-caesar-slider" min="1" max="25" value="1" style="margin-bottom:4px;">
                         <div id="lab-manual-caesar-out" class="brute-out" style="font-size:12px;min-height:28px;padding:8px 12px;"></div>
                     </div>
@@ -2034,7 +2186,7 @@
                         <div class="step-title">Enter Final Key</div>
                         <div class="prompt-line">
                             <span class="prompt-sym">$</span>
-                            <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">shift_k =</span>
+                            <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">shift_k =</span>
                             <input type="number" id="lab-manual-caesar-ans" class="step-input" min="1" max="25" placeholder="?">
                             <button class="check-btn" id="lab-manual-caesar-check">Verify Key</button>
                         </div>
@@ -2062,19 +2214,19 @@
         const bKey = Array.isArray(labKey) ? labKey[1] : 8;
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Affine Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Affine Cipher: Manual Decryption', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Find multiplier a and offset b to decrypt via D(y) = a⁻¹ &middot; (y - b) mod 26.</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Find multiplier a and offset b to decrypt via D(y) = a⁻¹ &middot; (y - b) mod 26.</div>
                     <div class="step-box" style="margin-top:10px;">
                         <div class="step-title">Submit Key Pair</div>
                         <div class="prompt-line" style="margin-bottom:8px;">
                             <span class="prompt-sym">$</span>
-                            <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Multiplier (a) =</span>
+                            <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">Multiplier (a) =</span>
                             <input type="number" id="lab-manual-affine-a" class="step-input" placeholder="?" style="width:60px;">
                         </div>
                         <div class="prompt-line">
                             <span class="prompt-sym">$</span>
-                            <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Offset (b) =</span>
+                            <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">Offset (b) =</span>
                             <input type="number" id="lab-manual-affine-b" class="step-input" min="0" max="25" placeholder="?" style="width:60px;">
                             <button class="check-btn" id="lab-manual-affine-check">Verify Keys</button>
                         </div>
@@ -2096,9 +2248,9 @@
         const K = Array.isArray(labKey) && labKey.length > 0 ? labKey : [[3,3],[2,5]];
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Hill Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Hill Cipher: Manual Decryption', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Derive the decryption matrix: compute det(K), find modular inverse det⁻¹, and apply K⁻¹.</div>
+                    <div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Derive the decryption matrix: compute det(K), find modular inverse det⁻¹, and apply K⁻¹.</div>
                     <div class="mat-disp" style="margin:8px 0;">${printMat(K).replace(/ /g,'&nbsp;')}</div>
                     <div id="lab-hill-manual-steps"></div>
                 </div>
@@ -2112,10 +2264,10 @@
         const stepsContainer = document.getElementById('lab-hill-manual-steps');
         stepsContainer.innerHTML = `<div class="step-box anim-in">
             <div class="step-title">Step 1: Compute det(K) mod 26</div>
-            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">${n===2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce mod 26:` : 'Compute determinant, then reduce mod 26:'}</div>
+            <div style="color:var(--ink-dim);font-size:11px;margin-bottom:8px;font-family:var(--font-typewriter);">${n===2 ? `Formula: (${K[0][0]}×${K[1][1]}) - (${K[0][1]}×${K[1][0]}) = ${rawDet}. Reduce mod 26:` : 'Compute determinant, then reduce mod 26:'}</div>
             <div class="prompt-line">
                 <span class="prompt-sym">$</span>
-                <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det(K) mod 26 =</span>
+                <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">det(K) mod 26 =</span>
                 <input type="number" id="lab-hm-inp1" class="step-input" placeholder="?">
                 <button class="check-btn" id="lab-hm-check1">Verify Determinant</button>
             </div>
@@ -2133,7 +2285,7 @@
                     <div class="step-title">Step 2: Modular Multiplicative Inverse: solve (${correct} × X) ≡ 1 (mod 26)</div>
                     <div class="prompt-line">
                         <span class="prompt-sym">$</span>
-                        <span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">det⁻¹ =</span>
+                        <span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">det⁻¹ =</span>
                         <input type="number" id="lab-hm-inp2" class="step-input" placeholder="?">
                         <button class="check-btn" id="lab-hm-check2">Verify Inverse</button>
                     </div>
@@ -2174,13 +2326,13 @@
 
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('Vigenère Cipher: Manual Decryption', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('Vigen\u00e8re Cipher: Manual Decryption', 'var(--ink)')}.replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
                     <div class="step-box">
                         <div class="step-title">Stage 1: Key Length Analysis</div>
-                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval = ${reps[0][1][1]-reps[0][1][0]} // candidate period factor</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Text length below duplicate trigram threshold. Evaluate period directly.</div>`}
+                        ${reps.length ? `<div style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);">Trigram <span style="color:var(--stamp-red);font-weight:700;">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval = ${reps[0][1][1]-reps[0][1][0]} // candidate period factor</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Text length below duplicate trigram threshold. Evaluate period directly.</div>`}
                         <div class="prompt-line" style="margin-top:8px;">
-                            <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">period_L =</span>
+                            <span class="prompt-sym">$</span><span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">period_L =</span>
                             <input type="number" id="lab-vm-inp1" class="step-input" placeholder="?">
                             <button class="check-btn" id="lab-vm-check1">Verify Length</button>
                         </div>
@@ -2189,9 +2341,9 @@
                     <div id="lab-vig-manual-step2" style="display:none;">
                         <div class="step-box anim-in">
                             <div class="step-title">Stage 2: Keyword Derivation</div>
-                            <div style="color:var(--text-dim);font-size:11px;margin-bottom:8px;font-family:var(--sans);">Evaluate frequency patterns on each interleaved coset to deduce sub-key offsets:</div>
+                            <div style="color:var(--ink-dim);font-size:11px;margin-bottom:8px;font-family:var(--font-typewriter);">Evaluate frequency patterns on each interleaved coset to deduce sub-key offsets:</div>
                             <div class="prompt-line">
-                                <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">keyword =</span>
+                                <span class="prompt-sym">$</span><span style="color:var(--ink-dim);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">keyword =</span>
                                 <input type="text" id="lab-vm-inp2" class="step-input" placeholder="KEY..." style="text-transform:uppercase;width:110px;">
                                 <button class="check-btn" id="lab-vm-check2">Verify Keyword</button>
                             </div>
@@ -2223,14 +2375,14 @@
     function renderLabAesManual(container) {
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('AES-256: Security & Inversion Complexity', 'var(--blue-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('AES-256: Security & Inversion Complexity', 'var(--ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;line-height:1.75;font-family:var(--sans);">
+                    <div style="color:var(--ink-dim);font-size:11px;line-height:1.75;font-family:var(--font-typewriter);">
                         AES-256 exhibits no polynomial-time analytical inversion shortcut under standard chosen-plaintext attack (CPA) models. Exhaustive keyspace search requires evaluating 2²⁵⁶ ≈ 1.15 × 10⁷⁷ operations, exceeding thermodynamic Landauer bounds for computational feasibility.<br><br>
-                        <span style="color:var(--text-hi);font-weight:600;">Recommended:</span> Switch to the Algorithmic View to inspect round-by-round state matrix SubBytes, ShiftRows, and MixColumns steps.
+                        <span style="color:var(--ink);font-weight:700;">Recommended:</span> Switch to the Algorithmic View to inspect round-by-round state matrix SubBytes, ShiftRows, and MixColumns steps.
                     </div>
                     <div style="margin-top:12px;">
-                        <a href="https://csrc.nist.gov/publications/detail/fips/197/final" target="_blank" class="calc-link" style="color:var(--blue-light);font-size:11px;font-family:var(--sans);text-decoration:none;">FIPS 197 Reference Specification (NIST)</a>
+                        <a href="https://csrc.nist.gov/publications/detail/fips/197/final" target="_blank" class="calc-link" style="color:var(--blue-ink);font-size:11px;font-family:var(--font-typewriter);text-decoration:none;font-weight:700;">FIPS 197 Reference Specification (NIST)</a>
                     </div>
                 </div>
             </div>`;
@@ -2242,10 +2394,10 @@
         const symbols = ['↕','↔','↗','↘'];
         container.innerHTML = `
             <div class="manual-terminal anim-in">
-                ${algoHeader('BB84 Protocol: Interactive Interception', 'var(--purple-light)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
+                ${algoHeader('BB84 Protocol: Interactive Interception', 'var(--blue-ink)').replace('algo-terminal', 'manual-terminal').replace('algo-header', 'manual-header').replace('algo-title', 'manual-title')}
                 <div class="manual-body">
-                    <div style="color:var(--text-dim);font-size:11px;line-height:1.6;font-family:var(--sans);">Photons are transmitted across non-orthogonal polarization bases. Select a measurement basis (+ or ×). Non-orthogonal measurements alter the photon and introduce detectable errors.</div>
-                    <div style="margin:10px 0;padding:12px;background:var(--bg-inset);border-radius:var(--radius-sm);border:1px solid var(--border);text-align:center;">
+                    <div style="color:var(--ink-dim);font-size:11px;line-height:1.6;font-family:var(--font-typewriter);">Photons are transmitted across non-orthogonal polarization bases. Select a measurement basis (+ or ×). Non-orthogonal measurements alter the photon and introduce detectable errors.</div>
+                    <div style="margin:10px 0;padding:12px;background:rgba(255,255,255,0.7);border-radius:1px;border:1px solid var(--ink-faint);text-align:center;">
                         <div style="font-size:28px;margin-bottom:4px;font-family:var(--mono);" id="lab-q-photon-show">${symbols[Math.floor(Math.random()*4)]}</div>
                         <div style="color:var(--text-faint);font-size:10px;font-family:var(--sans);">INCIDENT PHOTON POLARIZATION</div>
                     </div>
@@ -2254,7 +2406,7 @@
                         <button class="ctrl-btn" style="flex:1;padding:10px;font-family:var(--mono);" id="lab-q-guess-diag">× Diagonal Basis (45°/135°)</button>
                     </div>
                     <div id="lab-q-manual-fb" style="margin-top:8px;"></div>
-                    <div style="color:var(--text-faint);font-size:10px;margin-top:8px;font-family:var(--sans);">Measurements: <span id="lab-q-attempts" style="color:var(--text-hi);font-family:var(--mono);">0</span> | Matches: <span id="lab-q-score" style="color:var(--green-light);font-family:var(--mono);">0</span></div>
+                    <div style="color:var(--ink-faint);font-size:10px;margin-top:8px;font-family:var(--font-typewriter);">Measurements: <span id="lab-q-attempts" style="color:var(--ink);font-family:var(--font-typewriter);font-weight:700;">0</span> | Matches: <span id="lab-q-score" style="color:#1a6b32;font-family:var(--font-typewriter);font-weight:700;">0</span></div>
                 </div>
             </div>`;
 

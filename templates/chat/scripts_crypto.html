@@ -172,7 +172,7 @@
         const pC = plain.replace(/[^a-zA-Z]/g, '').toUpperCase();
         const cC = ct.replace(/[^a-zA-Z]/g, '').toUpperCase();
         const L = 24;
-        const m = s => `<code style="font-family:var(--mono);background:rgba(0,0,0,0.4);padding:2px 6px;border-radius:3px;font-size:0.625rem;">${s}</code>`;
+        const m = s => `<code style="font-family:var(--font-typewriter);background:rgba(45,74,122,0.08);color:var(--blue-ink);padding:2px 6px;border-radius:1px;font-size:11px;border:1px dashed var(--blue-ink);font-weight:700;">${s}</code>`;
 
         function buildTable(rows, hdrs) {
             if (!rows || !rows.length) return '<div style="color:var(--muted);padding:10px;font-size:0.6875rem;">Not enough data to display.</div>';
@@ -189,7 +189,7 @@
             for (let i = 0; i < Math.min(pC.length, L); i++) {
                 const pv = pC[i].charCodeAt(0) - 65;
                 const cv = (pv + s) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${pv}</td><td class="op-cell">+ ${s}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}</td><td class="op-cell">${pv}</td><td class="op-cell">+ ${s}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Caesar Encryption (Shift ${s})</div>
@@ -203,7 +203,7 @@
             for (let i = 0; i < Math.min(pC.length, L); i++) {
                 const x = pC[i].charCodeAt(0) - 65;
                 const cv = (a * x + b) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${x}</td><td class="op-cell">${a}*${x}+${b} = ${a*x+b}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}</td><td class="op-cell">${x}</td><td class="op-cell">${a}*${x}+${b} = ${a*x+b}</td><td class="op-cell">${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Affine Encryption (A=${a}, B=${b})</div>
@@ -218,7 +218,7 @@
                 const kv = kc.charCodeAt(0) - 65;
                 const pv = pC[i].charCodeAt(0) - 65;
                 const cv = (pv + kv) % 26;
-                rows.push(`<tr><td style="color:#fff;">${pC[i]}</td><td class="op-cell">${kc} (${kv})</td><td class="op-cell">${pv}+${kv} = ${pv+kv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}</td><td class="op-cell">${kc} (${kv})</td><td class="op-cell">${pv}+${kv} = ${pv+kv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Vigenère Encryption (Key "${k}")</div>
@@ -232,7 +232,7 @@
             for (let i = 0; i < pC.length; i += n) {
                 const block = pC.substring(i, i + n).padEnd(n, 'X');
                 const cBlock = cC.substring(i, i + n).padEnd(n, '?');
-                rows.push(`<tr><td style="color:#fff;">[${block.split('').join(', ')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cBlock.split('').join(', ')}]</td></tr>`);
+                rows.push(`<tr><td style="color:var(--ink);font-weight:700;">[${block.split('').join(', ')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cBlock.split('').join(', ')}]</td></tr>`);
             }
             html = `<div class="sol-box">
                 <div class="sol-title">Hill Cipher (${n}x${n} Matrix Multiplication)</div>
@@ -245,21 +245,21 @@
                 <div class="sol-title">AES-256 Block Cipher</div>
                 <div class="sol-explain">AES operates on 128-bit blocks through 14 rounds of SubBytes, ShiftRows, MixColumns, and AddRoundKey. Each round's state is a 4x4 byte matrix.</div>
                 <div style="display:flex;gap:6px;flex-wrap:wrap;margin:12px 0;">
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 1</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">SubBytes</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 1</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">SubBytes</div>
                     </div>
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 2</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">ShiftRows</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 2</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">ShiftRows</div>
                     </div>
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 3</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">MixColumns</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 3</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">MixColumns</div>
                     </div>
-                    <div style="flex:1;min-width:110px;padding:8px;background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-sm);text-align:center;">
-                        <div style="font-size:10px;color:var(--text-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--mono);">ROUND 4</div>
-                        <div style="color:var(--text-hi);font-size:11px;font-family:var(--mono);font-weight:600;">AddRoundKey</div>
+                    <div style="flex:1;min-width:110px;padding:8px;background:rgba(255,255,255,0.75);border:1px solid var(--ink-faint);border-radius:1px;text-align:center;">
+                        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.05em;margin-bottom:2px;font-family:var(--font-typewriter);">ROUND 4</div>
+                        <div style="color:var(--ink);font-size:11px;font-family:var(--font-typewriter);font-weight:700;">AddRoundKey</div>
                     </div>
                 </div>
                 <div style="color:var(--text-dim);font-size:11px;line-height:1.6;">
@@ -409,7 +409,7 @@
             modalBody.innerHTML = `
                 <div style="background:var(--bg-3);padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:14px;">
                     <div style="color:var(--text-dim);font-size:11px;margin-bottom:4px;font-weight:600;font-family:var(--font-display);">Encrypted Message</div>
-                    <div style="color:var(--text-hi);font-family:var(--mono);word-break:break-all;font-size:13px;">${cipherText}</div>
+                    <div style="color:var(--blue-ink);font-family:var(--font-typewriter);word-break:break-all;font-size:13px;font-weight:700;">${cipherText}</div>
                 </div>
                 <div class="sol-box">
                     <div class="sol-title">Step 1: Encryption Process</div>
@@ -423,7 +423,7 @@
                 </div>
                 <div class="sol-box">
                     <div class="sol-title">Step 3: Recovered Plaintext</div>
-                    <div style="color:var(--text-hi);font-size:14px;font-weight:600;font-family:var(--mono);padding:4px 0;">${orig}</div>
+                    <div style="color:var(--ink);font-size:14px;font-weight:700;font-family:var(--font-typewriter);padding:4px 0;">${orig}</div>
                 </div>
             `;
         }
@@ -482,20 +482,20 @@
         let rows = [], pC = plain.replace(/[^a-zA-Z]/g, '').toUpperCase(), cC = cipher.replace(/[^a-zA-Z]/g, '').toUpperCase(), L = 18;
         if (type === 'caesar') {
             const s = parseInt(key) || 0;
-            for (let i = 0; i < Math.min(pC.length, L); i++) { const pv = pC[i].charCodeAt(0) - 65, cv = (pv + s) % 26; rows.push(`<tr><td style="color:#fff;">${pC[i]}(${pv})</td><td class="op-cell">+${s} mod 26=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
+            for (let i = 0; i < Math.min(pC.length, L); i++) { const pv = pC[i].charCodeAt(0) - 65, cv = (pv + s) % 26; rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}(${pv})</td><td class="op-cell">+${s} mod 26=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
             return buildTable(rows, ['PLAIN', 'OP', 'CIPHER']);
         } else if (type === 'affine') {
             const a = key[0], b = key[1];
-            for (let i = 0; i < Math.min(pC.length, L); i++) { const pv = pC[i].charCodeAt(0) - 65, cv = (a * pv + b) % 26; rows.push(`<tr><td style="color:#fff;">${pC[i]}(${pv})</td><td class="op-cell">*${a}+${b} mod 26=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
+            for (let i = 0; i < Math.min(pC.length, L); i++) { const pv = pC[i].charCodeAt(0) - 65, cv = (a * pv + b) % 26; rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}(${pv})</td><td class="op-cell">*${a}+${b} mod 26=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
             return buildTable(rows, ['PLAIN', 'OP', 'CIPHER']);
         } else if (type === 'vigenere') {
             const k = String(key).toUpperCase();
-            for (let i = 0; i < Math.min(pC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, pv = pC[i].charCodeAt(0) - 65, cv = (pv + kv) % 26; rows.push(`<tr><td style="color:#fff;">${pC[i]}(${pv})</td><td class="op-cell">+${kc}(${kv})=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
+            for (let i = 0; i < Math.min(pC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, pv = pC[i].charCodeAt(0) - 65, cv = (pv + kv) % 26; rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${pC[i]}(${pv})</td><td class="op-cell">+${kc}(${kv})=${cv}</td><td class="enc-cell">${String.fromCharCode(cv + 65)}(${cv})</td></tr>`); }
             return buildTable(rows, ['PLAIN', 'KEY+SHIFT', 'CIPHER']);
         } else if (type === 'hill') {
             if (!key || !Array.isArray(key)) return `<div style="color:var(--muted);padding:10px;font-size:11px;">Matrix is invalid - cannot display encryption process.</div>`;
             const n = key.length;
-            for (let i = 0; i < pC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${pC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
+            for (let i = 0; i < pC.length; i += n) { rows.push(`<tr><td style="color:var(--ink);font-weight:700;">[${pC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* Key mod 26</td><td class="enc-cell">[${cC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
             return buildTable(rows, [`PLAIN(x${n})`, 'OP', `CIPHER(x${n})`]);
         }
         return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">Block-level cipher (character trace not applicable)</div>`;
@@ -504,20 +504,20 @@
         let rows = [], pC = plain.replace(/[^a-zA-Z]/g, '').toUpperCase(), cC = cipher.replace(/[^a-zA-Z]/g, '').toUpperCase(), L = 18;
         if (type === 'caesar') {
             const s = parseInt(key) || 0;
-            for (let i = 0; i < Math.min(cC.length, L); i++) { const cv = cC[i].charCodeAt(0) - 65, pv = ((cv - s) % 26 + 26) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">(${cv}-${s}+26) mod 26=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
+            for (let i = 0; i < Math.min(cC.length, L); i++) { const cv = cC[i].charCodeAt(0) - 65, pv = ((cv - s) % 26 + 26) % 26; rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${cC[i]}(${cv})</td><td class="op-cell">(${cv}-${s}+26) mod 26=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
             return buildTable(rows, ['CIPHER', 'REVERSE', 'PLAIN']);
         } else if (type === 'affine') {
             const a = key[0], b = key[1], invA = modInverse26(a);
-            for (let i = 0; i < Math.min(cC.length, L); i++) { const cv = cC[i].charCodeAt(0) - 65, pv = (invA * (cv - b + 26)) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">${invA}*(${cv}-${b}) mod 26=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
+            for (let i = 0; i < Math.min(cC.length, L); i++) { const cv = cC[i].charCodeAt(0) - 65, pv = (invA * (cv - b + 26)) % 26; rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${cC[i]}(${cv})</td><td class="op-cell">${invA}*(${cv}-${b}) mod 26=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
             return buildTable(rows, ['CIPHER', 'REVERSE', 'PLAIN']);
         } else if (type === 'vigenere') {
             const k = String(key).toUpperCase();
-            for (let i = 0; i < Math.min(cC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, cv = cC[i].charCodeAt(0) - 65, pv = ((cv - kv) % 26 + 26) % 26; rows.push(`<tr><td style="color:#fff;">${cC[i]}(${cv})</td><td class="op-cell">-${kc}(${kv})=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
+            for (let i = 0; i < Math.min(cC.length, L); i++) { const kc = k[i % k.length], kv = kc.charCodeAt(0) - 65, cv = cC[i].charCodeAt(0) - 65, pv = ((cv - kv) % 26 + 26) % 26; rows.push(`<tr><td style="color:var(--ink);font-weight:700;">${cC[i]}(${cv})</td><td class="op-cell">-${kc}(${kv})=${pv}</td><td class="hi-cell">${String.fromCharCode(pv + 65)}(${pv})</td></tr>`); }
             return buildTable(rows, ['CIPHER', 'KEY-SHIFT', 'PLAIN']);
         } else if (type === 'hill') {
             if (!key || !Array.isArray(key)) return `<div style="color:var(--muted);padding:10px;font-size:11px;">Matrix is invalid - cannot display decryption process.</div>`;
             const n = key.length;
-            for (let i = 0; i < cC.length; i += n) { rows.push(`<tr><td style="color:#fff;">[${cC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* K⁻¹ mod 26</td><td class="hi-cell">[${pC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
+            for (let i = 0; i < cC.length; i += n) { rows.push(`<tr><td style="color:var(--ink);font-weight:700;">[${cC.substring(i, i + n).padEnd(n, 'A').split('').join(',')}]</td><td class="op-cell">* K⁻¹ mod 26</td><td class="hi-cell">[${pC.substring(i, i + n).padEnd(n, '?').split('').join(',')}]</td></tr>`); }
             return buildTable(rows, [`CIPHER(x${n})`, 'INV MATRIX', `PLAIN(x${n})`]);
         }
         return `<div style="color:var(--muted);padding:10px;font-size:11px;font-style:italic;">Block-level cipher (requires key for reversal)</div>`;
