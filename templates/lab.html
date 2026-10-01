@@ -101,7 +101,6 @@
     .lab-block-algo {
         background: rgba(255,255,255,0.35);
         border: 1px solid rgba(0,0,0,0.06);
-        border-left: 3px solid var(--stamp-red);
         border-radius: 1px;
         padding: 10px 14px;
         margin-bottom: 12px;
@@ -458,12 +457,21 @@
         display: none;
         background: rgba(255, 255, 255, 0.7) !important;
         border: 1px solid rgba(0, 0, 0, 0.08) !important;
-        border-left: 3px solid var(--stamp-red) !important;
         border-radius: 1px !important;
         padding: 16px 18px !important;
         margin-bottom: 14px !important;
         box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05) !important;
         color: var(--ink) !important;
+    }
+    #lab-tab-guide .cipher-spec-header,
+    .cipher-spec-header {
+        border-bottom: none !important;
+        padding-bottom: 4px !important;
+    }
+    #lab-tab-guide .spec-section,
+    .spec-section {
+        border-top: none !important;
+        padding-top: 4px !important;
     }
     #lab-tab-guide .history-block h3,
     .history-block h3,
@@ -942,7 +950,7 @@
             <div class="lab-block-params">
                 <div class="lab-section-hdr lab-section-collapsible" onclick="toggleLabParams()" title="Click to collapse/expand">
                     <span>Cipher Parameters</span>
-                    <button type="button" class="collapse-toggle-btn" id="lab-param-toggle-btn">[ &minus; Collapse ]</button>
+                    <button type="button" class="collapse-toggle-btn" id="lab-param-toggle-btn">[ Collapse ]</button>
                 </div>
                 <div id="lab-key-config"></div>
             </div>
@@ -1474,7 +1482,7 @@
             if (mat && labValidateHillMatrix()) {
                 result = hillEncrypt(labPlaintext, mat);
             } else {
-                result = '[Invalid matrix - cannot encrypt]';
+                result = '[Invalid matrix: cannot encrypt]';
             }
         } else if (labCipher === 'aes') {
             result = await serverEncrypt('aes', labPlaintext, String(labKey));
@@ -1544,10 +1552,10 @@
         if (!kc) return;
         if (kc.style.display === 'none') {
             kc.style.display = 'block';
-            if (btn) btn.textContent = '[ \u2212 Collapse ]';
+            if (btn) btn.textContent = '[ Collapse ]';
         } else {
             kc.style.display = 'none';
-            if (btn) btn.textContent = '[ + Expand ]';
+            if (btn) btn.textContent = '[ Expand ]';
         }
     }
     window.toggleLabParams = toggleLabParams;

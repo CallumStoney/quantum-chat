@@ -655,7 +655,6 @@
     .history-block {
         background: rgba(255, 255, 255, 0.6);
         border: 1px solid rgba(0, 0, 0, 0.06);
-        border-left: 3px solid var(--stamp-red);
         border-radius: 1px;
         padding: 14px;
         margin-bottom: 12px;
@@ -667,8 +666,12 @@
         flex-direction: column;
         gap: 4px;
         margin-bottom: 10px;
-        padding-bottom: 8px;
-        border-bottom: 1px dashed var(--ink-faint);
+        padding-bottom: 4px;
+        border-bottom: none;
+    }
+    .spec-section {
+        border-top: none !important;
+        padding-top: 4px !important;
     }
     .cipher-tag {
         font-family: var(--font-typewriter) !important;

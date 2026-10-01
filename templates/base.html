@@ -124,7 +124,7 @@
         ::-webkit-scrollbar-thumb { background: #1e2638; border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: #2a364e; }
 
-        /* Topbar — folder tab at top of desk */
+        /* Topbar: folder tab at top of desk */
         .topbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 200;
             height: 48px;
@@ -739,7 +739,6 @@
         .history-block {
             padding: 16px 18px;
             border: 1px solid rgba(0, 0, 0, 0.08);
-            border-left: 3px solid var(--stamp-red);
             border-radius: 1px;
             background: rgba(255, 255, 255, 0.7);
             margin-bottom: 14px;
@@ -748,8 +747,7 @@
         }
         .cipher-spec-header {
             display: flex; flex-direction: column; gap: 4px;
-            margin-bottom: 12px; padding-bottom: 10px;
-            border-bottom: 1px dashed var(--ink-faint);
+            margin-bottom: 12px; padding-bottom: 4px;
         }
         .cipher-tag {
             font-family: var(--font-typewriter);
@@ -772,8 +770,7 @@
             color: var(--ink); font-family: var(--font-typewriter);
         }
         .spec-section {
-            margin-top: 14px; padding-top: 12px;
-            border-top: 1px dashed var(--ink-faint);
+            margin-top: 14px; padding-top: 4px;
         }
         .spec-section-title {
             font-family: var(--font-stamp);
@@ -1117,7 +1114,7 @@
            DOSSIER UTILITY CLASSES
            ======================================== */
 
-        /* Paper card — the base building block */
+        /* Paper card: the base building block */
         .paper-card {
             background: var(--paper);
             border: none;
@@ -1146,7 +1143,7 @@
             color: var(--stamp-red);
         }
 
-        /* Rotation variants — break the grid */
+        /* Rotation variants: break the grid */
         .paper-tilt-l  { transform: rotate(-1.2deg); }
         .paper-tilt-r  { transform: rotate(0.8deg); }
         .paper-tilt-l2 { transform: rotate(-2.1deg); }
@@ -1157,7 +1154,7 @@
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Tape strip — sticks a card to the cork */
+        /* Tape strip: sticks a card to the cork */
         .tape-top::before {
             content: '';
             position: absolute;
@@ -1237,7 +1234,7 @@
             background: radial-gradient(circle at 40% 35%, #f1c40f 0%, #d4a017 60%, #b7950b 100%);
         }
 
-        /* Coffee ring stain — decorative background */
+        /* Coffee ring stain: decorative background */
         .coffee-stain {
             position: relative;
         }
