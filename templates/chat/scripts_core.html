@@ -138,8 +138,8 @@
         const el = document.getElementById('msg-row-' + d.id); if (el) el.remove();
     });
 
-    // --- NEW HOST LISTENERS ---
-    socket.on('system_alert', d => alert(d.msg));
+    // --- OPERATOR CONSOLE LISTENERS ---
+    socket.on('system_alert', d => showOperatorNotice(d.msg, 'ok'));
 
     socket.on('cipher_forced', d => {
         if (!isHost) {
@@ -147,27 +147,27 @@
                 selBox.value = d.cipher;
                 selBox.disabled = true;
                 selBox.dispatchEvent(new Event('change'));
-                alert("The host has restricted the cipher to: " + d.cipher);
+                showOperatorNotice("Channel policy enforcement: Cipher restricted to " + d.cipher.toUpperCase(), 'warn');
             } else {
                 selBox.disabled = false;
-                alert("The host has removed the cipher restriction.");
+                showOperatorNotice("Channel policy cleared: Free cipher selection restored", 'ok');
             }
         }
     });
 
     socket.on('user_kicked', d => {
         if (d.target === myUsername) {
-            alert("You have been kicked from the room by the host.");
-            window.location.href = '/leave';
+            showOperatorNotice("Session disconnected: Operator evicted by host console", 'err');
+            setTimeout(() => { window.location.href = '/leave'; }, 1000);
         }
     });
 
     socket.on('user_renamed', d => {
         if (d.old_name === myUsername) {
             myUsername = d.new_name;
-            alert("The host has renamed you to: " + d.new_name);
+            showOperatorNotice("Operator handle updated to: " + d.new_name, 'ok');
 
-            //Tell the bum ahh server to update MY personal session
+            // Tell server to update session
             socket.emit('update_my_session_name', { new_name: d.new_name });
         }
     });
@@ -179,7 +179,7 @@
         if (selBox.value === 'caesar') { encVal = parseInt(caesarSlider.value) || 0; }
         else if (selBox.value === 'affine') { encVal = [parseInt(affineA.value) || 1, parseInt(affineB.value) || 0]; }
         else if (selBox.value === 'hill') {
-            if (!validateHillMatrix()) { alert('Singular matrix, choose different values.'); return; }
+            if (!validateHillMatrix()) { showOperatorNotice('Matrix determinant is not coprime with 26. Inversion is undefined.', 'err'); return; }
             const cells = document.querySelectorAll('.hill-cell');
             let mat = [], row = [];
             cells.forEach(c => { row.push(parseInt(c.value) || 0); if (row.length === currentHillSize) { mat.push(row); row = []; } });

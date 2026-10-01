@@ -7,17 +7,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 32px 16px;
+        padding: 48px 16px;
         background: var(--bg);
     }
 
     .lobby-card {
         width: 100%;
-        max-width: 440px;
+        max-width: 460px;
         background: var(--bg-2);
         border: 1px solid var(--border);
         border-radius: var(--radius-md);
         padding: 24px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
 
     .lobby-header {
@@ -26,19 +27,30 @@
         border-bottom: 1px solid var(--border);
     }
 
+    .lobby-tag {
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--amber);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 4px;
+    }
+
     .lobby-title {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 700;
         letter-spacing: -0.01em;
         color: var(--text-hi);
         margin: 0 0 6px 0;
+        font-family: var(--sans);
     }
 
     .lobby-desc {
         font-size: 12px;
         color: var(--text-dim);
         margin: 0;
-        line-height: 1.5;
+        line-height: 1.55;
     }
 
     .field-group {
@@ -49,14 +61,15 @@
         display: block;
         font-size: 11px;
         font-weight: 600;
-        color: var(--text-hi);
+        color: var(--text-dim);
         margin-bottom: 6px;
+        font-family: var(--sans);
     }
 
     .text-input {
         width: 100%;
         padding: 8px 12px;
-        background: var(--bg-3);
+        background: var(--bg-inset);
         border: 1px solid var(--border-md);
         color: var(--text-hi);
         font-family: var(--sans);
@@ -99,22 +112,24 @@
     .btn-action-host {
         width: 100%;
         padding: 9px 16px;
-        background: var(--primary);
-        color: #ffffff;
+        background: linear-gradient(180deg, #d48b38 0%, #ba7526 100%);
+        color: #121418;
         font-family: var(--sans);
         font-size: 12px;
-        font-weight: 600;
-        border: 1px solid rgba(255,255,255,0.1);
+        font-weight: 700;
+        border: 1px solid #e29845;
         border-radius: var(--radius-sm);
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        transition: background 0.15s;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 1px 3px rgba(0,0,0,0.4);
+        transition: all 0.15s;
     }
     .btn-action-host:hover {
-        background: var(--primary-hover);
+        background: linear-gradient(180deg, #e09845 0%, #c98230 100%);
+        border-color: #f0a855;
     }
     .btn-action-host:disabled {
         opacity: 0.45;
@@ -125,10 +140,11 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 2px 0;
+        margin: 4px 0;
         color: var(--text-faint);
         font-size: 11px;
         font-weight: 500;
+        font-family: var(--mono);
     }
     .divider-text::before,
     .divider-text::after {
@@ -149,8 +165,8 @@
 
     .btn-action-join {
         padding: 8px 16px;
-        background: var(--bg-3);
-        border: 1px solid var(--border-md);
+        background: linear-gradient(180deg, #2b313d 0%, #1f232b 100%);
+        border: 1px solid #3c4556;
         color: var(--text-hi);
         font-family: var(--sans);
         font-size: 12px;
@@ -158,10 +174,12 @@
         border-radius: var(--radius-sm);
         cursor: pointer;
         white-space: nowrap;
-        transition: border-color 0.15s, color 0.15s;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.35);
+        transition: all 0.15s;
     }
     .btn-action-join:hover {
-        border-color: var(--border-hi);
+        background: linear-gradient(180deg, #343c4a 0%, #252b35 100%);
+        border-color: #4f5b70;
         color: #ffffff;
     }
     .btn-action-join:disabled {
@@ -170,7 +188,7 @@
     }
 
     .lobby-foot {
-        margin-top: 18px;
+        margin-top: 20px;
         padding-top: 14px;
         border-top: 1px solid var(--border);
         display: flex;
@@ -178,13 +196,16 @@
         align-items: center;
         font-size: 11px;
         color: var(--text-faint);
+        font-family: var(--mono);
     }
 
     .lobby-foot a {
-        color: var(--blue-light);
+        color: var(--text-dim);
         text-decoration: none;
+        font-family: var(--sans);
     }
     .lobby-foot a:hover {
+        color: var(--text-hi);
         text-decoration: underline;
     }
 </style>
@@ -192,16 +213,16 @@
 <div class="lobby-wrapper">
     <div class="lobby-card">
         <div class="lobby-header">
-            <h2 class="lobby-title">Encrypted Chat Rooms</h2>
+            <div class="lobby-tag">Ephemeral Relay Channel</div>
+            <h2 class="lobby-title">Session Dispatcher</h2>
             <p class="lobby-desc">
-                Pick a nickname to start a new chat room, or enter a 4-letter code from a friend to join theirs.
-                Messages are encrypted right in your browser before they touch the network.
+                Select an operator handle to host a new relay session, or provide an active 4-character room token to join an ongoing channel. Outgoing payloads encrypt locally prior to WebSocket transmission.
             </p>
         </div>
 
         <form method="post" id="local-form">
             <div class="field-group">
-                <label class="field-label" for="username_input">Your Nickname</label>
+                <label class="field-label" for="username_input">Operator Handle</label>
                 <input
                     type="text"
                     id="username_input"
@@ -219,17 +240,17 @@
             <div class="action-section">
                 <div>
                     <button type="submit" formaction="/host" id="btn-host" class="btn-action-host">
-                        <svg viewBox="0 0 20 20" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+                        <svg viewBox="0 0 20 20" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
                             <rect x="2" y="2" width="16" height="7" rx="1.5"/>
                             <rect x="2" y="11" width="16" height="7" rx="1.5"/>
                             <circle cx="5.5" cy="5.5" r="1" fill="currentColor"/>
                             <circle cx="5.5" cy="14.5" r="1" fill="currentColor"/>
                         </svg>
-                        Host a New Room
+                        Host New Session Room
                     </button>
                 </div>
 
-                <div class="divider-text">or join with a code</div>
+                <div class="divider-text">// or connect with token</div>
 
                 <div class="field-group" style="margin-bottom:0">
                     <div class="join-group">
@@ -238,11 +259,11 @@
                             name="room_code"
                             id="room_code_box"
                             class="text-input code-input-field"
-                            placeholder="ABCD"
+                            placeholder="CODE"
                             maxlength="4"
                         >
                         <button type="submit" formaction="/join" id="btn-join" class="btn-action-join">
-                            Join Room →
+                            Connect &rarr;
                         </button>
                     </div>
                 </div>
@@ -250,47 +271,66 @@
         </form>
 
         <div class="lobby-foot">
-            <span>In-memory sessions · Zero database logs</span>
-            <a href="/">← Back to Home</a>
+            <div>RAM-only session storage</div>
+            <div>
+                <a href="/lab">Open Workbench</a>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-const usernameInput = document.getElementById('username_input');
-const warningDiv = document.getElementById('username_warning');
-const hostBtn = document.getElementById('btn-host');
-const joinBtn = document.getElementById('btn-join');
+(function() {
+    const usernameInput = document.getElementById('username_input');
+    const warningText = document.getElementById('username_warning');
+    const btnHost = document.getElementById('btn-host');
+    const btnJoin = document.getElementById('btn-join');
+    const roomCodeBox = document.getElementById('room_code_box');
 
-usernameInput.addEventListener('input', function () {
-    const val = usernameInput.value.trim();
-    if (!val) {
-        warningDiv.textContent = '';
-        hostBtn.disabled = joinBtn.disabled = false;
-        usernameInput.style.borderColor = '';
-        return;
-    }
-    fetch('/api/usernames')
-        .then(r => r.json())
-        .then(taken => {
-            if (taken.includes(val)) {
-                warningDiv.textContent = 'That nickname is currently in use in an active room.';
-                hostBtn.disabled = joinBtn.disabled = true;
-                usernameInput.style.borderColor = 'var(--rose)';
-            } else {
-                warningDiv.textContent = '';
-                hostBtn.disabled = joinBtn.disabled = false;
-                usernameInput.style.borderColor = '';
-            }
-        })
-        .catch(() => {});
-});
+    let isUsernameTaken = false;
 
-document.getElementById('local-form').addEventListener('submit', function (e) {
-    if (!usernameInput.value.trim()) {
-        e.preventDefault();
-        usernameInput.focus();
+    function checkUsername() {
+        const username = usernameInput.value.trim();
+        if (!username) {
+            warningText.textContent = '';
+            isUsernameTaken = false;
+            updateButtonStates();
+            usernameInput.style.borderColor = '';
+            return;
+        }
+
+        fetch('/api/usernames')
+            .then(res => res.json())
+            .then(takenList => {
+                if (takenList.includes(username)) {
+                    warningText.textContent = 'Handle currently in use in an active session. Choose another.';
+                    isUsernameTaken = true;
+                    usernameInput.style.borderColor = 'var(--rose)';
+                } else {
+                    warningText.textContent = '';
+                    isUsernameTaken = false;
+                    usernameInput.style.borderColor = '';
+                }
+                updateButtonStates();
+            })
+            .catch(() => {});
     }
-});
+
+    function updateButtonStates() {
+        const hasUser = usernameInput.value.trim().length > 0;
+        const hasCode = roomCodeBox.value.trim().length === 4;
+
+        btnHost.disabled = !hasUser || isUsernameTaken;
+        btnJoin.disabled = !hasUser || !hasCode || isUsernameTaken;
+    }
+
+    usernameInput.addEventListener('input', checkUsername);
+    roomCodeBox.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+        updateButtonStates();
+    });
+
+    updateButtonStates();
+})();
 </script>
 {% endblock %}

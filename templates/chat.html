@@ -4,10 +4,10 @@
 <div class="chat-page">
     <div class="chat-topbar-ext">
         <div class="room-badge">
-            <span style="font-size: 11px; font-weight: 600; color: var(--text-dim);">Room:</span>
+            <span style="font-size: 11px; font-weight: 600; color: var(--text-dim); font-family: var(--mono); text-transform: uppercase;">SESSION:</span>
             <div style="display:flex;align-items:center;gap:6px;">
                 <span class="room-code-display">{{ room_code }}</span>
-                <button class="btn-copy-room" onclick="copyRoomCode(this)" data-code="{{ room_code }}" title="Copy room code">
+                <button class="btn-copy-room" onclick="copyRoomCode(this)" data-code="{{ room_code }}" title="Copy session token">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
@@ -15,9 +15,9 @@
                 </button>
             </div>
         </div>
-        <div style="font-size: 11px; color: var(--text-dim);">
-            User: <strong style="color: var(--text-hi);">{{ current_user }}</strong>
-            {% if is_host %}<span style="color: var(--amber); font-weight: 600; margin-left: 4px;">[Host]</span>{% endif %}
+        <div style="font-size: 11px; color: var(--text-dim); font-family: var(--mono);">
+            OPERATOR: <strong style="color: var(--text-hi);">{{ current_user }}</strong>
+            {% if is_host %}<span style="color: var(--amber); font-weight: 700; margin-left: 6px;">[ROOM HOST]</span>{% endif %}
         </div>
     </div>
     <div class="chat-body">
@@ -25,17 +25,17 @@
         <div class="chat-col" id="chat-col">
             <div class="room-quick-guide" id="welcome-guide" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 8px 0;padding:6px 10px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text-dim);">
                 <div>
-                    Configure cipher & key on the right. Outgoing messages encrypt locally before transmission.
+                    Configure algorithm parameters on the right. Plaintext is encrypted locally before transmission over the relay.
                 </div>
-                <button class="btn-close-guide" onclick="closeWelcomeGuide()" title="Dismiss" style="background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:12px;padding:0;line-height:1;flex-shrink:0;">✕</button>
+                <button class="btn-close-guide" onclick="closeWelcomeGuide()" title="Dismiss" style="background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:12px;padding:0;line-height:1;flex-shrink:0;">&times;</button>
             </div>
 
             {% include 'chat/host_panel.html' %}
 
             <div id="chat-box" class="chat-log"></div>
             <div class="chat-send-row">
-                <input type="text" id="msg-input" class="chat-input" placeholder="Type a message to encrypt and send..." autofocus>
-                <button onclick="sendMessage()" class="btn-send">Send</button>
+                <input type="text" id="msg-input" class="chat-input" placeholder="Enter message to encrypt and dispatch..." autofocus>
+                <button onclick="sendMessage()" class="btn-send">Transmit</button>
             </div>
         </div>
 
@@ -46,14 +46,14 @@
 
             <div class="enc-panel-bottom">
                 <div id="sel-details" class="tabs-wrap">
-                    <div style="background:var(--bg-3);padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:8px;flex-shrink:0;">
-                        <div style="color:var(--text-faint);font-size:10px;margin-bottom:3px;font-weight:600;">Ciphertext Preview</div>
-                        <div id="sel-payload" style="color:var(--blue-light);font-family:var(--mono);word-break:break-all;font-size:12px;">HELLO WORLD</div>
+                    <div style="background:var(--bg-inset);padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:8px;flex-shrink:0;">
+                        <div style="color:var(--text-faint);font-size:10px;margin-bottom:3px;font-weight:600;font-family:var(--mono);text-transform:uppercase;">Transmitted Payload Stream</div>
+                        <div id="sel-payload" style="color:var(--amber);font-family:var(--mono);word-break:break-all;font-size:12px;">HELLO WORLD</div>
                     </div>
                     <div class="tabs-nav" style="flex-shrink:0;">
-                        <button class="tab-btn active" onclick="switchTab('guide',event)">Guide & Info</button>
-                        <button class="tab-btn" onclick="switchTab('steps',event)">Step-by-Step</button>
-                        <button class="tab-btn" onclick="switchTab('decrypt',event)">Decrypt Tools</button>
+                        <button class="tab-btn active" onclick="switchTab('guide',event)">Specification & Cryptanalysis</button>
+                        <button class="tab-btn" onclick="switchTab('steps',event)">Character Trace</button>
+                        <button class="tab-btn" onclick="switchTab('decrypt',event)">Cracking Workbench</button>
                     </div>
 
                     {% include 'chat/guide_tab.html' %}

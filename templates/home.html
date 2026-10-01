@@ -3,111 +3,168 @@
 {% block content %}
 <style>
     .home-wrapper {
-        max-width: 820px;
+        max-width: 960px;
         margin: 0 auto;
-        padding: 40px 20px 60px;
+        padding: 68px 24px 80px;
     }
 
-    /* Hero */
-    .home-hero {
-        margin-bottom: 30px;
+    /* System Telemetry Header */
+    .home-header {
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 22px;
+    }
+
+    .telemetry-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+    }
+
+    .system-status-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 8px;
+        background: var(--bg-inset);
+        border: 1px solid var(--border-md);
+        border-radius: var(--radius-sm);
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--amber);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .telemetry-meta {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--text-faint);
+        display: flex;
+        gap: 14px;
+    }
+
+    .telemetry-meta span strong {
+        color: var(--text-dim);
+    }
+
+    .status-dot {
+        width: 6px; height: 6px;
+        border-radius: 1px;
+        background: var(--green);
     }
 
     .project-title {
-        font-size: 26px;
+        font-size: 24px;
         font-weight: 700;
         letter-spacing: -0.02em;
         color: var(--text-hi);
         margin: 0 0 6px 0;
+        font-family: var(--sans);
     }
 
     .tagline {
-        font-size: 15px;
-        color: var(--blue-light);
+        font-size: 13px;
+        color: var(--text-dim);
         margin: 0 0 12px 0;
         font-weight: 500;
+        font-family: var(--sans);
     }
 
     .summary {
-        font-size: 13px;
-        line-height: 1.6;
-        color: var(--text-dim);
+        font-size: 12px;
+        line-height: 1.65;
+        color: var(--text);
         margin: 0;
-        max-width: 720px;
+        max-width: 860px;
     }
 
-    /* Unified Room Entry Console */
-    .room-entry-card {
+    /* Dual Operational Stations */
+    .launch-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .launch-card {
         background: var(--bg-2);
         border: 1px solid var(--border);
         border-radius: var(--radius-md);
-        padding: 20px 22px;
-        margin-bottom: 36px;
-    }
-
-    .entry-header {
+        padding: 18px;
         display: flex;
-        align-items: center;
+        flex-direction: column;
         justify-content: space-between;
-        margin-bottom: 16px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--border);
     }
 
-    .entry-title {
-        font-size: 13px;
+    .launch-card-header {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .launch-card-tag {
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--amber);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .launch-card-title {
+        font-size: 14px;
         font-weight: 700;
         color: var(--text-hi);
         margin: 0;
     }
 
-    .entry-alt-link {
+    .launch-card-desc {
         font-size: 12px;
-        color: var(--blue-light);
-        text-decoration: none;
-    }
-    .entry-alt-link:hover {
-        text-decoration: underline;
-        color: #ffffff;
-    }
-
-    .entry-tabs {
-        display: flex;
-        gap: 6px;
-        margin-bottom: 16px;
-    }
-
-    .entry-tab {
-        background: var(--bg-3);
-        border: 1px solid var(--border);
+        line-height: 1.6;
         color: var(--text-dim);
-        padding: 6px 14px;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        transition: all 0.15s;
-        font-family: var(--sans);
-    }
-    .entry-tab:hover {
-        color: var(--text-hi);
-        border-color: var(--border-md);
-    }
-    .entry-tab.active {
-        background: var(--bg);
-        border-color: var(--border-hi);
-        color: var(--text-hi);
+        margin: 0 0 14px 0;
+        flex: 1;
     }
 
-    .entry-panel {
-        display: none;
+    /* Embedded Relay Controls */
+    .relay-toggle-bar {
+        display: flex;
+        background: var(--bg-inset);
+        padding: 2px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-bottom: 12px;
+        gap: 2px;
     }
-    .entry-panel.active {
-        display: block;
+
+    .relay-toggle-btn {
+        flex: 1;
+        background: transparent;
+        border: none;
+        color: var(--text-dim);
+        padding: 5px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 2px;
+        cursor: pointer;
+        font-family: var(--sans);
+        transition: all 0.12s;
+    }
+    .relay-toggle-btn.active {
+        background: var(--bg-2);
+        color: var(--text-hi);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
     .form-group {
-        margin-bottom: 14px;
+        margin-bottom: 10px;
     }
 
     .form-label {
@@ -115,22 +172,22 @@
         font-size: 11px;
         font-weight: 600;
         color: var(--text-dim);
-        margin-bottom: 6px;
+        margin-bottom: 5px;
     }
 
     .form-controls {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         align-items: center;
     }
 
     .text-input {
         flex: 1;
-        padding: 8px 12px;
-        background: var(--bg);
+        padding: 7px 10px;
+        background: var(--bg-inset);
         border: 1px solid var(--border-md);
         color: var(--text-hi);
-        font-size: 13px;
+        font-size: 12px;
         border-radius: var(--radius-sm);
         outline: none;
         transition: border-color 0.15s;
@@ -144,7 +201,7 @@
     }
 
     .code-input {
-        width: 100px;
+        width: 85px;
         text-align: center;
         font-family: var(--mono);
         font-weight: 700;
@@ -153,303 +210,474 @@
         flex: none;
     }
 
-    .btn-submit-primary {
-        padding: 8px 18px;
-        background: var(--primary);
-        border: 1px solid rgba(255,255,255,0.1);
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: 600;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        transition: background 0.15s;
-        white-space: nowrap;
-        font-family: var(--sans);
-    }
-    .btn-submit-primary:hover {
-        background: var(--primary-hover);
-    }
-    .btn-submit-primary:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
-    }
-
     .field-hint {
         font-size: 11px;
         color: var(--rose);
-        margin-top: 6px;
-        min-height: 16px;
+        margin-top: 4px;
+        min-height: 14px;
     }
 
-    /* What's In The Box */
-    .section-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text-hi);
-        margin: 0 0 14px 0;
-    }
-
-    .cipher-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-bottom: 36px;
-    }
-
-    .cipher-item {
-        background: var(--bg-2);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        padding: 14px;
+    /* Section Headers */
+    .section-header-row {
         display: flex;
-        flex-direction: column;
         justify-content: space-between;
-    }
-
-    .cipher-item-head {
-        display: flex;
         align-items: baseline;
-        justify-content: space-between;
-        margin-bottom: 6px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
     }
 
-    .cipher-item-title {
+    .section-title {
         font-size: 13px;
         font-weight: 700;
         color: var(--text-hi);
         margin: 0;
+        font-family: var(--sans);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
 
-    .cipher-item-desc {
-        font-size: 12px;
-        color: var(--text-dim);
-        line-height: 1.5;
-        margin: 0 0 10px 0;
-    }
-
-    .cipher-lab-link {
+    .section-subtitle {
         font-size: 11px;
-        font-weight: 600;
-        color: var(--blue-light);
-        text-decoration: none;
-        align-self: flex-start;
-    }
-    .cipher-lab-link:hover {
-        text-decoration: underline;
-        color: #ffffff;
+        color: var(--text-faint);
+        font-family: var(--mono);
     }
 
-    /* How it works */
-    .how-it-works-list {
+    /* Cryptanalysis Specification Matrix Table */
+    .matrix-table-wrap {
         background: var(--bg-2);
         border: 1px solid var(--border);
         border-radius: var(--radius-sm);
-        padding: 16px 20px;
-        margin-bottom: 36px;
+        overflow-x: auto;
+        margin-bottom: 32px;
     }
 
-    .how-it-works-item {
-        font-size: 12px;
+    .matrix-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+        text-align: left;
+    }
+
+    .matrix-table th {
+        background: var(--bg-3);
+        padding: 9px 12px;
+        color: var(--text-dim);
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .matrix-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+        vertical-align: top;
+        line-height: 1.5;
+    }
+
+    .matrix-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .matrix-table tr:hover td {
+        background: rgba(255, 255, 255, 0.015);
+    }
+
+    .alg-cell-name {
+        font-weight: 700;
+        color: var(--text-hi);
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .alg-cell-tag {
+        font-family: var(--mono);
+        font-size: 9px;
+        color: var(--amber);
+        text-transform: uppercase;
+    }
+
+    .formula-code {
+        font-family: var(--mono);
+        background: var(--bg-inset);
+        padding: 2px 5px;
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        font-size: 10px;
+        color: var(--text-hi);
+        white-space: nowrap;
+    }
+
+    .keyspace-badge {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--text-dim);
+    }
+
+    .security-status {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 2px;
+        font-family: var(--mono);
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .sec-broken   { background: rgba(207, 72, 72, 0.12); color: var(--rose); border: 1px solid rgba(207, 72, 72, 0.3); }
+    .sec-secure   { background: rgba(45, 156, 87, 0.12); color: var(--green-light); border: 1px solid rgba(45, 156, 87, 0.3); }
+    .sec-protocol { background: rgba(212, 139, 56, 0.12); color: var(--amber); border: 1px solid rgba(212, 139, 56, 0.3); }
+
+    /* Engineering Notes & Architecture Specifications */
+    .specs-card {
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 16px;
+        margin-bottom: 32px;
+    }
+
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .spec-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .spec-item-title {
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-hi);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .spec-item-text {
+        font-size: 11px;
         line-height: 1.6;
         color: var(--text-dim);
-        margin-bottom: 8px;
     }
-    .how-it-works-item:last-child {
-        margin-bottom: 0;
+
+    /* Technical Implementation Notes (Real human developer caveats) */
+    .caveats-box {
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        margin-bottom: 32px;
+        font-size: 11px;
+        color: var(--text-dim);
+        line-height: 1.6;
     }
-    .how-it-works-item strong {
-        color: var(--text-hi);
+
+    .caveats-title {
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--amber);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+    }
+
+    .caveats-list {
+        margin: 0;
+        padding-left: 16px;
+    }
+
+    .caveats-list li {
+        margin-bottom: 4px;
     }
 
     /* Footer */
     .home-footer {
-        padding-top: 18px;
+        padding-top: 16px;
         border-top: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 11px;
         color: var(--text-faint);
+        font-family: var(--mono);
     }
 
     .home-footer a {
         color: var(--text-dim);
         text-decoration: none;
         margin-left: 14px;
+        font-family: var(--sans);
     }
     .home-footer a:hover {
         color: var(--text-hi);
     }
 
-    @media (max-width: 640px) {
-        .cipher-grid {
-            grid-template-columns: 1fr;
-        }
-        .form-controls {
-            flex-direction: column;
-            align-items: stretch;
-        }
-        .code-input {
-            width: 100%;
-        }
+    @media (max-width: 768px) {
+        .launch-grid { grid-template-columns: 1fr; }
+        .specs-grid  { grid-template-columns: 1fr; }
+        .matrix-table { font-size: 10px; }
     }
 </style>
 
 <div class="home-wrapper">
     <!-- Header -->
-    <header class="home-hero">
-        <h1 class="project-title">QuantumChat</h1>
-        <div class="tagline">Disposable in-browser chat with client-side ciphers.</div>
+    <header class="home-header">
+        <div class="telemetry-bar">
+            <div class="system-status-tag">
+                <span class="status-dot"></span>
+                <span>Console Active // Shannon Transmission Lab</span>
+            </div>
+            <div class="telemetry-meta">
+                <span>Engines: <strong>6 Active</strong></span>
+                <span>Channel: <strong>Insecure Relay (Alice-Bob-Eve)</strong></span>
+                <span>State: <strong>Volatile RAM</strong></span>
+            </div>
+        </div>
+
+        <h1 class="project-title">QuantumChat // Cryptographic Analysis Bench</h1>
+        <div class="tagline">Interactive laboratory for character-level cryptanalysis, SPN diffusion inspection, and wire interception simulation.</div>
         <p class="summary">
-            A small web experiment exploring how classical and modern ciphers actually work.
-            Messages are scrambled locally right inside your browser before sending, and you can inspect or crack every payload in the lab.
+            A hands-on testbed structured around the classical Shannon communication model. Users transmit payloads over an untrusted channel, configure modular substitution and block parameters, execute character-by-character transformation traces, and evaluate automated cryptanalysis techniques (unigram frequency analysis, linear congruence factoring, Kasiski duplicate trigram examination, and quantum measurement state collapse).
         </p>
     </header>
 
-    <!-- Unified Room Entry Console -->
-    <section class="room-entry-card">
-        <div class="entry-header">
-            <h2 class="entry-title">Enter a Chat Room</h2>
-            <a href="/lab" class="entry-alt-link">Open Cipher Lab without chatting →</a>
+    <!-- Operational Launch Console -->
+    <section class="launch-grid">
+        <!-- Workbench Card -->
+        <div class="launch-card">
+            <div>
+                <div class="launch-card-header">
+                    <h2 class="launch-card-title">Cryptanalysis Workbench</h2>
+                    <span class="launch-card-tag">Interactive Sandbox</span>
+                </div>
+                <p class="launch-card-desc">
+                    Isolated cryptanalytic testbench. Input test vectors, configure rotational shifts, modular coprimes, matrix grids, or AES round keys, and execute automated cracking algorithms (brute-force enumeration, Kasiski factor analysis, modular matrix inversion) with real-time character trace matrices.
+                </p>
+            </div>
+            <div>
+                <a href="/lab" class="btn-submit-primary btn-brass-primary" style="width: 100%;">
+                    Open Cryptanalysis Workbench &rarr;
+                </a>
+            </div>
         </div>
 
-        <div class="entry-tabs">
-            <button type="button" class="entry-tab active" onclick="switchEntryMode('host')">Host New Room</button>
-            <button type="button" class="entry-tab" onclick="switchEntryMode('join')">Join Existing Room</button>
-        </div>
-
-        <!-- Host Panel -->
-        <div id="panel-host" class="entry-panel active">
-            <form method="POST" action="/host" id="host-form">
-                <div class="form-group">
-                    <label class="form-label" for="host-nick">Your Nickname</label>
-                    <div class="form-controls">
-                        <input type="text" name="username" id="host-nick" class="text-input" placeholder="e.g. Alice" maxlength="24" required autocomplete="off">
-                        <button type="submit" id="btn-host-action" class="btn-submit-primary">Create Room</button>
-                    </div>
-                    <div id="host-val-msg" class="field-hint"></div>
+        <!-- Relay Dispatch Card -->
+        <div class="launch-card">
+            <div>
+                <div class="launch-card-header">
+                    <h2 class="launch-card-title">Insecure Transmission Channel</h2>
+                    <span class="launch-card-tag">Alice & Bob Wiretap</span>
                 </div>
-            </form>
-        </div>
-
-        <!-- Join Panel -->
-        <div id="panel-join" class="entry-panel">
-            <form method="POST" action="/join" id="join-form">
-                <div class="form-group">
-                    <label class="form-label" for="join-nick">Nickname & Room Code</label>
-                    <div class="form-controls">
-                        <input type="text" name="username" id="join-nick" class="text-input" placeholder="Your nickname" maxlength="24" required autocomplete="off">
-                        <input type="text" name="room_code" id="join-code" class="text-input code-input" placeholder="CODE" maxlength="4" required autocomplete="off">
-                        <button type="submit" id="btn-join-action" class="btn-submit-primary">Join Room</button>
-                    </div>
-                    <div id="join-val-msg" class="field-hint"></div>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Cipher Breakdown -->
-    <section>
-        <h2 class="section-title">Available Ciphers</h2>
-        <div class="cipher-grid">
-            <div class="cipher-item">
-                <div class="cipher-item-head">
-                    <h3 class="cipher-item-title">Caesar Shift</h3>
-                </div>
-                <p class="cipher-item-desc">
-                    The classic Roman alphabet shift (1 to 25 positions). Easy to set up and trivial to break with frequency analysis.
+                <p class="launch-card-desc">
+                    Disposable communication channel simulating an untrusted wire. Payloads are encrypted locally client-side before transmission. Any peer connected to the channel acts as Eve, inspecting intercepted payloads with the trace engine.
                 </p>
-                <a href="/lab" class="cipher-lab-link">Experiment in Lab →</a>
+
+                <!-- Mode Switcher -->
+                <div class="relay-toggle-bar">
+                    <button type="button" class="relay-toggle-btn active" id="btn-mode-host" onclick="switchEntryMode('host')">Host New Room</button>
+                    <button type="button" class="relay-toggle-btn" id="btn-mode-join" onclick="switchEntryMode('join')">Join with Token</button>
+                </div>
+
+                <!-- Host Panel -->
+                <div id="panel-host" class="entry-panel">
+                    <form method="POST" action="/host" id="host-form">
+                        <div class="form-group">
+                            <label class="form-label" for="host-nick">Operator Handle</label>
+                            <div class="form-controls">
+                                <input type="text" name="username" id="host-nick" class="text-input" placeholder="e.g. Alice" maxlength="24" required autocomplete="off">
+                                <button type="submit" id="btn-host-action" class="btn-submit-primary">Initialize Room</button>
+                            </div>
+                            <div id="host-val-msg" class="field-hint"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Join Panel -->
+                <div id="panel-join" class="entry-panel" style="display: none;">
+                    <form method="POST" action="/join" id="join-form">
+                        <div class="form-group">
+                            <label class="form-label" for="join-nick">Handle & Room Token</label>
+                            <div class="form-controls">
+                                <input type="text" name="username" id="join-nick" class="text-input" placeholder="Handle" maxlength="24" required autocomplete="off">
+                                <input type="text" name="room_code" id="join-code" class="text-input code-input" placeholder="CODE" maxlength="4" required autocomplete="off">
+                                <button type="submit" id="btn-join-action" class="btn-submit-primary">Attach</button>
+                            </div>
+                            <div id="join-val-msg" class="field-hint"></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="cipher-item">
-                <div class="cipher-item-head">
-                    <h3 class="cipher-item-title">Affine Cipher</h3>
-                </div>
-                <p class="cipher-item-desc">
-                    Linear modular substitution using a multiplier and an offset. The multiplier has to be coprime with 26 so the decryption inverse exists.
-                </p>
-                <a href="/lab" class="cipher-lab-link">Experiment in Lab →</a>
-            </div>
-
-            <div class="cipher-item">
-                <div class="cipher-item-head">
-                    <h3 class="cipher-item-title">Hill Matrix</h3>
-                </div>
-                <p class="cipher-item-desc">
-                    Multiplies blocks of letters against an invertible matrix mod 26. Breaks if the determinant shares a common factor with 26.
-                </p>
-                <a href="/lab" class="cipher-lab-link">Experiment in Lab →</a>
-            </div>
-
-            <div class="cipher-item">
-                <div class="cipher-item-head">
-                    <h3 class="cipher-item-title">Vigenère</h3>
-                </div>
-                <p class="cipher-item-desc">
-                    Shifts letters using a repeating keyword. Resisted simple frequency analysis for centuries until Kasiski trigram examination was discovered.
-                </p>
-                <a href="/lab" class="cipher-lab-link">Experiment in Lab →</a>
-            </div>
-
-            <div class="cipher-item">
-                <div class="cipher-item-head">
-                    <h3 class="cipher-item-title">AES-256</h3>
-                </div>
-                <p class="cipher-item-desc">
-                    The modern symmetric standard. Runs 14 rounds of byte substitution, row shifts, and column mixing directly in your browser.
-                </p>
-                <a href="/lab" class="cipher-lab-link">Experiment in Lab →</a>
-            </div>
-
-            <div class="cipher-item">
-                <div class="cipher-item-head">
-                    <h3 class="cipher-item-title">BB84 Quantum (Simulation)</h3>
-                </div>
-                <p class="cipher-item-desc">
-                    Simulates photon polarization basis matching between sender and receiver. Eavesdropping alters photon states and triggers detectable error rates.
-                </p>
-                <a href="/lab" class="cipher-lab-link">Experiment in Lab →</a>
+            <div style="font-size: 11px; color: var(--text-faint); margin-top: 6px;">
+                Channel state resides strictly in volatile server memory; all data evaporates on disconnect.
             </div>
         </div>
     </section>
 
-    <!-- How it works -->
+    <!-- Cryptographic Specification & Vulnerability Reference (Dense Matrix Table) -->
     <section>
-        <h2 class="section-title">How it works</h2>
-        <div class="how-it-works-list">
-            <div class="how-it-works-item">
-                <strong>In-memory only:</strong> Rooms exist purely in server RAM. When everyone disconnects, the room code and messages vanish completely.
+        <div class="section-header-row">
+            <h2 class="section-title">Cryptanalytic Architecture & Vulnerability Profile</h2>
+            <span class="section-subtitle">Mathematical mappings, keyspace bounds, and primary attack vectors</span>
+        </div>
+
+        <div class="matrix-table-wrap">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th style="width: 18%;">Algorithm</th>
+                        <th style="width: 20%;">Mathematical Formulation</th>
+                        <th style="width: 14%;">Key Space |K|</th>
+                        <th style="width: 28%;">Primary Analytical Vulnerability</th>
+                        <th style="width: 12%;">Complexity</th>
+                        <th style="width: 8%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="alg-cell-name">Caesar Shift</span>
+                            <span class="alg-cell-tag">Monoalphabetic</span>
+                        </td>
+                        <td><span class="formula-code">C_i = (P_i + k) mod 26</span></td>
+                        <td><span class="keyspace-badge">25 non-trivial</span></td>
+                        <td>Unigram frequency matching; English letter 'E' (approx 12.7%) reveals shift offset in single pass. Exhaustive search requires 25 evaluations.</td>
+                        <td><span class="formula-code">O(25)</span></td>
+                        <td><span class="security-status sec-broken">Broken</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="alg-cell-name">Affine Cipher</span>
+                            <span class="alg-cell-tag">Linear Congruence</span>
+                        </td>
+                        <td><span class="formula-code">E(x) = (a·x + b) mod 26</span></td>
+                        <td><span class="keyspace-badge">12 × 26 = 312</span></td>
+                        <td>Multiplicative key constrained to Z_26^* (coprime to 26). Known-plaintext attack with 2 character pairs solves linear system via Extended Euclidean Algorithm.</td>
+                        <td><span class="formula-code">O(312)</span></td>
+                        <td><span class="security-status sec-broken">Broken</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="alg-cell-name">Hill Cipher</span>
+                            <span class="alg-cell-tag">Polygraphic Matrix</span>
+                        </td>
+                        <td><span class="formula-code">C ≡ K · P (mod 26)</span></td>
+                        <td><span class="keyspace-badge">|GL(n, Z_26)|</span></td>
+                        <td>Strict linearity flaw. Interception of n linearly independent plaintext-ciphertext vector pairs solves K ≡ C · P^-1 (mod 26) directly without search.</td>
+                        <td><span class="formula-code">O(n^3)</span></td>
+                        <td><span class="security-status sec-broken">Broken</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="alg-cell-name">Vigenère Cipher</span>
+                            <span class="alg-cell-tag">Periodic Polyalphabetic</span>
+                        </td>
+                        <td><span class="formula-code">C_i = (P_i + K_{i mod m}) mod 26</span></td>
+                        <td><span class="keyspace-badge">26^m</span></td>
+                        <td>Kasiski examination: GCD of distance intervals between duplicate trigrams factors into key period m, decomposing ciphertext into m independent Caesar streams.</td>
+                        <td><span class="formula-code">O(m · 26)</span></td>
+                        <td><span class="security-status sec-broken">Broken</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="alg-cell-name">AES-256 (Rijndael)</span>
+                            <span class="alg-cell-tag">Symmetric SPN Block</span>
+                        </td>
+                        <td><span class="formula-code">14 rounds over GF(2^8)</span></td>
+                        <td><span class="keyspace-badge">2^256 ≈ 1.15×10^77</span></td>
+                        <td>Non-linear SubBytes S-Box resists differential and linear cryptanalysis. Maximum Distance Separable (MDS) MixColumns ensures full avalanche diffusion.</td>
+                        <td><span class="formula-code">O(2^128) quant</span></td>
+                        <td><span class="security-status sec-secure">Secure</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="alg-cell-name">BB84 QKD</span>
+                            <span class="alg-cell-tag">Quantum Protocol</span>
+                        </td>
+                        <td><span class="formula-code">Polarization: + and ×</span></td>
+                        <td><span class="keyspace-badge">Sifted key bits</span></td>
+                        <td>No-Cloning Theorem. Eavesdropper basis mismatch collapses quantum state, injecting an expected 25% Quantum Bit Error Rate (QBER) that triggers key abort.</td>
+                        <td><span class="formula-code">QBER &gt; 11%</span></td>
+                        <td><span class="security-status sec-protocol">Agreement</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Architecture & Threat Model -->
+    <section>
+        <div class="section-header-row">
+            <h2 class="section-title">System Architecture & Threat Model</h2>
+            <span class="section-subtitle">Operational constraints, memory guarantees, and client boundaries</span>
+        </div>
+
+        <div class="specs-card">
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-item-title">Client-Side Boundary</div>
+                    <div class="spec-item-text">
+                        Plaintext does not cross the network unencrypted when an active cipher is configured. Modular substitutions, matrix operations, and key schedules execute inside browser memory prior to socket dispatch.
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-item-title">Volatile RAM Persistence</div>
+                    <div class="spec-item-text">
+                        Relay channels reside strictly in application process memory. Zero disk, SQLite, or file persistence is maintained. Once channel participants disconnect, session tokens and message queues are purged immediately.
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-item-title">Payload Inspection Engine</div>
+                    <div class="spec-item-text">
+                        Every relayed transmission carries character trace metadata. Peers can open the inspector on any message to review the exact modular operations, key parameters, and inverse transformations applied.
+                    </div>
+                </div>
             </div>
-            <div class="how-it-works-item">
-                <strong>Client-side encryption:</strong> When a cipher is selected, the plaintext is scrambled before leaving your browser. The server only relays ciphertext.
-            </div>
-            <div class="how-it-works-item">
-                <strong>Live inspection:</strong> Click any message inside a room to see the raw ciphertext, character mapping, and modular math used.
-            </div>
+        </div>
+    </section>
+
+    <!-- Technical Implementation Caveats (Authentic developer notes) -->
+    <section>
+        <div class="caveats-box">
+            <div class="caveats-title">Implementation Notes & Engineering Caveats</div>
+            <ul class="caveats-list">
+                <li><strong>Hill Cipher Alphabet Modulation:</strong> The client-side educational trace visualizes the classical Latin alphabet modulo 26 for readability. The backend engine in <code>crypto/hill.py</code> utilizes a 97-character prime alphabet to ensure mathematical invertibility across ASCII spaces and special characters.</li>
+                <li><strong>AES Implementation Architecture:</strong> AES-256 is implemented from raw mathematical principles in pure Python (Galois field multiplication in GF(2^8), Rijndael key expansion, round state transformations) without invoking third-party cryptographic library wrappers.</li>
+                <li><strong>Quantum Simulation Bounds:</strong> BB84 simulation models idealized state preparation and detection. Optical attenuation, dark count detector noise, and polarization alignment drift are omitted in favor of clear state collapse visualization.</li>
+            </ul>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="home-footer">
-        <div>QuantumChat</div>
+        <div>QuantumChat // Cryptographic Workbench v1.4.2</div>
         <div>
-            <a href="/lab">Cipher Lab</a>
-            <a href="/local">Chat Rooms</a>
+            <a href="/lab">Workbench</a>
+            <a href="/local">Relay Channels</a>
         </div>
     </footer>
 </div>
 
 <script>
 function switchEntryMode(mode) {
-    const tabs = document.querySelectorAll('.entry-tab');
-    tabs[0].classList.toggle('active', mode === 'host');
-    tabs[1].classList.toggle('active', mode === 'join');
+    const isHost = mode === 'host';
+    document.getElementById('btn-mode-host').classList.toggle('active', isHost);
+    document.getElementById('btn-mode-join').classList.toggle('active', !isHost);
 
-    document.getElementById('panel-host').classList.toggle('active', mode === 'host');
-    document.getElementById('panel-join').classList.toggle('active', mode === 'join');
+    document.getElementById('panel-host').style.display = isHost ? 'block' : 'none';
+    document.getElementById('panel-join').style.display = isHost ? 'none' : 'block';
 
-    if (mode === 'host') {
+    if (isHost) {
         document.getElementById('host-nick').focus();
     } else {
         document.getElementById('join-nick').focus();
@@ -478,7 +706,7 @@ function switchEntryMode(mode) {
             .then(r => r.json())
             .then(taken => {
                 if (taken.includes(val)) {
-                    msg.textContent = 'Nickname already taken in an active room. Pick another.';
+                    msg.textContent = 'Handle currently in use in an active session. Choose another.';
                     btn.disabled = true;
                     input.style.borderColor = 'var(--rose)';
                 } else {

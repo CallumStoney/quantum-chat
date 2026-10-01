@@ -348,8 +348,8 @@
         function hl(sz, commit) {
             [...picker.children].forEach(el => {
                 const lit = parseInt(el.dataset.r) <= sz && parseInt(el.dataset.c) <= sz;
-                el.style.background = lit ? (commit ? 'rgba(59,130,246,0.55)' : 'rgba(59,130,246,0.3)') : 'rgba(255,255,255,0.03)';
-                el.style.borderColor = lit ? 'var(--blue)' : 'rgba(255,255,255,0.12)';
+                el.style.background = lit ? (commit ? 'rgba(62,126,201,0.5)' : 'rgba(62,126,201,0.25)') : 'var(--bg-inset)';
+                el.style.borderColor = lit ? 'var(--blue-light)' : 'var(--border)';
             });
             pill.textContent = sz + ' × ' + sz;
         }
@@ -391,7 +391,7 @@
         const chk = setInterval(() => {
             if (!emojiPicker.shadowRoot) return; clearInterval(chk);
             const s = document.createElement('style');
-            s.textContent = `:host{--background:#0d1526;--border-color:rgba(255,255,255,0.08);--input-font-color:#fff;--indicator-color:#3b82f6;--button-hover-background:rgba(59,130,246,0.12);--search-background:rgba(0,0,0,0.3);}.nav,.preview{display:none!important;}`;
+            s.textContent = `:host{--background:var(--bg-2);--border-color:var(--border);--input-font-color:var(--text-hi);--indicator-color:var(--blue-light);--button-hover-background:rgba(62,126,201,0.12);--search-background:var(--bg-inset);}.nav,.preview{display:none!important;}`;
             emojiPicker.shadowRoot.appendChild(s);
         }, 50);
     });
@@ -456,21 +456,21 @@
     function getCipherExpl(type, key, dec) {
         if (type === 'caesar') {
             const s = parseInt(key) || 0;
-            return dec ? `Each ciphertext letter is shifted <strong>${s}</strong> positions backward. ${m('P = (C - ' + s + ' + 26) mod 26')}` : `Each letter is shifted <strong>${s}</strong> positions forward. ${m('C = (P + ' + s + ') mod 26')}`;
+            return dec ? `Each ciphertext letter is shifted <strong>${s}</strong> positions backward: ${m('P = (C - ' + s + ' + 26) mod 26')}` : `Each plaintext letter is shifted <strong>${s}</strong> positions forward: ${m('C = (P + ' + s + ') mod 26')}`;
         } else if (type === 'affine') {
             const a = key[0], b = key[1], invA = modInverse26(a);
-            return dec ? `Multiply by modular inverse of ${a} (${invA}) and subtract ${b}. ${m('P = ' + invA + ' * (C - ' + b + ') mod 26')}` : `Multiply plaintext value by ${a} and add ${b}. ${m('C = (' + a + ' * P + ' + b + ') mod 26')}`;
+            return dec ? `Multiply by modular inverse a<sup>-1</sup> = ${invA} and subtract offset b = ${b}: ${m('P = ' + invA + ' * (C - ' + b + ') mod 26')}` : `Multiply by multiplier a = ${a} and add offset b = ${b}: ${m('C = (' + a + ' * P + ' + b + ') mod 26')}`;
         } else if (type === 'vigenere') {
             const k = String(key).toUpperCase();
-            return dec ? `Subtract each keyword letter of <strong>"${k}"</strong> from the ciphertext. ${m('P[i] = (C[i] - K[i mod ' + k.length + '] + 26) mod 26')}` : `Pair each letter with keyword <strong>"${k}"</strong>. ${m('C[i] = (P[i] + K[i mod ' + k.length + ']) mod 26')}`;
+            return dec ? `Subtract repeating keyword letter from ciphertext: ${m('P[i] = (C[i] - K[i mod ' + k.length + '] + 26) mod 26')}` : `Add repeating keyword letter to plaintext: ${m('C[i] = (P[i] + K[i mod ' + k.length + ']) mod 26')}`;
         } else if (type === 'hill') {
-            if (!key) return `Matrix is singular - cannot encrypt. Ensure the matrix determinant is non-zero (mod 97).`;
+            if (!key) return `Matrix is singular (det = 0). Ensure det is coprime to modulus to allow inversion.`;
             const n = Array.isArray(key) ? key.length : 2;
-            return dec ? `Multiply ciphertext blocks by the <strong>inverse matrix K⁻¹</strong> mod 26. ${m('[P] = [C] * K⁻¹ (mod 26)')}` : `Multiply plaintext blocks of ${n} by the <strong>key matrix K</strong> mod 26. ${m('[C] = [P] * K (mod 26)')}`;
+            return dec ? `Multiply ciphertext vector blocks by the inverse matrix K<sup>-1</sup> mod 26: ${m('[P] = K^{-1} * [C] (mod 26)')}` : `Multiply plaintext vector blocks of length ${n} by key matrix K mod 26: ${m('[C] = K * [P] (mod 26)')}`;
         } else if (type === 'aes') {
-            return dec ? `AES applies 14 inverse rounds: <strong>InvShiftRows -> InvSubBytes -> AddRoundKey -> InvMixColumns</strong>. Without the 256-bit key, recovery is infeasible.` : `AES-256 expands the key into 14 round sub-keys. Each round: <strong>SubBytes, ShiftRows, MixColumns, AddRoundKey</strong>.`;
+            return dec ? `AES executes 14 inverse transformation rounds (InvShiftRows, InvSubBytes, AddRoundKey, InvMixColumns). Exhaustive search requires 2<sup>256</sup> operations.` : `AES-256 expands the key into 15 round sub-keys, running 14 rounds of SubBytes, ShiftRows, MixColumns over GF(2<sup>8</sup>), and AddRoundKey.`;
         } else if (type === 'quantum') {
-            return dec ? `Decryption uses the agreed-upon basis sift. Any eavesdropper introduces ~25% error, alerting the parties.` : `BB84 transmits each bit as a polarized photon in a randomly chosen basis (+/x). Matching bases form the shared key.`;
+            return dec ? `Decryption applies the sifted key obtained from matched photon bases (+/x). Any eavesdropper perturbs quantum states, injecting an expected 25% QBER.` : `BB84 encodes key bits into polarized single photons across random non-orthogonal bases (+ and x). Matching basis choices form the shared key.`;
         }
         return '';
     }

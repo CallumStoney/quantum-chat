@@ -1,36 +1,36 @@
     // ===========================================================
-    //  DECRYPT TAB, COMPUTER ALGORITHM VIEWS
+    //  DECRYPT TAB: COMPUTATIONAL CRYPTANALYSIS ENGINES
     // ===========================================================
     function algoHeader(title, color) {
         return `<div class="algo-header">
             <span class="algo-terminal-icon">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
             </span>
-            <div class="algo-title" style="color:${color || 'var(--blue-light)'};">${title}</div>
+            <div class="algo-title" style="color:${color || 'var(--text-hi)'};">${title}</div>
         </div>`;
     }
 
-    // -- Caesar computer view -------------------------------------
+    // -- Caesar Rotational Analysis -------------------------------
     function renderCaesarComputer(container) {
         let step = 0, timer = null, done = false;
         const totalKey = parseInt(activeCipherKey) || 1;
 
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('CAESAR BRUTE-FORCE CRACKER')}
+                ${algoHeader('CAESAR ROTATIONAL SEARCH // CHI-SQUARED FREQ')}
                 <div class="algo-body">
                     <div class="algo-pseudocode">
                         <div class="algo-line"><span class="kw">for</span> (shift = <span class="val">1</span>; shift &lt;= <span class="val">25</span>; shift++) {</div>
                         <div class="algo-line">&nbsp;&nbsp;candidate = <span class="fn">reverse_shift</span>(ciphertext, shift)</div>
-                        <div class="algo-line">&nbsp;&nbsp;score = <span class="fn">freq_score</span>(candidate) <span class="cm">// english letter freq</span></div>
+                        <div class="algo-line">&nbsp;&nbsp;score = <span class="fn">freq_score</span>(candidate) <span class="cm">// evaluate unigram distribution</span></div>
                         <div class="algo-line">&nbsp;&nbsp;<span class="kw">if</span> (score &gt; best_score) best = {shift, candidate}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--muted);font-size:10px;letter-spacing:1px;">INPUT: <span style="color:#fff;">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
+                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);">VECTOR: <span style="color:var(--text-hi);">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
                     <div id="caesar-scan" class="scan-results"></div>
                     <div class="algo-controls">
-                        <button class="ctrl-btn" id="cs-step">▶ Step</button>
-                        <button class="ctrl-btn" id="cs-auto">⏩ Auto-Run</button>
+                        <button class="ctrl-btn" id="cs-step">▶ Single Step</button>
+                        <button class="ctrl-btn" id="cs-auto">⏩ Auto-Scan</button>
                         <button class="ctrl-btn" id="cs-reset" style="opacity:0.6;">↺ Reset</button>
                     </div>
                     <div id="caesar-algo-result"></div>
@@ -49,11 +49,11 @@
             const row = document.createElement('div');
             row.className = 'scan-row anim-in' + (isKey ? ' scan-match' : '');
             row.innerHTML = `
-                <span class="scan-shift">shift=${String(step).padStart(2, '0')}</span>
+                <span class="scan-shift">k=${String(step).padStart(2, '0')}</span>
                 <span class="scan-text">${candidate.substring(0, 14)}${candidate.length > 14 ? '...' : ''}</span>
                 <span class="scan-bar">${'█'.repeat(bar)}${'░'.repeat(10 - bar)}</span>
                 <span class="scan-score">${score}</span>
-                ${isKey ? '<span class="scan-tag">← HIT</span>' : ''}`;
+                ${isKey ? '<span class="scan-tag">[MATCH]</span>' : ''}`;
             scanEl.appendChild(row);
             scanEl.scrollTop = scanEl.scrollHeight;
             if (isKey || step >= 25) {
@@ -62,7 +62,7 @@
                 document.getElementById('cs-step').disabled = true;
                 document.getElementById('cs-auto').disabled = true;
                 const res = document.getElementById('caesar-algo-result');
-                if (res) res.innerHTML = `<div class="algo-success">✓ KEY FOUND: shift = ${totalKey}<br>→ PLAINTEXT: "${activeOriginal}"</div>`;
+                if (res) res.innerHTML = `<div class="algo-success">[ANALYSIS COMPLETE] True shift offset: k = ${totalKey}<br>→ Recovered vector: "${activeOriginal}"</div>`;
             }
         }
 
@@ -84,32 +84,32 @@
         document.getElementById('cs-reset').onclick = reset;
     }
 
-    // -- Affine computer view -------------------------------------
+    // -- Affine Linear Congruence Analysis ------------------------
     function renderAffineComputer(container) {
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('AFFINE BRUTE-FORCE CRACKER')}
+                ${algoHeader('AFFINE LINEAR CONGRUENCE SOLVER')}
                 <div class="algo-body">
                     <div class="algo-pseudocode">
-                        <div class="algo-line"><span class="kw">for</span> (a <span class="kw">in</span> {1,3,5,7,9,11,15,17,19,21,23,25}) {</div>
+                        <div class="algo-line"><span class="kw">for</span> (a <span class="kw">in</span> {1,3,5,7,9,11,15,17,19,21,23,25}) { <span class="cm">// coprime to 26</span></div>
                         <div class="algo-line">&nbsp;&nbsp;<span class="kw">for</span> (b = 0; b &lt; 26; b++) {</div>
                         <div class="algo-line">&nbsp;&nbsp;&nbsp;&nbsp;candidate = <span class="fn">reverse_affine</span>(ciphertext, a, b)</div>
                         <div class="algo-line">&nbsp;&nbsp;&nbsp;&nbsp;score = <span class="fn">freq_score</span>(candidate)</div>
                         <div class="algo-line">&nbsp;&nbsp;}</div>
                         <div class="algo-line">}</div>
                     </div>
-                    <div style="color:var(--muted);font-size:10px;letter-spacing:1px;margin-top:8px;">INPUT: <span style="color:#fff;">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
+                    <div style="color:var(--text-dim);font-size:10px;font-family:var(--mono);margin-top:8px;">VECTOR: <span style="color:var(--text-hi);">"${activePayload.substring(0, 30)}${activePayload.length > 30 ? '...' : ''}"</span></div>
                     <div id="affine-algo-result" style="margin-top:12px;">
-                        <div class="algo-success">✓ KEY FOUND: A = ${activeCipherKey[0]}, B = ${activeCipherKey[1]}<br>→ PLAINTEXT: "${activeOriginal}"</div>
+                        <div class="algo-success">[ANALYSIS COMPLETE] Keypair identified: a = ${activeCipherKey[0]}, b = ${activeCipherKey[1]}<br>→ Recovered vector: "${activeOriginal}"</div>
                     </div>
                 </div>
             </div>`;
     }
 
-    // -- Hill computer view ---------------------------------------
+    // -- Hill Matrix Inversion ------------------------------------
     function renderHillComputer(container) {
         if (!Array.isArray(activeCipherKey) || activeCipherKey.length === 0) {
-            container.innerHTML = `<div style="color:var(--muted);padding:16px;font-style:italic;">Key matrix data unavailable for visualization. Make sure matrix is completely filled.</div>`;
+            container.innerHTML = `<div style="color:var(--text-faint);padding:16px;font-style:italic;font-size:11px;">Matrix parameter vector unavailable. Ensure active matrix is populated and coprime.</div>`;
             return;
         }
         const K = activeCipherKey;
@@ -121,16 +121,16 @@
         const invM = adj.map(r => r.map(v => mod26(v * detInv)));
         const steps = [
             { id: 'hs0', title: 'INPUT: Key Matrix K', body: `<div class="mat-disp">${printMat(K).replace(/ /g, '&nbsp;')}</div>` },
-            { id: 'hs1', title: 'STEP 1: Compute det(K)', body: `<div style="line-height:2;">${n === 2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:var(--green-light);">${rawDet}</span>` : `det(K) = <span style="color:var(--green-light);">${rawDet}</span>`}<br>det mod 26 = <span style="color:var(--green-light);font-weight:800;">${det}</span></div>` },
-            { id: 'hs2', title: 'STEP 2: Modular Inverse of det', body: `<div style="line-height:2;">Find X: (${det} * X) mod 26 = 1<br>X = <span style="color:var(--green-light);font-weight:800;">${detInv}</span>  <span style="color:var(--muted);">(${det}*${detInv}=${det * detInv}, mod 26=${(det * detInv) % 26} ✓)</span></div>` },
-            { id: 'hs3', title: 'STEP 3: Adjugate Matrix', body: `<div class="mat-disp">${printMat(adj.map(r => r.map(mod26))).replace(/ /g, '&nbsp;')}</div>` },
-            { id: 'hs4', title: 'STEP 4: K⁻¹ = det⁻¹ * adj(K) mod 26', body: `<div class="mat-disp">${printMat(invM).replace(/ /g, '&nbsp;')}</div>` },
-            { id: 'hs5', title: 'STEP 5: Decode Ciphertext Blocks', body: `<div class="algo-success">✓ K⁻¹ applied to all blocks<br>→ PLAINTEXT: "${activeOriginal}"</div>` },
+            { id: 'hs1', title: 'STEP 1: Determinant det(K)', body: `<div style="line-height:2;">${n === 2 ? `det = (${K[0][0]}*${K[1][1]}) - (${K[0][1]}*${K[1][0]}) = <span style="color:var(--green-light);">${rawDet}</span>` : `det(K) = <span style="color:var(--green-light);">${rawDet}</span>`}<br>det mod 26 = <span style="color:var(--green-light);font-weight:700;">${det}</span></div>` },
+            { id: 'hs2', title: 'STEP 2: Modular Multiplicative Inverse', body: `<div style="line-height:2;">Solve: (${det} × X) ≡ 1 (mod 26)<br>det⁻¹ = <span style="color:var(--green-light);font-weight:700;">${detInv}</span> <span style="color:var(--text-faint);">(${det} × ${detInv} = ${det * detInv} ≡ ${(det * detInv) % 26} mod 26)</span></div>` },
+            { id: 'hs3', title: 'STEP 3: Adjugate Matrix adj(K)', body: `<div class="mat-disp">${printMat(adj.map(r => r.map(mod26))).replace(/ /g, '&nbsp;')}</div>` },
+            { id: 'hs4', title: 'STEP 4: Inverted Matrix K⁻¹ = det⁻¹ · adj(K) mod 26', body: `<div class="mat-disp">${printMat(invM).replace(/ /g, '&nbsp;')}</div>` },
+            { id: 'hs5', title: 'STEP 5: Block Vector Decoding', body: `<div class="algo-success">[MATRIX INVERTED] K⁻¹ applied to vector blocks.<br>→ Recovered vector: "${activeOriginal}"</div>` },
         ];
         let revealed = 0;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('HILL CIPHER MATRIX INVERSION', 'var(--purple-light)')}
+                ${algoHeader('HILL MODULAR MATRIX INVERSION // GL(n, Z_26)', 'var(--amber)')}
                 <div class="algo-body">
                     <div id="hill-algo-steps" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:6px;">
@@ -160,49 +160,45 @@
             document.getElementById('hs-step').disabled = true;
             hsTimer = setInterval(() => { showStep(); if (revealed >= steps.length) clearInterval(hsTimer); }, 600);
         };
-        // Auto-show first step
         showStep();
     }
 
-    // -- Vigenère computer view -----------------------------------
+    // -- Vigenère Period & Coset Attack ---------------------------
     function renderVigenereComputer(container) {
         const key = String(activeCipherKey).toUpperCase() || 'KEY';
         const keyLen = key.length;
         const ct = activePayload.toUpperCase().replace(/[^A-Z]/g, '');
-        const freqEng = { A: 8.2, B: 1.5, C: 2.8, D: 4.3, E: 12.7, F: 2.2, G: 2.0, H: 6.1, I: 7.0, J: 0.15, K: 0.77, L: 4.0, M: 2.4, N: 6.7, O: 7.5, P: 1.9, Q: 0.1, R: 6.0, S: 6.3, T: 9.1, U: 2.8, V: 0.98, W: 2.4, X: 0.15, Y: 2.0, Z: 0.07 };
-        // Find trigrams
         const tri = {};
         for (let i = 0; i <= ct.length - 3; i++) { const s = ct.substr(i, 3); if (!tri[s]) tri[s] = []; tri[s].push(i); }
         const reps = Object.entries(tri).filter(([, v]) => v.length > 1);
         const gap = reps.length ? reps[0][1][1] - reps[0][1][0] : keyLen;
-        // Build freq for each column
         const cols = Array.from({ length: keyLen }, (_, ci) => ct.split('').filter((_, i) => i % keyLen === ci));
 
         const steps = [
-            { title: 'INPUT', body: `<div style="color:#fff;font-family:var(--mono);font-size:11px;word-break:break-all;">"${activePayload.substring(0, 40)}${activePayload.length > 40 ? '...' : ''}"</div>` },
-            { title: 'STEP 1: Kasiski Scan (repeated trigrams)', body: reps.length ? `Sequence <span style="color:var(--blue-light);">"${reps[0][0]}"</span> at positions [${reps[0][1].join(', ')}]<br>Gap = <span style="color:var(--green-light);font-weight:800;">${gap}</span> → key length candidate: ${gap}` : `No repeated trigrams found. Known key length: <span style="color:var(--green-light);">${keyLen}</span>` },
-            { title: `STEP 2: Split into ${keyLen} columns`, body: `${cols.map((c, i) => `Col ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0, 25)}...</span>`).join('<br>')}` },
+            { title: 'INPUT PAYLOAD', body: `<div style="color:var(--text-hi);font-family:var(--mono);font-size:11px;word-break:break-all;">"${activePayload.substring(0, 40)}${activePayload.length > 40 ? '...' : ''}"</div>` },
+            { title: 'STAGE 1: Kasiski Duplication Analysis', body: reps.length ? `Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> recurs at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--amber);font-weight:700;">${gap}</span> → Candidate period factor: ${gap}` : `Text stream below Kasiski duplication threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
+            { title: `STAGE 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c, i) => `Coset ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0, 25)}...</span>`).join('<br>')}` },
             {
-                title: 'STEP 3: Frequency Analysis per Column', body: cols.map((col, ci) => {
+                title: 'STAGE 3: Coset Frequency Distribution', body: cols.map((col, ci) => {
                     const counts = {};
                     col.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
                     const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
                     const shift = ((top[0]?.[0]?.charCodeAt(0) || 69) - 69 + 26) % 26;
-                    return `Col ${ci}: top="${top.map(e => e[0]).join('')}" → shift≈${shift} → key[${ci}]=<span style="color:var(--green-light);">${key[ci]}</span>`;
+                    return `Coset ${ci}: max="${top.map(e => e[0]).join('')}" → offset≈${shift} → sub-key[${ci}]=<span style="color:var(--green-light);font-weight:700;">${key[ci]}</span>`;
                 }).join('<br>')
             },
-            { title: 'STEP 4: Reconstructed Key', body: `keyword = <span style="color:var(--green-light);font-weight:800;font-size:14px;">"${key}"</span>` },
-            { title: 'STEP 5: Decrypt', body: `<div class="algo-success">✓ KEY: "${key}"<br>→ PLAINTEXT: "${activeOriginal}"</div>` },
+            { title: 'STAGE 4: Keyword Derivation', body: `Derived keyword = <span style="color:var(--green-light);font-weight:700;font-size:13px;font-family:var(--mono);">"${key}"</span>` },
+            { title: 'STAGE 5: Polyalphabetic Inversion', body: `<div class="algo-success">[ANALYSIS COMPLETE] Keyword derived: "${key}"<br>→ Recovered vector: "${activeOriginal}"</div>` },
         ];
 
         let revealed = 0;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('KASISKI + FREQUENCY ATTACK', 'var(--green-light)')}
+                ${algoHeader('KASISKI EXAMINATION & COSET FREQUENCY ANALYSIS', 'var(--green-light)')}
                 <div class="algo-body">
                     <div id="vig-algo-steps" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:6px;">
-                        <button class="ctrl-btn" id="vs-step">▶ Next Step</button>
+                        <button class="ctrl-btn" id="vs-step">▶ Next Stage</button>
                         <button class="ctrl-btn" id="vs-auto">⏩ Auto-Run</button>
                     </div>
                 </div>
@@ -213,7 +209,7 @@
             const s = steps[revealed++];
             const el = document.createElement('div');
             el.className = 'algo-step-block anim-in';
-            el.innerHTML = `<div class="algo-step-title">${s.title}</div><div class="algo-step-val" style="font-size:11px;line-height:1.8;">${s.body}</div>`;
+            el.innerHTML = `<div class="algo-step-title">${s.title}</div><div class="algo-step-val" style="font-size:11px;line-height:1.7;">${s.body}</div>`;
             document.getElementById('vig-algo-steps').appendChild(el);
             if (revealed >= steps.length) {
                 document.getElementById('vs-step').disabled = true;
@@ -230,30 +226,30 @@
         showVStep();
     }
 
-    // -- AES computer view ----------------------------------------
+    // -- AES SPN Round State Visualizer ---------------------------
     function renderAesComputer(container) {
         const hex = () => Math.floor(Math.random() * 256).toString(16).padStart(2, '0').toUpperCase();
-        const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:6px 4px;border-radius:3px;text-align:center;font-size:10px;font-family:var(--mono);">${hex()}</div>`).join('');
+        const makeGrid = (color) => Array(16).fill(0).map(() => `<div style="background:${color};padding:5px 3px;border-radius:2px;text-align:center;font-size:10px;font-family:var(--mono);border:1px solid var(--border);">${hex()}</div>`).join('');
         const roundSteps = [
-            { name: 'SubBytes()', desc: 'Non-linear substitution via S-Box', color: 'rgba(59,130,246,0.25)' },
-            { name: 'ShiftRows()', desc: 'Cyclic shift of each row', color: 'rgba(139,92,246,0.25)' },
-            { name: 'MixColumns()', desc: 'Matrix multiply in GF(2⁸)', color: 'rgba(16,185,129,0.25)' },
-            { name: 'AddRoundKey()', desc: 'XOR with round sub-key', color: 'rgba(245,158,11,0.2)' },
+            { name: 'SubBytes()', desc: 'Non-linear S-Box substitution via finite field multiplicative inversion in GF(2^8)', color: 'rgba(62,126,201,0.2)' },
+            { name: 'ShiftRows()', desc: 'Cyclical row permutation interleaving byte positions across state columns', color: 'rgba(123,94,201,0.2)' },
+            { name: 'MixColumns()', desc: 'MDS matrix multiplication in GF(2^8)[x]/(x^4+1) for diffusion across matrix words', color: 'rgba(45,156,87,0.2)' },
+            { name: 'AddRoundKey()', desc: 'Bitwise XOR state integration with expanded 128-bit round sub-key', color: 'rgba(212,139,56,0.2)' },
         ];
         let rStep = 0, rRound = 0, rTimer = null;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('AES-256 ROUND VISUALIZER', 'var(--green-light)')}
+                ${algoHeader('AES-256 SPN ROUND STATE VISUALIZER', 'var(--green-light)')}
                 <div class="algo-body">
-                    <div style="color:var(--muted);font-size:10px;margin-bottom:4px;letter-spacing:1px;">STATE MATRIX (4×4 bytes), ROUND <span id="aes-round-num">0</span>/14</div>
-                    <div id="aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('rgba(255,255,255,0.06)')}</div>
+                    <div style="color:var(--text-dim);font-size:10px;margin-bottom:4px;font-family:var(--mono);">STATE MATRIX (4×4 BYTES), ROUND <span id="aes-round-num" style="color:var(--amber);font-weight:700;">0</span>/14</div>
+                    <div id="aes-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:10px;">${makeGrid('var(--bg-inset)')}</div>
                     <div id="aes-op-row" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-                        ${roundSteps.map((s, i) => `<div id="aes-op-${i}" style="padding:5px 10px;border-radius:5px;border:1px solid rgba(255,255,255,0.08);font-size:10px;color:var(--muted);transition:all 0.3s;">${s.name}</div>`).join('')}
+                        ${roundSteps.map((s, i) => `<div id="aes-op-${i}" style="padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;">${s.name}</div>`).join('')}
                     </div>
-                    <div id="aes-desc" style="color:var(--muted-2);font-size:11px;min-height:18px;"></div>
+                    <div id="aes-desc" style="color:var(--text-dim);font-size:11px;min-height:18px;"></div>
                     <div class="algo-controls" style="margin-top:8px;">
-                        <button class="ctrl-btn" id="aes-step-btn">▶ Next Op</button>
-                        <button class="ctrl-btn" id="aes-auto-btn">⏩ Auto-Run</button>
+                        <button class="ctrl-btn" id="aes-step-btn">▶ Step Round</button>
+                        <button class="ctrl-btn" id="aes-auto-btn">⏩ Run Rounds</button>
                         <button class="ctrl-btn" id="aes-reset-btn" style="opacity:0.6;">↺ Reset</button>
                     </div>
                     <div id="aes-result"></div>
@@ -262,10 +258,10 @@
 
         function aesStep() {
             const ops = document.querySelectorAll('[id^="aes-op-"]');
-            ops.forEach(o => o.style.cssText = 'padding:5px 10px;border-radius:5px;border:1px solid rgba(255,255,255,0.08);font-size:10px;color:var(--muted);transition:all 0.3s;');
+            ops.forEach(o => o.style.cssText = 'padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;');
             const op = roundSteps[rStep];
             const opEl = document.getElementById('aes-op-' + rStep);
-            if (opEl) { opEl.style.background = op.color; opEl.style.color = '#fff'; opEl.style.borderColor = 'rgba(255,255,255,0.3)'; }
+            if (opEl) { opEl.style.background = op.color; opEl.style.color = 'var(--text-hi)'; opEl.style.borderColor = 'var(--border-hi)'; }
             document.getElementById('aes-grid').innerHTML = makeGrid(op.color);
             document.getElementById('aes-desc').textContent = op.desc;
             rStep = (rStep + 1) % 4;
@@ -276,18 +272,18 @@
                     if (rTimer) { clearInterval(rTimer); rTimer = null; }
                     document.getElementById('aes-step-btn').disabled = true;
                     document.getElementById('aes-auto-btn').disabled = true;
-                    document.getElementById('aes-result').innerHTML = `<div class="algo-success">✓ 14 rounds complete. Avalanche effect: 1 bit change diffuses to all 128 bits<br>→ Ciphertext output finalized.</div>`;
+                    document.getElementById('aes-result').innerHTML = `<div class="algo-success">[DIFFUSION COMPLETE] 14 rounds executed. Shannon avalanche criterion satisfied across 128-bit block state.</div>`;
                 }
             }
         }
         function aesReset() {
             rStep = 0; rRound = 0;
             if (rTimer) { clearInterval(rTimer); rTimer = null; }
-            document.getElementById('aes-grid').innerHTML = makeGrid('rgba(255,255,255,0.06)');
+            document.getElementById('aes-grid').innerHTML = makeGrid('var(--bg-inset)');
             document.getElementById('aes-round-num').textContent = '0';
             document.getElementById('aes-desc').textContent = '';
             document.getElementById('aes-result').innerHTML = '';
-            document.querySelectorAll('[id^="aes-op-"]').forEach(o => o.style.cssText = 'padding:5px 10px;border-radius:5px;border:1px solid rgba(255,255,255,0.08);font-size:10px;color:var(--muted);transition:all 0.3s;');
+            document.querySelectorAll('[id^="aes-op-"]').forEach(o => o.style.cssText = 'padding:4px 8px;border-radius:2px;border:1px solid var(--border-md);font-size:10px;font-family:var(--mono);color:var(--text-dim);transition:all 0.2s;');
             document.getElementById('aes-step-btn').disabled = false;
             document.getElementById('aes-auto-btn').disabled = false;
         }
@@ -301,7 +297,7 @@
         aesStep();
     }
 
-    // -- Quantum computer view ------------------------------------
+    // -- Quantum Transmission Simulation (BB84) ------------------
     function renderQuantumComputer(container) {
         const N = 12;
         const aliceBits = Array.from({ length: N }, () => Math.random() > 0.5 ? 1 : 0);
@@ -312,9 +308,9 @@
         let step = -1;
         container.innerHTML = `
             <div class="algo-terminal anim-in">
-                ${algoHeader('BB84 QUANTUM CHANNEL SIMULATION', 'var(--purple-light)')}
+                ${algoHeader('BB84 QUANTUM TRANSMISSION & EAVESDROP SIMULATOR', 'var(--purple-light)')}
                 <div class="algo-body">
-                    <div id="q-stage-label" style="color:var(--text-dim);font-size:11px;font-weight:600;margin-bottom:6px;">Ready to simulate transmission</div>
+                    <div id="q-stage-label" style="color:var(--text-dim);font-size:11px;font-weight:600;margin-bottom:6px;">Ready to simulate optical channel transmission</div>
                     <div id="q-photon-display" style="display:flex;flex-direction:column;gap:6px;"></div>
                     <div class="algo-controls" style="margin-top:8px;">
                         <button class="ctrl-btn" id="q-step-btn">▶ Next Stage</button>
@@ -326,27 +322,27 @@
 
         const stages = [
             () => {
-                document.getElementById('q-stage-label').textContent = 'STAGE 1: Alice encodes bits as polarized photons';
+                document.getElementById('q-stage-label').textContent = 'STAGE 1: Alice encodes qubits in random non-orthogonal polarization bases (+ / ×)';
                 document.getElementById('q-photon-display').innerHTML = `
-                    <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">BIT&nbsp;&nbsp;&nbsp;BASIS&nbsp;&nbsp;PHOTON</div>
-                    <div class="photon-row">${aliceBits.map((b, i) => `<div style="text-align:center;"><div style="font-size:9px;color:var(--muted);">${aliceBases[i]}</div><div class="photon-bit ${b ? 'photon-1' : 'photon-0'}">${photonSyms[aliceBases[i] + b]}</div><div style="font-size:9px;color:var(--muted);">${b}</div></div>`).join('')}</div>`;
+                    <div style="font-size:10px;color:var(--text-faint);margin-bottom:4px;font-family:var(--mono);">BIT&nbsp;&nbsp;&nbsp;BASIS&nbsp;&nbsp;PHOTON</div>
+                    <div class="photon-row">${aliceBits.map((b, i) => `<div style="text-align:center;"><div style="font-size:9px;color:var(--text-faint);">${aliceBases[i]}</div><div class="photon-bit ${b ? 'photon-1' : 'photon-0'}">${photonSyms[aliceBases[i] + b]}</div><div style="font-size:9px;color:var(--text-faint);">${b}</div></div>`).join('')}</div>`;
             },
             () => {
-                document.getElementById('q-stage-label').textContent = 'STAGE 2: Eve intercepts and measures in random bases';
+                document.getElementById('q-stage-label').textContent = 'STAGE 2: Eve intercepts and executes projective measurement in random bases';
                 const eveResults = aliceBits.map((b, i) => eveBases[i] === aliceBases[i] ? b : Math.random() > 0.5 ? 1 : 0);
                 document.getElementById('q-photon-display').innerHTML += `
-                    <div style="font-size:10px;color:var(--muted);margin:6px 0 2px;">EVE'S BASES</div>
-                    <div class="photon-row">${eveResults.map((b, i) => `<div style="text-align:center;"><div style="font-size:9px;color:${eveBases[i] === aliceBases[i] ? 'var(--green)' : 'var(--red)'};">${eveBases[i]}</div><div class="photon-bit ${b ? 'photon-1' : 'photon-0'} ${eveBases[i] === aliceBases[i] ? 'photon-match' : 'photon-mismatch'}">${photonSyms[eveBases[i] + b]}</div></div>`).join('')}</div>`;
+                    <div style="font-size:10px;color:var(--text-faint);margin:6px 0 2px;font-family:var(--mono);">EVE MEASUREMENT BASES</div>
+                    <div class="photon-row">${eveResults.map((b, i) => `<div style="text-align:center;"><div style="font-size:9px;color:${eveBases[i] === aliceBases[i] ? 'var(--green-light)' : 'var(--rose)'};">${eveBases[i]}</div><div class="photon-bit ${b ? 'photon-1' : 'photon-0'} ${eveBases[i] === aliceBases[i] ? 'photon-match' : 'photon-mismatch'}">${photonSyms[eveBases[i] + b]}</div></div>`).join('')}</div>`;
             },
             () => {
-                document.getElementById('q-stage-label').textContent = 'STAGE 3: Bob measures and compares bases with Alice';
+                document.getElementById('q-stage-label').textContent = 'STAGE 3: Bob measures and sifts bases with Alice over classical channel';
                 const matches = aliceBases.map((a, i) => a === bobBases[i]);
                 const errorRate = matches.filter((m, i) => m && eveBases[i] !== aliceBases[i]).length / matches.filter(m => m).length;
                 document.getElementById('q-photon-display').innerHTML += `
-                    <div style="font-size:10px;color:var(--muted);margin:6px 0 2px;">BOB'S BASES (matching Alice = shared key bit)</div>
-                    <div class="photon-row">${aliceBits.map((b, i) => `<div style="text-align:center;"><div style="font-size:9px;color:${matches[i] ? 'var(--green)' : 'var(--muted)'};">${bobBases[i]}</div><div class="photon-bit ${b ? 'photon-1' : 'photon-0'}" style="opacity:${matches[i] ? 1 : 0.3};">${matches[i] ? b : '-'}</div></div>`).join('')}</div>
-                    <div style="margin-top:8px;padding:8px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:6px;font-size:11px;color:var(--red);">⚠ Eve's interception introduced ~${Math.round(errorRate * 100) || 22}% error rate: DETECTED</div>`;
-                document.getElementById('q-result').innerHTML = `<div class="algo-success" style="margin-top:8px;">✓ Simulation complete<br>Eve detected via error spike<br>→ Shared key bits: [${aliceBits.filter((_, i) => aliceBases[i] === bobBases[i]).join('')}]</div>`;
+                    <div style="font-size:10px;color:var(--text-faint);margin:6px 0 2px;font-family:var(--mono);">BOB MEASUREMENT BASES (matching Alice = sifted key candidate)</div>
+                    <div class="photon-row">${aliceBits.map((b, i) => `<div style="text-align:center;"><div style="font-size:9px;color:${matches[i] ? 'var(--green-light)' : 'var(--text-faint)'};">${bobBases[i]}</div><div class="photon-bit ${b ? 'photon-1' : 'photon-0'}" style="opacity:${matches[i] ? 1 : 0.3};">${matches[i] ? b : '-'}</div></div>`).join('')}</div>
+                    <div style="margin-top:8px;padding:8px;background:rgba(207,72,72,0.1);border:1px solid rgba(207,72,72,0.3);border-radius:var(--radius-sm);font-size:11px;color:var(--rose);">[ALERT] Eavesdropping projection induced ~${Math.round(errorRate * 100) || 22}% Quantum Bit Error Rate (QBER threshold = 11%)</div>`;
+                document.getElementById('q-result').innerHTML = `<div class="algo-success" style="margin-top:8px;">[PROTOCOL TERMINATED] Sifting aborted: Eavesdropper detected via QBER threshold violation.<br>→ Compromised key vector discarded.</div>`;
                 document.getElementById('q-step-btn').disabled = true;
                 document.getElementById('q-auto-btn').disabled = true;
             }
@@ -362,4 +358,3 @@
         };
         doQStage();
     }
-
