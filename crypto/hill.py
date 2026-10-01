@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
     msg = input("Enter a message to encrypt: ")
     if not msg:
-        msg = "HELLO"    
+        msg = "TELEMETRY"    
     
     key = [[3, 3], [2, 5]]
 

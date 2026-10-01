@@ -165,7 +165,7 @@
                 <div class="manual-body">
                     <div class="step-box">
                         <div class="step-title">Stage 1: Find Keyword Length</div>
-                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> repeats at interval ${reps[0][1][1] - reps[0][1][0]} → factor suggests key length</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Message length below duplicate trigram threshold. Test candidate key lengths:</div>`}
+                        ${reps.length ? `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Trigram <span style="color:var(--blue-light);">"${reps[0][0]}"</span> repeats at interval ${reps[0][1][1] - reps[0][1][0]} (factor suggests candidate key length)</div>` : `<div style="color:var(--text-dim);font-size:11px;font-family:var(--sans);">Message length below duplicate trigram threshold. Test candidate key lengths:</div>`}
                         <div class="prompt-line" style="margin-top:8px;">
                             <span class="prompt-sym">$</span><span style="color:var(--text-dim);font-size:11px;font-family:var(--mono);">key_length =</span>
                             <input type="number" id="vm-inp1" class="step-input" placeholder="?">
@@ -220,7 +220,7 @@
                         AES-256 uses a 256-bit key space (approximately 1.15 &times; 10⁷⁷ possible keys). Its 14 rounds of substitution and mixing make manual cracking impossible without the key.<br><br>
                         Switch to the Automated view to inspect the round transformations across SubBytes, ShiftRows, and MixColumns.
                     </div>
-                    <a href="https://www.nist.gov/publications/advanced-encryption-standard-aes" target="_blank" class="calc-link">NIST FIPS 197 Specification &rarr;</a>
+                    <a href="https://www.nist.gov/publications/advanced-encryption-standard-aes" target="_blank" class="calc-link">NIST FIPS 197 Specification</a>
                 </div>
             </div>`;
     }

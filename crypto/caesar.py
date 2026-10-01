@@ -40,7 +40,7 @@ if __name__ == "__main__": #this is kinda cool it makes it so that this code onl
     
 
     msg = input("Enter a message to encrypt: ")
-    if not msg: msg = "Hello, World!"
+    if not msg: msg = "ORBITAL_TELEMETRY_LINK_ACTIVE"
 
     shift = int(input("Enter the shift value (key): "))
     if not shift: shift = 3

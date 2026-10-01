@@ -4,42 +4,61 @@
 <style>
     .lobby-wrapper {
         min-height: calc(100vh - 52px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 48px 16px;
-        background: var(--bg);
+        padding: 48px 24px 72px;
+        background: transparent;
+        position: relative;
     }
 
-    .lobby-card {
+    .lobby-container {
         width: 100%;
-        max-width: 440px;
-        background: var(--bg-2);
+        max-width: 1040px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 480px 1fr;
+        gap: 28px;
+        position: relative;
+        z-index: 10;
+        align-items: start;
+    }
+
+    /* Ambient Watermark */
+    .lobby-watermark {
+        position: absolute;
+        bottom: 12px;
+        right: 24px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.04);
+        pointer-events: none;
+        letter-spacing: 0.1em;
+    }
+
+    /* Left: Session Gateway Terminal */
+    .lobby-card {
+        background: linear-gradient(180deg, rgba(20, 26, 38, 0.9) 0%, rgba(13, 17, 25, 0.96) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--border);
+        border-top: 1px solid rgba(255, 255, 255, 0.09);
         border-radius: var(--radius-sm);
-        padding: 24px;
-        box-shadow: var(--shadow-md);
+        padding: 28px;
+        box-shadow: 0 10px 32px -4px rgba(0, 0, 0, 0.55);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .lobby-header {
-        margin-bottom: 20px;
-        padding-bottom: 14px;
+        margin-bottom: 22px;
+        padding-bottom: 16px;
         border-bottom: 1px solid var(--border);
     }
 
-    .lobby-tag {
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--blue-light);
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        margin-bottom: 6px;
-    }
-
     .lobby-title {
-        font-size: 18px;
+        font-family: var(--font-display);
+        font-size: 22px;
         font-weight: 700;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.02em;
         color: var(--text-hi);
         margin: 0 0 6px 0;
     }
@@ -51,21 +70,65 @@
         line-height: 1.55;
     }
 
+    /* Mode Segmented Controls */
+    .session-mode-switch {
+        display: flex;
+        background: var(--bg-inset);
+        border: 1px solid var(--border-md);
+        border-radius: var(--radius-xs);
+        padding: 3px;
+        margin-bottom: 20px;
+        gap: 3px;
+    }
+
+    .mode-tab-btn {
+        flex: 1;
+        padding: 7px 12px;
+        font-family: var(--font-display);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-dim);
+        background: transparent;
+        border: none;
+        border-radius: var(--radius-xs);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-align: center;
+    }
+    .mode-tab-btn:hover {
+        color: var(--text-hi);
+    }
+    .mode-tab-btn.active {
+        background: var(--bg-3);
+        color: var(--text-hi);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
     .field-group {
         margin-bottom: 16px;
     }
 
     .field-label {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--font-display);
         font-size: 12px;
         font-weight: 600;
-        color: var(--text-dim);
+        color: var(--text-hi);
         margin-bottom: 6px;
+    }
+
+    .field-sublabel {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-faint);
+        font-weight: 400;
     }
 
     .text-input {
         width: 100%;
-        padding: 8px 12px;
+        padding: 9px 12px;
         background: var(--bg-inset);
         border: 1px solid var(--border-md);
         color: var(--text-hi);
@@ -73,20 +136,21 @@
         font-size: 13px;
         border-radius: var(--radius-xs);
         outline: none;
-        transition: border-color 0.15s;
+        transition: border-color 0.15s, box-shadow 0.15s;
     }
     .text-input:focus {
         border-color: var(--blue-light);
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
     }
     .text-input::placeholder {
         color: var(--text-faint);
     }
 
     .code-input-field {
-        font-family: var(--mono);
-        font-size: 14px;
+        font-family: var(--font-mono);
+        font-size: 15px;
         font-weight: 600;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.16em;
         text-align: center;
         text-transform: uppercase;
     }
@@ -97,151 +161,297 @@
         margin-top: 5px;
         min-height: 16px;
         display: block;
+        font-family: var(--sans);
     }
 
-    .action-section {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+    .action-panel-view {
+        display: none;
+    }
+    .action-panel-view.active {
+        display: block;
     }
 
-    .btn-action-host {
+    .btn-submit-action {
         width: 100%;
-        padding: 9px 16px;
-        background: var(--primary);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #ffffff;
+        padding: 10px 18px;
+        margin-top: 4px;
         font-size: 13px;
-        font-weight: 600;
-        border-radius: var(--radius-xs);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: background 0.15s ease, transform 0.05s ease;
-    }
-    .btn-action-host:hover {
-        background: var(--primary-hover);
-    }
-    .btn-action-host:active {
-        transform: translateY(1px);
-    }
-    .btn-action-host:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
-    }
-
-    .divider-text {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 2px 0;
-        color: var(--text-faint);
-        font-size: 12px;
-        font-weight: 500;
-    }
-    .divider-text::before,
-    .divider-text::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-    }
-
-    .join-group {
-        display: flex;
-        gap: 8px;
-    }
-
-    .join-group .text-input {
-        flex: 1;
-    }
-
-    .btn-action-join {
-        padding: 9px 18px;
-        background: var(--bg-3);
-        border: 1px solid var(--border-md);
-        color: var(--text-hi);
-        font-size: 13px;
-        font-weight: 500;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        white-space: nowrap;
-        transition: all 0.15s;
-    }
-    .btn-action-join:hover {
-        background: #30363d;
-        border-color: #8b949e;
-        color: #ffffff;
-    }
-    .btn-action-join:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
     }
 
     .lobby-foot {
-        margin-top: 22px;
+        margin-top: 24px;
         padding-top: 16px;
         border-top: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 12px;
+        font-size: 11.5px;
         color: var(--text-faint);
+        font-family: var(--sans);
     }
 
     .lobby-foot a {
         color: var(--text-dim);
         text-decoration: none;
+        font-family: var(--font-display);
+        font-weight: 500;
     }
     .lobby-foot a:hover {
         color: var(--text-hi);
     }
+
+    /* Right: Telemetry & Network Monitor Column */
+    .telemetry-column {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .monitor-card {
+        background: linear-gradient(180deg, rgba(17, 23, 34, 0.8) 0%, rgba(10, 14, 21, 0.9) 100%);
+        border: 1px solid var(--border);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius-sm);
+        padding: 20px;
+        backdrop-filter: blur(12px);
+    }
+
+    .monitor-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .monitor-title {
+        font-family: var(--font-display);
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-hi);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .monitor-badge {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--blue-light);
+        background: rgba(2, 132, 199, 0.1);
+        padding: 2px 6px;
+        border-radius: 2px;
+    }
+
+    /* Live Stream Log */
+    .stream-feed {
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xs);
+        padding: 12px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-dim);
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .feed-line {
+        display: flex;
+        gap: 10px;
+    }
+
+    .feed-tag {
+        color: var(--blue-light);
+        flex-shrink: 0;
+    }
+
+    .feed-text {
+        color: var(--text);
+        word-break: break-all;
+    }
+
+    .feed-accent {
+        color: var(--green-light);
+    }
+
+    /* Diagram Card */
+    .topology-diagram {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 10px;
+        background: var(--bg-inset);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xs);
+        margin-bottom: 14px;
+    }
+
+    .topo-node {
+        text-align: center;
+        flex: 1;
+    }
+
+    .node-box {
+        background: var(--bg-2);
+        border: 1px solid var(--border-md);
+        border-radius: var(--radius-xs);
+        padding: 6px 8px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-hi);
+        display: inline-block;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .node-sub {
+        font-size: 10px;
+        color: var(--text-faint);
+        margin-top: 4px;
+        font-family: var(--sans);
+    }
+
+    .topo-link {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--blue-light);
+        text-align: center;
+        padding: 0 6px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .link-line {
+        width: 36px;
+        height: 1px;
+        background: var(--border-hi);
+        position: relative;
+    }
+    .link-line::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -2px;
+        width: 5px;
+        height: 5px;
+        border-top: 1px solid var(--border-hi);
+        border-right: 1px solid var(--border-hi);
+        transform: rotate(45deg);
+    }
+
+    .guarantee-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--text-dim);
+        line-height: 1.5;
+    }
+
+    .guarantee-item {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .guarantee-bullet {
+        color: var(--blue-light);
+        font-family: var(--font-mono);
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 860px) {
+        .lobby-container {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 
 <div class="lobby-wrapper">
-    <div class="lobby-card">
-        <div class="lobby-header">
-            <div class="lobby-tag">Real-Time Messaging</div>
-            <h2 class="lobby-title">Chat Rooms</h2>
-            <p class="lobby-desc">
-                Choose a username to create a new room, or enter a 4-character room code to join an active session. Messages encrypt client-side before transmission.
-            </p>
-        </div>
+    <div class="lobby-watermark">
+        0x43 0x48 0x41 0x54 0x5F 0x52 0x4F 0x4F 0x4D 0x53 &bull; SHA-256 // EPHEMERAL
+    </div>
 
-        <form method="post" id="local-form">
-            <div class="field-group">
-                <label class="field-label" for="username_input">Username</label>
-                <input
-                    type="text"
-                    id="username_input"
-                    name="username"
-                    class="text-input"
-                    placeholder="e.g. Alice"
-                    maxlength="24"
-                    required
-                    autocomplete="off"
-                    autofocus
-                >
-                <span id="username_warning" class="field-error"></span>
-            </div>
+    <div class="lobby-container">
+        <!-- Left: Gateway Terminal -->
+        <div class="lobby-card">
+            <div>
+                <div class="lobby-header">
+                    <h2 class="lobby-title">Chat Rooms</h2>
+                    <p class="lobby-desc">
+                        Initialize a new room session or join an active room with an access code. Cryptographic transformations occur locally in your browser sandbox prior to relay transit.
+                    </p>
+                </div>
 
-            <div class="action-section">
-                <div>
-                    <button type="submit" formaction="/host" id="btn-host" class="btn-action-host">
-                        <svg viewBox="0 0 20 20" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
-                            <line x1="10" y1="4" x2="10" y2="16"/>
-                            <line x1="4" y1="10" x2="16" y2="10"/>
-                        </svg>
-                        Create New Room
+                <!-- Segmented Mode Control -->
+                <div class="session-mode-switch">
+                    <button type="button" class="mode-tab-btn active" id="tab-mode-host" onclick="switchSessionMode('host')">
+                        Host New Room
+                    </button>
+                    <button type="button" class="mode-tab-btn" id="tab-mode-join" onclick="switchSessionMode('join')">
+                        Join with Code
                     </button>
                 </div>
 
-                <div class="divider-text">or join an existing room</div>
+                <!-- Host Mode Form -->
+                <form method="post" action="/host" id="host-form" class="action-panel-view active">
+                    <div class="field-group">
+                        <label class="field-label" for="username_input">
+                            <span>Host Username</span>
+                            <span class="field-sublabel">Max 24 characters</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="username_input"
+                            name="username"
+                            class="text-input"
+                            placeholder="e.g. cipher_node"
+                            maxlength="24"
+                            required
+                            autocomplete="off"
+                            autofocus
+                        >
+                        <span id="host_warning" class="field-error"></span>
+                    </div>
 
-                <div class="field-group" style="margin-bottom:0">
-                    <div class="join-group">
+                    <button type="submit" id="btn-host" class="btn-primary btn-submit-action">
+                        Initialize Room Session
+                    </button>
+                </form>
+
+                <!-- Join Mode Form -->
+                <form method="post" action="/join" id="join-form" class="action-panel-view">
+                    <div class="field-group">
+                        <label class="field-label" for="join_username_input">
+                            <span>Participant Username</span>
+                            <span class="field-sublabel">Participant handle</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="join_username_input"
+                            name="username"
+                            class="text-input"
+                            placeholder="e.g. vector_peer"
+                            maxlength="24"
+                            required
+                            autocomplete="off"
+                        >
+                        <span id="join_warning" class="field-error"></span>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="room_code_box">
+                            <span>Room Access Code</span>
+                            <span class="field-sublabel">4 letters</span>
+                        </label>
                         <input
                             type="text"
                             name="room_code"
@@ -249,19 +459,96 @@
                             class="text-input code-input-field"
                             placeholder="CODE"
                             maxlength="4"
+                            required
+                            autocomplete="off"
                         >
-                        <button type="submit" formaction="/join" id="btn-join" class="btn-action-join">
-                            Join Room &rarr;
-                        </button>
+                    </div>
+
+                    <button type="submit" id="btn-join" class="btn-secondary btn-submit-action">
+                        Connect to Room
+                    </button>
+                </form>
+            </div>
+
+            <div class="lobby-foot">
+                <span>In-memory session state &bull; Discarded on disconnect</span>
+                <a href="/lab">Open Workbench</a>
+            </div>
+        </div>
+
+        <!-- Right: Telemetry & Network Monitor -->
+        <div class="telemetry-column">
+            <!-- Topology Architecture Card -->
+            <div class="monitor-card">
+                <div class="monitor-head">
+                    <h3 class="monitor-title">Relay Topology & Trust Model</h3>
+                    <span class="monitor-badge">In-memory relay</span>
+                </div>
+
+                <div class="topology-diagram">
+                    <div class="topo-node">
+                        <div class="node-box">Browser A</div>
+                        <div class="node-sub">WebCrypto Engine</div>
+                    </div>
+                    <div class="topo-link">
+                        <span style="font-size:9px;">CIPHERTEXT</span>
+                        <div class="link-line"></div>
+                    </div>
+                    <div class="topo-node">
+                        <div class="node-box" style="border-color:var(--blue-light);">Relay Node</div>
+                        <div class="node-sub">RAM Buffer Only</div>
+                    </div>
+                    <div class="topo-link">
+                        <span style="font-size:9px;">CIPHERTEXT</span>
+                        <div class="link-line"></div>
+                    </div>
+                    <div class="topo-node">
+                        <div class="node-box">Browser B</div>
+                        <div class="node-sub">Local Decrypt</div>
+                    </div>
+                </div>
+
+                <div class="guarantee-list">
+                    <div class="guarantee-item">
+                        <span class="guarantee-bullet">&bull;</span>
+                        <span><strong>Client Sandbox:</strong> Transformations occur in JavaScript memory. Decryption keys never travel across the socket connection.</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <span class="guarantee-bullet">&bull;</span>
+                        <span><strong>Blind Transport:</strong> The server forwards opaque ciphertext payloads. It possesses no keys or mathematical shortcuts to read messages.</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <span class="guarantee-bullet">&bull;</span>
+                        <span><strong>Session Ephemerality:</strong> Leaving or closing the tab immediately triggers memory garbage collection with zero persistent logs.</span>
                     </div>
                 </div>
             </div>
-        </form>
 
-        <div class="lobby-foot">
-            <div>Ephemeral sessions (in-memory only)</div>
-            <div>
-                <a href="/lab">Open Workbench</a>
+            <!-- Connection & Execution Model -->
+            <div class="monitor-card">
+                <div class="monitor-head">
+                    <h3 class="monitor-title">Connection & Execution Model</h3>
+                    <span class="monitor-badge">Client sandbox</span>
+                </div>
+
+                <div class="stream-feed">
+                    <div class="feed-line">
+                        <span class="feed-tag">SANDBOX</span>
+                        <span class="feed-text">WebCrypto API and client-side cipher evaluation in browser thread</span>
+                    </div>
+                    <div class="feed-line">
+                        <span class="feed-tag">TRANSPORT</span>
+                        <span class="feed-text">WebSocket relay transports opaque ciphertext payloads only</span>
+                    </div>
+                    <div class="feed-line">
+                        <span class="feed-tag">STORAGE</span>
+                        <span class="feed-text">Volatile memory state discarded immediately on session disconnect</span>
+                    </div>
+                    <div class="feed-line">
+                        <span class="feed-tag">ROUTING</span>
+                        <span class="feed-text">Peer broadcast isolated strictly by room session code</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -269,21 +556,71 @@
 
 <script>
 (function() {
-    const usernameInput = document.getElementById('username_input');
-    const warningText = document.getElementById('username_warning');
+    const hostForm = document.getElementById('host-form');
+    const joinForm = document.getElementById('join-form');
+    const hostUserInp = document.getElementById('username_input');
+    const joinUserInp = document.getElementById('join_username_input');
+    const hostWarning = document.getElementById('host_warning');
+    const joinWarning = document.getElementById('join_warning');
     const btnHost = document.getElementById('btn-host');
     const btnJoin = document.getElementById('btn-join');
     const roomCodeBox = document.getElementById('room_code_box');
 
+    let currentMode = 'host';
     let isUsernameTaken = false;
 
-    function checkUsername() {
-        const username = usernameInput.value.trim();
+    // Segmented tab switcher
+    window.switchSessionMode = function(mode) {
+        currentMode = mode;
+        const hostTab = document.getElementById('tab-mode-host');
+        const joinTab = document.getElementById('tab-mode-join');
+
+        if (mode === 'host') {
+            hostTab.classList.add('active');
+            joinTab.classList.remove('active');
+            hostForm.classList.add('active');
+            joinForm.classList.remove('active');
+            if (joinUserInp.value && !hostUserInp.value) {
+                hostUserInp.value = joinUserInp.value;
+            }
+            hostUserInp.focus();
+        } else {
+            joinTab.classList.add('active');
+            hostTab.classList.remove('active');
+            joinForm.classList.add('active');
+            hostForm.classList.remove('active');
+            if (hostUserInp.value && !joinUserInp.value) {
+                joinUserInp.value = hostUserInp.value;
+            }
+            if (!joinUserInp.value) {
+                joinUserInp.focus();
+            } else {
+                roomCodeBox.focus();
+            }
+        }
+        updateButtonStates();
+    };
+
+    // Keep inputs synchronized
+    hostUserInp.addEventListener('input', function() {
+        joinUserInp.value = this.value;
+        checkUsername(this.value);
+    });
+
+    joinUserInp.addEventListener('input', function() {
+        hostUserInp.value = this.value;
+        checkUsername(this.value);
+    });
+
+    function checkUsername(val) {
+        const username = val.trim();
         if (!username) {
-            warningText.textContent = '';
+            hostWarning.textContent = '';
+            joinWarning.textContent = '';
             isUsernameTaken = false;
+            hostUserInp.style.borderColor = '';
+            joinUserInp.style.borderColor = '';
             updateButtonStates();
-            usernameInput.style.borderColor = '';
             return;
         }
 
@@ -291,13 +628,18 @@
             .then(res => res.json())
             .then(takenList => {
                 if (takenList.includes(username)) {
-                    warningText.textContent = 'Username already in use in an active session. Choose another.';
+                    const msg = 'Username already in use in an active session. Choose another.';
+                    hostWarning.textContent = msg;
+                    joinWarning.textContent = msg;
                     isUsernameTaken = true;
-                    usernameInput.style.borderColor = 'var(--rose)';
+                    hostUserInp.style.borderColor = 'var(--rose)';
+                    joinUserInp.style.borderColor = 'var(--rose)';
                 } else {
-                    warningText.textContent = '';
+                    hostWarning.textContent = '';
+                    joinWarning.textContent = '';
                     isUsernameTaken = false;
-                    usernameInput.style.borderColor = '';
+                    hostUserInp.style.borderColor = '';
+                    joinUserInp.style.borderColor = '';
                 }
                 updateButtonStates();
             })
@@ -305,14 +647,14 @@
     }
 
     function updateButtonStates() {
-        const hasUser = usernameInput.value.trim().length > 0;
+        const currentUser = (currentMode === 'host' ? hostUserInp.value : joinUserInp.value).trim();
+        const hasUser = currentUser.length > 0;
         const hasCode = roomCodeBox.value.trim().length === 4;
 
         btnHost.disabled = !hasUser || isUsernameTaken;
         btnJoin.disabled = !hasUser || !hasCode || isUsernameTaken;
     }
 
-    usernameInput.addEventListener('input', checkUsername);
     roomCodeBox.addEventListener('input', function() {
         this.value = this.value.toUpperCase();
         updateButtonStates();

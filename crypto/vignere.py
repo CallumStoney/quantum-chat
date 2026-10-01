@@ -55,7 +55,7 @@ if __name__ == "__main__":
     cipher = VigenereCipher()
     
     msg = input("Enter a message to encrypt: ")
-    if not msg: msg = "Hello World!"
+    if not msg: msg = "ORBITAL_TELEMETRY_LINK_ACTIVE"
 
     # Note: Vigenere needs a string for a key, not an integer!
     shift_key = input("Enter the key (no special chars): ")

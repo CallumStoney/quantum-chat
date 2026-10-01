@@ -7,12 +7,7 @@
             <span style="font-size: 12px; font-weight: 600; color: var(--text-dim); font-family: var(--sans);">Room:</span>
             <div style="display:flex;align-items:center;gap:6px;">
                 <span class="room-code-display">{{ room_code }}</span>
-                <button class="btn-copy-room" onclick="copyRoomCode(this)" data-code="{{ room_code }}" title="Copy room code">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                    </svg>
-                </button>
+                <button class="btn-copy-room" onclick="copyRoomCode(this)" data-code="{{ room_code }}" title="Copy room code" style="font-family:var(--font-mono);font-size:10px;font-weight:600;padding:2px 7px;">COPY</button>
             </div>
         </div>
         <div style="font-size: 12px; color: var(--text-dim); font-family: var(--sans);">
@@ -48,7 +43,7 @@
                 <div id="sel-details" class="tabs-wrap">
                     <div style="background:var(--bg-inset);padding:9px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:10px;flex-shrink:0;">
                         <div style="color:var(--text-faint);font-size:11px;margin-bottom:3px;font-weight:600;font-family:var(--sans);">Ciphertext Preview</div>
-                        <div id="sel-payload" style="color:var(--blue-light);font-family:var(--mono);word-break:break-all;font-size:12px;">HELLO WORLD</div>
+                        <div id="sel-payload" style="color:var(--blue-light);font-family:var(--mono);word-break:break-all;font-size:12px;">ORBITAL TELEMETRY LINK ESTABLISHED</div>
                     </div>
                     <div class="tabs-nav" style="flex-shrink:0;">
                         <button class="tab-btn active" onclick="switchTab('guide',event)">Guide & Formula</button>

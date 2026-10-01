@@ -176,7 +176,7 @@
 
         const steps = [
             { title: 'Ciphertext', body: `<div style="color:var(--text-hi);font-family:var(--mono);font-size:11px;word-break:break-all;">"${activePayload.substring(0, 40)}${activePayload.length > 40 ? '...' : ''}"</div>` },
-            { title: 'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--blue-light);">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-light);font-weight:700;">${gap}</span> → Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
+            { title: 'Stage 1: Repeating Sequence Analysis', body: reps.length ? `Repeated sequence <span style="color:var(--blue-light);">"${reps[0][0]}"</span> found at offsets [${reps[0][1].join(', ')}]<br>Interval = <span style="color:var(--blue-light);font-weight:700;">${gap}</span> // Candidate period factor: ${gap}` : `Text length below duplicate sequence threshold. Evaluating period: <span style="color:var(--green-light);">${keyLen}</span>` },
             { title: `Stage 2: Coset Decomposition (${keyLen} Interleaved Streams)`, body: `${cols.map((c, i) => `Coset ${i}: <span style="color:var(--blue-light);">${c.join('').substring(0, 25)}...</span>`).join('<br>')}` },
             {
                 title: 'Stage 3: Coset Frequency Distribution', body: cols.map((col, ci) => {
@@ -184,7 +184,7 @@
                     col.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
                     const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
                     const shift = ((top[0]?.[0]?.charCodeAt(0) || 69) - 69 + 26) % 26;
-                    return `Coset ${ci}: max="${top.map(e => e[0]).join('')}" → offset≈${shift} → sub-key[${ci}]=<span style="color:var(--green-light);font-weight:700;">${key[ci]}</span>`;
+                    return `Coset ${ci}: max="${top.map(e => e[0]).join('')}" // offset≈${shift} // sub-key[${ci}]=<span style="color:var(--green-light);font-weight:700;">${key[ci]}</span>`;
                 }).join('<br>')
             },
             { title: 'Stage 4: Derived Keyword', body: `Derived keyword = <span style="color:var(--green-light);font-weight:700;font-size:13px;font-family:var(--mono);">"${key}"</span>` },

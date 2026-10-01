@@ -5,7 +5,6 @@
                 <!-- Top Row: Title and Collapse Toggle -->
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 10px; gap: 8px;">
                     <div style="font-size: 12px; font-weight: 600; color: var(--blue-light); display: flex; align-items: center; gap: 6px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/><path d="M19 11v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
                         Room Settings (Host Controls)
                     </div>
                     <button id="host-controls-toggle" onclick="toggleHostControls()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;" title="Toggle controls">
@@ -26,12 +25,16 @@
                             onchange="socket.emit('host_action', {room, action: 'force_cipher', cipher: this.value})">
                             <option value="">Cipher Policy: Free Selection</option>
                             <option value="none">Lock Room: Plaintext</option>
-                            <option value="caesar">Lock Room: Caesar Shift</option>
-                            <option value="affine">Lock Room: Affine Cipher</option>
-                            <option value="hill">Lock Room: Hill Matrix</option>
-                            <option value="vigenere">Lock Room: Vigen&egrave;re</option>
-                            <option value="aes">Lock Room: AES-256</option>
-                            <option value="quantum">Lock Room: BB84 Quantum</option>
+                            <optgroup label="Classical Primitives">
+                                <option value="caesar">Lock Room: Caesar Shift</option>
+                                <option value="affine">Lock Room: Affine Cipher</option>
+                                <option value="hill">Lock Room: Hill Matrix</option>
+                                <option value="vigenere">Lock Room: Vigen&egrave;re</option>
+                            </optgroup>
+                            <optgroup label="Modern & Quantum">
+                                <option value="aes">Lock Room: AES-256</option>
+                                <option value="quantum">Lock Room: BB84 Quantum</option>
+                            </optgroup>
                         </select>
 
                         <button class="ctrl-btn" style="border-color: var(--border-md); color: var(--text); flex-shrink: 0;"
